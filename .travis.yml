@@ -1,0 +1,30 @@
+language: php
+
+php:
+    - 7.1
+    - 7.2
+    - nightly
+
+notifications:
+    email: false
+
+matrix:
+    allow_failures:
+        - php: nightly
+  
+before_install:
+    - composer self-update
+
+install:
+    - wget https://www.phing.info/get/phing-latest.phar && mv phing-latest.phar phing && chmod +x phing
+  
+script:
+    - ./phing test
+
+after_failure:
+    - for i in $(find ./tests -name \*.actual); do echo "--- $i"; cat $i; echo; echo; done
+
+cache:
+    directories:
+        - $HOME/.composer/cache
+        - vendor

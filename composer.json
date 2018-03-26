@@ -1,0 +1,52 @@
+{
+    "name": "heroesofabenez/combat",
+    "description": "A simple chat component",
+    "keywords": [
+      "combat"
+    ],
+    "license": "BSD-3-Clause",
+    "homepage": "https://heroesofabenez.gitlab.io",
+    "authors": [
+        {
+            "name": "Jakub Konečný",
+            "email": "jakub.konecny2@centrum.cz",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "source": "https://gitlab.com/heroesofabenez/comat/",
+        "issues": "https://gitlab.com/heroesofabenez/combat/issues"
+    },
+    "require": {
+        "php": ">=7.1.0",
+        "latte/latte": "^2.4",
+        "nette/utils": "^2.4",
+        "nexendrie/translation": "^1.1.1",
+        "nexendrie/utils": "^1.2"
+    },
+    "require-dev": {
+        "nexendrie/code-quality": "dev-master",
+        "nexendrie/site-generator": "1.0.x-dev",
+        "phpstan/phpstan-nette": "^0.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "HeroesofAbenez\\Combat\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "HeroesofAbenez\\Combat\\": "tests/HeroesofAbenez/Combat/"
+        }
+    },
+    "config": {
+        "classmap-authoritative": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

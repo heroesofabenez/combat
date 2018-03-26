@@ -1,0 +1,6 @@
+/vendor/
+/public/
+/.idea/
+/tests/_temp/
+composer.lock
+coverage.*

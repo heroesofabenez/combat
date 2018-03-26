@@ -1,0 +1,39 @@
+image: nexendrie/php:7.1
+
+stages:
+  - test
+  - deploy
+
+cache:
+  paths:
+  - vendor/
+
+test:default:
+  stage: test
+  script:
+  - phing test
+
+test:php7.2:
+  stage: test
+  image: nexendrie/php:7.2
+  script:
+  - phing test
+
+test:cc:
+  stage: test
+  script:
+  - phing test-coverage
+  coverage: '/(\d+\%) covered/'
+
+pages:
+  stage: deploy
+  environment:
+    name: documentation
+    url: https://heroesofabenez.gitlab.io/combat
+  script:
+  - phing documentation
+  artifacts:
+      paths:
+      - public
+  only:
+  - tags@heroesofabenez/combat

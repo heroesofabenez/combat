@@ -1,0 +1,12 @@
+application:
+    scanDirs: false
+services:
+    testbench.presenterMock: Testbench\Mocks\PresenterMock
+    combatLogger: HeroesofAbenez\Combat\CombatLogger
+extensions:
+    translation: Nexendrie\Translation\Bridges\NetteDI\TranslationExtension
+translation:
+    localeResolver: fallback
+    loader:
+        folders!:
+            - %appDir%/../lang
