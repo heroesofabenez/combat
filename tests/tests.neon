@@ -9,4 +9,4 @@ translation:
     localeResolver: fallback
     loader:
         folders!:
-            - %appDir%/../lang
+            - %appDir%/../src/lang
