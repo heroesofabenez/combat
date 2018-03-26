@@ -581,15 +581,10 @@ class CombatBase {
     $result["result"] = $this->hasHit($hitChance);
     $result["amount"] = 0;
     if($result["result"]) {
-      $result["amount"] = $attacker->damage - $defender->defense;
+      $amount = $attacker->damage - $defender->defense;
+      $result["amount"] = Numbers::range($amount, 0, $defender->hitpoints);
     }
-    if($result["amount"] < 0) {
-      $result["amount"] = 0;
-    }
-    if($defender->hitpoints - $result["amount"] < 0) {
-      $result["amount"] = $defender->hitpoints;
-    }
-    if($result["amount"]) {
+    if($result["amount"] > 0) {
       $defender->harm($result["amount"]);
     }
     $result["action"] = CombatAction::ACTION_ATTACK;
@@ -608,11 +603,8 @@ class CombatBase {
     $result["result"] = $this->hasHit($hitChance);
     $result["amount"] = 0;
     if($result["result"]) {
-      $result["amount"] = $attacker->damage - $defender->defense;
-      $result["amount"] = (int) ($result["amount"] / 100 * $skill->damage);
-    }
-    if($defender->hitpoints - $result["amount"] < 0) {
-      $result["amount"] = $defender->hitpoints;
+      $amount = (int) ($attacker->damage - $defender->defense / 100 * $skill->damage);
+      $result["amount"] = Numbers::range($amount, 0, $defender->hitpoints);
     }
     if($result["amount"]) {
       $defender->harm($result["amount"]);
