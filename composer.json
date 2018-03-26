@@ -1,6 +1,6 @@
 {
     "name": "heroesofabenez/combat",
-    "description": "A simple chat component",
+    "description": "Combat library for PHP applications",
     "keywords": [
       "combat"
     ],
