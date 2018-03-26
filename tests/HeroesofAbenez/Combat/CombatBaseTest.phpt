@@ -22,7 +22,29 @@ final class CombatBaseTest extends \Tester\TestCase {
       "id" => $id, "name" => "Player $id", "level" => 1, "initiativeFormula" => "1d2+DEX/4", "strength" => 10,
       "dexterity" => 10, "constitution" => 10, "intelligence" => 10, "charisma" => 10
     ];
-    return new Character($stats);
+    $petStats = [
+      "id" => $id, "deployed" => true, "bonusStat" => "strength", "bonusValue" => 10
+    ];
+    $weaponStats = [
+      "id" => 1, "name" => "Novice sword", "slot" => Equipment::SLOT_WEAPON, "type" => Equipment::TYPE_SWORD,
+      "strength" => 1, "worn" => true,
+    ];
+    $attackSkillStats = [
+      "id" => 1, "name" => "Charge", "description" => "", "neededClass" => 1, "neededSpecialization" => 1,
+      "neededLevel" => 1, "target" => SkillAttack::TARGET_SINGLE, "levels" => 5,
+      "baseDamage" => "110%", "damageGrowth" => "5%", "strikes" => 1, "hitRate" => NULL,
+    ];
+    $specialSkillStats = [
+      "id" => 1, "name" => "type", "description" => "", "neededClass" => 1, "neededSpecialization" => 1,
+      "neededLevel" => 1, "target" => SkillSpecial::TARGET_SELF, "levels" => 5,
+      "type" => SkillSpecial::TYPE_BUFF, "stat" => SkillSpecial::STAT_DEFENSE, "value" => 15, "valueGrowth" => 3,
+      "duration" => 3,
+    ];
+    $skills = [
+      new CharacterAttackSkill(new SkillAttack($attackSkillStats), 1),
+      new CharacterSpecialSkill(new SkillSpecial($specialSkillStats), 1),
+    ];
+    return new Character($stats, [new Equipment($weaponStats)], [new Pet($petStats)], $skills);
   }
   
   public function testInvalidStates() {
@@ -38,6 +60,13 @@ final class CombatBaseTest extends \Tester\TestCase {
   
   public function testPostCombat() {
     $combat = new CombatBase(clone $this->logger);
+    $combat->healers = function(Team $team1, Team $team2): Team {
+      $team = new Team("healers");
+      foreach(array_merge($team1->items, $team2->items) as $character) {
+        $team[] = $character;
+      }
+      return $team;
+    };
     $team1 = new Team("Team 1");
     $team1[] = $this->generateCharacter(1);
     $team2 = new Team("Team 2");
