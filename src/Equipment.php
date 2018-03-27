@@ -25,6 +25,7 @@ class Equipment {
   public const SLOT_ARMOR = "armor";
   public const SLOT_SHIELD = "shield";
   public const SLOT_AMULET = "amulet";
+  public const SLOT_HELMET = "helmet";
   public const TYPE_SWORD = "sword";
   public const TYPE_AXE = "axe";
   public const TYPE_CLUB = "club";
@@ -111,7 +112,7 @@ class Equipment {
   
   public function getDeployParams(): array {
     $stat = [
-      static::SLOT_WEAPON => "damage", static::SLOT_ARMOR => "defense",
+      static::SLOT_WEAPON => "damage", static::SLOT_ARMOR => "defense", static::SLOT_HELMET => "hitpoints",
       static::SLOT_SHIELD => "dodge", static::SLOT_AMULET => "initiative",
     ];
     $return = [
