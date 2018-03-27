@@ -29,6 +29,7 @@ use Nexendrie\Utils\Numbers,
  * @property-read int $charismaBase
  * @property-read int $maxHitpoints
  * @property-read int $hitpoints
+ * @property-read int $hitpointsBase
  * @property-read int $damage
  * @property-read int $damageBase
  * @property-read int $hit
@@ -91,6 +92,8 @@ class Character {
   protected $maxHitpoints;
   /** @var int */
   protected $hitpoints;
+  /** @var int */
+  protected $hitpointsBase;
   /** @var int */
   protected $damage = 0;
   /** @var int */
@@ -188,7 +191,7 @@ class Character {
         $this->$key = $value;
       }
     }
-    $this->hitpoints = $this->maxHitpoints = $this->constitution * 5;
+    $this->hitpointsBase = $this->hitpoints = $this->maxHitpoints = $this->constitution * 5;
     $this->recalculateSecondaryStats();
     $this->hitBase = $this->hit;
     $this->dodgeBase = $this->dodge;
@@ -522,6 +525,12 @@ class Character {
       }
       $this->$secondary = $base + $gain;
     }
+    // update hitpoints
+    $hpLost = $this->maxHitpoints - $this->hitpoints;
+    $base = $this->constitution * 5;
+    $gain = $this->maxHitpoints - $this->hitpointsBase;
+    $this->maxHitpoints = $base + $gain;
+    $this->hitpoints = $this->maxHitpoints - $hpLost;
   }
   
   /**
@@ -530,7 +539,7 @@ class Character {
   public function recalculateStats(): void {
     $stats = [
       "strength", "dexterity", "constitution", "intelligence", "charisma",
-      "damage", "hit", "dodge", "initiative", "defense"
+      "damage", "hit", "dodge", "initiative", "defense", "hitpoints",
     ];
     $stunned = false;
     $debuffs = [];
@@ -574,6 +583,9 @@ class Character {
       $$stat -= $bonus_value;
     }
     foreach($stats as $stat) {
+      if($stat === "hitpoints") {
+        $this->maxHitpoints += (int) round($$stat) - $this->$stat;
+      }
       $this->$stat = (int) round($$stat);
     }
     $this->recalculateSecondaryStats();
