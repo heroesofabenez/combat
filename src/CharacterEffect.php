@@ -52,7 +52,7 @@ class CharacterEffect {
     $resolver->setAllowedTypes("stat", "string");
     $resolver->setDefault("stat", "");
     $resolver->setAllowedValues("stat", function(string $value) {
-      return in_array($value, ["strength", "dexterity", "constitution", "intelligence", "charisma", "damage", "hit", "dodge", "initiative", "defense", ""], true);
+      return $value === "" OR in_array($value, $this->getAllowedStats(), true);
     });
     $resolver->setAllowedTypes("source", "string");
     $resolver->setAllowedValues("source", function(string $value) {
@@ -74,6 +74,12 @@ class CharacterEffect {
     $this->value = $effect["value"];
     $this->source = $effect["source"];
     $this->duration = $effect["duration"];
+  }
+  
+  protected function getAllowedStats(): array {
+    $stats = Constants::getConstantsValues(SkillSpecial::class, "STAT_");
+    $stats = array_merge($stats, ["strength", "dexterity", "constitution", "intelligence", "charisma",]);
+    return $stats;
   }
   
   /**
