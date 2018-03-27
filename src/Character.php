@@ -516,7 +516,7 @@ class Character {
     foreach($stats as $secondary => $primary) {
       $gain = $this->$secondary - $this->{$secondary . "Base"};
       if($secondary === "damage") {
-        $base = (int) round($this->$primary / 2) + 1;
+        $base = (int) round($this->$primary / 2);
       } else {
         $base = $this->$primary * 3;
       }
