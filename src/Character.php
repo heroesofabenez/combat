@@ -597,7 +597,11 @@ class Character {
    */
   public function calculateInitiative(): void {
     $result = 0;
-    $formula = str_replace(["INT", "DEX"], [$this->intelligence, $this->dexterity], $this->initiativeFormula);
+    $stats = [
+      "INT" => $this->intelligence, "DEX" => $this->dexterity, "STR" => $this->strength, "CON" => $this->constitution,
+      "CHAR" => $this->charisma,
+    ];
+    $formula = str_replace(array_keys($stats), array_values($stats), $this->initiativeFormula);
     preg_match_all("/^([1-9]+)d([1-9]+)/", $formula, $dices);
     for($i = 1; $i <= (int) $dices[1][0]; $i++) {
       $result += rand(1, (int) $dices[2][0]);
