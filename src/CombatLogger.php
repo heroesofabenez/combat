@@ -11,6 +11,7 @@ use Nette\Bridges\ApplicationLatte\ILatteFactory,
  * 
  * @author Jakub Konečný
  * @property int $round Current round
+ * @property string $title
  */
 class CombatLogger implements \Countable, \IteratorAggregate {
   use \Nette\SmartObject;
@@ -27,6 +28,8 @@ class CombatLogger implements \Countable, \IteratorAggregate {
   protected $actions = [];
   /** @var int */
   protected $round;
+  /** @var string */
+  protected $title = "";
   
   public function __construct(ILatteFactory $latteFactory, ITranslator $translator) {
     $this->latte = $latteFactory->create();
@@ -52,6 +55,14 @@ class CombatLogger implements \Countable, \IteratorAggregate {
     $this->round = $round;
   }
   
+  public function getTitle(): string {
+    return $this->title;
+  }
+  
+  public function setTitle(string $title): void {
+    $this->title = $title;
+  }
+  
   /**
    * Adds new entry
    */
@@ -68,7 +79,7 @@ class CombatLogger implements \Countable, \IteratorAggregate {
   
   public function __toString(): string {
     $params = [
-      "team1" => $this->team1, "team2" => $this->team2, "actions" => $this->actions
+      "team1" => $this->team1, "team2" => $this->team2, "actions" => $this->actions, "title" => $this->title,
     ];
     return $this->latte->renderToString(__DIR__ . "/CombatLog.latte", $params);
   }
