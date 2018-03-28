@@ -1,6 +1,7 @@
 log:
     title: "Combat"
     participant: "%name%: level %level%"
+    battle: "Battle"
     round: "Round %count%"
     results: "Results:"
     attackHits: "%character1% attacks %character2% and hits. %character2% loses %count% hitpoints."

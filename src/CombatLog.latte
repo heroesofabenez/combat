@@ -24,7 +24,7 @@
     </div>
   </div>
   <div id="combat">
-    <h3>Battle</h3>
+    <h3>{_"combat.log.battle"}</h3>
     {foreach $actions as $i => $round}
       {if $i != 5000}<h4>{_"combat.log.round", $i}</h4>{else}<h4>{_"combat.log.results"}</h4>{/if}
       {foreach $round as $action}

@@ -1,6 +1,7 @@
 log:
     title: "Souboj"
     participant: "%name%: úroveň %level%"
+    battle: "Bitva"
     round: "Kolo %count%"
     results: "Výsledky:"
     attackHits: "%character1% útočí na %character2% a zasahuje. %character2% ztrácí %count% životů."
