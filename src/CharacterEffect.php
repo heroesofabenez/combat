@@ -42,7 +42,6 @@ class CharacterEffect {
   public function __construct(array $effect) {
     $allStats = ["id", "type", "source", "value", "duration", "stat",];
     $resolver = new OptionsResolver();
-    $resolver->setDefined($allStats);
     $resolver->setRequired($allStats);
     $resolver->setAllowedTypes("id", "string");
     $resolver->setAllowedTypes("type", "string");

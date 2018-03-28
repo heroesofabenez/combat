@@ -47,9 +47,8 @@ class CombatAction {
   
   public function __construct(ITranslator $translator, array $action) {
     $requiredStats = ["action", "result", "character1", "character2",];
-    $allStats = array_merge($requiredStats, ["amount", "name",]);
     $resolver = new OptionsResolver();
-    $resolver->setDefined($allStats);
+    $resolver->setDefined(["amount", "name",]);
     $resolver->setRequired($requiredStats);
     $resolver->setAllowedTypes("action", "string");
     $resolver->setAllowedValues("action", function(string $value) {

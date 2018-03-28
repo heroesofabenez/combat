@@ -37,7 +37,6 @@ class Pet {
   public function __construct(array $data) {
     $allStats = ["id", "deployed", "bonusStat", "bonusValue",];
     $resolver = new OptionsResolver();
-    $resolver->setDefined($allStats);
     $resolver->setRequired($allStats);
     $resolver->setAllowedTypes("id", "integer");
     $resolver->setAllowedTypes("deployed", "boolean");

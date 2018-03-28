@@ -52,7 +52,6 @@ class Equipment {
   public function __construct(array $data) {
     $allStats = ["id", "name", "slot", "type", "strength", "worn",];
     $resolver = new OptionsResolver();
-    $resolver->setDefined($allStats);
     $resolver->setRequired($allStats);
     $resolver->setAllowedTypes("id", "integer");
     $resolver->setAllowedTypes("name", "string");
