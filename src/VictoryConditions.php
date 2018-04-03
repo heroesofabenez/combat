@@ -8,7 +8,7 @@ namespace HeroesofAbenez\Combat;
  *
  * @author Jakub Konečný
  */
-class VictoryConditions {
+final class VictoryConditions {
   use \Nette\StaticClass;
   
   /**

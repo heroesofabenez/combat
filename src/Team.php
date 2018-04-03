@@ -16,7 +16,7 @@ use Nexendrie\Utils\Collection,
  * @property-read Character[] $aliveMembers
  * @property-read Character[] $usableMembers
  */
-class Team extends Collection {
+final class Team extends Collection {
   protected $class = Character::class;
   /** @var string Name of the team */
   protected $name;

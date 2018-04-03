@@ -8,7 +8,7 @@ namespace HeroesofAbenez\Combat;
  *
  * @author Jakub Konečný
  */
-class EffectProvider implements ICharacterEffectProvider {
+final class EffectProvider implements ICharacterEffectProvider {
   public function toCombatEffect(): ?CharacterEffect {
     return new CharacterEffect([
       "id" => "provider1Effect",
