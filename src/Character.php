@@ -49,6 +49,7 @@ use Nexendrie\Utils\Numbers,
  * @property-read ICharacterEffectProvider[] $effectProviders
  * @property-read bool $stunned
  * @property-read BaseCharacterSkill[] $usableSkills
+ * @property IInitiativeFormulaParser $initiativeFormulaParser
  */
 class Character {
   use \Nette\SmartObject;
@@ -113,6 +114,8 @@ class Character {
   protected $initiativeBase = 0;
   /** @var string */
   protected $initiativeFormula;
+  /** @var IInitiativeFormulaParser */
+  protected $initiativeFormulaParser;
   /** @var float */
   protected $defense = 0;
   /** @var float */
@@ -139,7 +142,7 @@ class Character {
    * @param Pet[] $pets Pets owned by the character
    * @param BaseCharacterSkill[] $skills Skills acquired by the character
    */
-  public function __construct(array $stats, array $equipment = [], array $pets = [], array $skills = []) {
+  public function __construct(array $stats, array $equipment = [], array $pets = [], array $skills = [], IInitiativeFormulaParser $initiativeFormulaParser = NULL) {
     $this->setStats($stats);
     foreach($equipment as $eq) {
       if($eq instanceof Equipment) {
@@ -158,6 +161,7 @@ class Character {
         $this->skills[] = $skill;
       }
     }
+    $this->initiativeFormulaParser = $initiativeFormulaParser ?? new InitiativeFormulaParser();
   }
   
   protected function setStats(array $stats): void {
@@ -378,6 +382,14 @@ class Character {
     return $this->intelligenceBase;
   }
   
+  public function getInitiativeFormulaParser(): IInitiativeFormulaParser {
+    return $this->initiativeFormulaParser;
+  }
+  
+  public function setInitiativeFormulaParser(IInitiativeFormulaParser $initiativeFormulaParser): void {
+    $this->initiativeFormulaParser = $initiativeFormulaParser;
+  }
+  
   /**
    * Applies new effect on the character
    */
@@ -564,19 +576,7 @@ class Character {
    * Calculate character's initiative
    */
   public function calculateInitiative(): void {
-    $result = 0;
-    $stats = [
-      "INT" => $this->intelligence, "DEX" => $this->dexterity, "STR" => $this->strength, "CON" => $this->constitution,
-      "CHAR" => $this->charisma,
-    ];
-    $formula = str_replace(array_keys($stats), array_values($stats), $this->initiativeFormula);
-    preg_match_all("/^([1-9]+)d([1-9]+)/", $formula, $dices);
-    for($i = 1; $i <= (int) $dices[1][0]; $i++) {
-      $result += rand(1, (int) $dices[2][0]);
-    }
-    preg_match_all("/\+([0-9]+)\/([0-9]+)/", $formula, $ammendum);
-    $result += (int) $ammendum[1][0] / (int) $ammendum[2][0];
-    $this->initiative = (int) $result;
+    $this->initiative = $this->initiativeFormulaParser->calculateInitiative($this->initiativeFormula, $this);
   }
   
   /**
