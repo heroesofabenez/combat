@@ -16,6 +16,8 @@ use Nexendrie\Utils\Constants,
  * @property-read int $value
  * @property-read string $source
  * @property int|string $duration
+ * @method void onApply(Character $character, CharacterEffect $effect)
+ * @method void onRemove(Character $character, CharacterEffect $effect)
  */
 class CharacterEffect {
   use \Nette\SmartObject;
@@ -38,6 +40,10 @@ class CharacterEffect {
   protected $source;
   /** @var int|string */
   protected $duration;
+  /** @var callable[] */
+  public $onApply = [];
+  /** @var callable[] */
+  public $onRemove = [];
   
   public function __construct(array $effect) {
     $allStats = ["id", "type", "source", "value", "duration", "stat",];

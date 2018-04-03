@@ -242,8 +242,9 @@ class CombatBase {
     $characters = array_merge($combat->team1->items, $combat->team2->items);
     foreach($characters as $character) {
       if(!is_null($character->activePet)) {
-        $effect = $character->getPet($character->activePet)->deployParams;
-        $character->addEffect(new CharacterEffect($effect));
+        $effect = new CharacterEffect($character->getPet($character->activePet)->deployParams);
+        $character->addEffect($effect);
+        $effect->onApply($character, $effect);
       }
     }
   }
@@ -626,15 +627,16 @@ class CombatBase {
       "character1" => $character1, "character2" => $target,
     ];
     $this->results = $result;
-    $effect = [
+    $effect = new CharacterEffect([
       "id" => "skill{$skill->skill->id}Effect",
       "type" => $skill->skill->type,
       "stat" => ((in_array($skill->skill->type, SkillSpecial::NO_STAT_TYPES, true)) ? NULL : $skill->skill->stat),
       "value" => $skill->value,
       "source" => CharacterEffect::SOURCE_SKILL,
       "duration" => $skill->skill->duration
-    ];
-    $target->addEffect(new CharacterEffect($effect));
+    ]);
+    $target->addEffect($effect);
+    $effect->onApply($target, $effect);
     $skill->resetCooldown();
   }
   

@@ -374,6 +374,7 @@ class Character {
     foreach($this->effects as $i => $effect) {
       if($effect->id == $effectId) {
         unset($this->effects[$i]);
+        $effect->onRemove($this, $effect);
         $this->recalculateStats();
         return;
       }
@@ -406,6 +407,7 @@ class Character {
     }
     $itemBonus = new CharacterEffect($item->deployParams);
     $this->addEffect($itemBonus);
+    $itemBonus->onApply($this, $itemBonus);
   }
   
   /**
