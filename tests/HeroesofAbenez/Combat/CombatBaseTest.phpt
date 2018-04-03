@@ -76,6 +76,13 @@ final class CombatBaseTest extends \Tester\TestCase {
     Assert::same(50, $character1->hitpoints);
   }
   
+  public function testSuccessCalculator() {
+    $combat = new CombatBase(clone $this->logger);
+    Assert::type(RandomSuccessCalculator::class, $combat->successCalculator);
+    $combat->successCalculator = new StaticSuccessCalculator();
+    Assert::type(StaticSuccessCalculator::class, $combat->successCalculator);
+  }
+  
   public function testPostCombat() {
     $combat = new CombatBase(clone $this->logger);
     $combat->healers = function(Team $team1, Team $team2): Team {

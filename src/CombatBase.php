@@ -18,6 +18,7 @@ use Nexendrie\Utils\Numbers,
  * @property-read Team $team2
  * @property-read int $team1Damage
  * @property-read int $team2Damage
+ * @property ISuccessCalculator $successCalculator
  * @property callable $victoryCondition To evaluate the winner of combat. Gets combat as parameter, should return winning team (1/2) or 0 if there is not winner (yet)
  * @property callable $healers To determine characters that are supposed to heal their team. Gets team1 and team2 as parameters, should return Team
  * @method void onCombatStart(CombatBase $combat)
@@ -71,8 +72,10 @@ class CombatBase {
   protected $victoryCondition;
   /** @var callable */
   protected $healers;
+  /** @var ISuccessCalculator */
+  protected $successCalculator;
   
-  public function __construct(CombatLogger $logger) {
+  public function __construct(CombatLogger $logger, ?ISuccessCalculator $successCalculator = NULL) {
     $this->log = $logger;
     $this->onCombatStart[] = [$this, "applyEffectProviders"];
     $this->onCombatStart[] = [$this, "setSkillsCooldowns"];
@@ -96,6 +99,7 @@ class CombatBase {
     $this->onHeal[] = [$this, "heal"];
     $this->onHeal[] = [$this, "logResults"];
     $this->victoryCondition = [VictoryConditions::class, "moreDamage"];
+    $this->successCalculator = $successCalculator ?? new RandomSuccessCalculator();
     $this->healers = function(): Team {
       return new Team("healers");
     };
@@ -163,6 +167,14 @@ class CombatBase {
   
   public function getTeam2Damage(): int {
     return $this->damage[2];
+  }
+  
+  public function getSuccessCalculator(): ISuccessCalculator {
+    return $this->successCalculator;
+  }
+  
+  public function setSuccessCalculator(ISuccessCalculator $successCalculator): void {
+    $this->successCalculator = $successCalculator;
   }
   
   /**
@@ -494,20 +506,15 @@ class CombatBase {
    * Calculate hit chance for attack/skill attack
    */
   protected function calculateHitChance(Character $character1, Character $character2, CharacterAttackSkill $skill = NULL): int {
-    $hitRate = $character1->hit;
-    $dodgeRate = $character2->dodge;
-    if(!is_null($skill)) {
-      $hitRate = $hitRate / 100 * $skill->hitRate;
-    }
-    return Numbers::range((int) ($hitRate - $dodgeRate), 15, 100);
+    $hitChance = $this->successCalculator->calculateHitChance($character1, $character2, $skill);
+    return Numbers::range($hitChance, 15, 100);
   }
   
   /**
    * Check whether action succeeded
    */
   protected function hasHit(int $hitChance): bool {
-    $roll = rand(0, 100);
-    return ($roll <= $hitChance);
+    return $this->successCalculator->hasHit($hitChance);
   }
   
   /**
@@ -580,19 +587,13 @@ class CombatBase {
   }
   
   /**
-   * Calculate success chance of healing
-   */
-  protected function calculateHealingSuccessChance(Character $healer): int {
-    return $healer->intelligence * (int) round($healer->level / 5) + 30;
-  }
-  
-  /**
    * Heal a character
    */
   public function heal(Character $healer, Character $patient): void {
     $result = [];
-    $hitChance = $this->calculateHealingSuccessChance($healer);
-    $result["result"] = $this->hasHit($hitChance);
+    $hitChance = $this->successCalculator->calculateHealingSuccessChance($healer);
+    $hitChance = Numbers::range($hitChance, 0, 100);
+    $result["result"] = $this->successCalculator->hasHit($hitChance);
     $amount = ($result["result"]) ? $healer->intelligence / 2 : 0;
     if($amount + $patient->hitpoints > $patient->maxHitpoints) {
       $amount = $patient->maxHitpoints - $patient->hitpoints;
