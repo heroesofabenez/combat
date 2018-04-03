@@ -72,8 +72,6 @@ class CombatBase {
   
   public function __construct(CombatLogger $logger) {
     $this->log = $logger;
-    $this->onCombatStart[] = [$this, "deployPets"];
-    $this->onCombatStart[] = [$this, "equipItems"];
     $this->onCombatStart[] = [$this, "applyEffectProviders"];
     $this->onCombatStart[] = [$this, "setSkillsCooldowns"];
     $this->onCombatEnd[] = [$this, "removeCombatEffects"];
@@ -233,36 +231,6 @@ class CombatBase {
   
   protected function getEnemyTeam(Character $character): Team {
     return $this->team1->hasMember($character->id) ? $this->team2 : $this->team1;
-  }
-  
-  /**
-   * Apply pet's effects to character at the start of the combat
-   */
-  public function deployPets(CombatBase $combat): void {
-    /** @var Character[] $characters */
-    $characters = array_merge($combat->team1->items, $combat->team2->items);
-    foreach($characters as $character) {
-      if(!is_null($character->activePet)) {
-        $effect = new CharacterEffect($character->getPet($character->activePet)->deployParams);
-        $character->addEffect($effect);
-        $effect->onApply($character, $effect);
-      }
-    }
-  }
-  
-  /**
-   * Apply effects from worn items
-   */
-  public function equipItems(CombatBase $combat): void {
-    /** @var Character[] $characters */
-    $characters = array_merge($combat->team1->items, $combat->team2->items);
-    foreach($characters as $character) {
-      foreach($character->equipment as $item) {
-        if($item->worn) {
-          $character->equipItem($item->id);
-        }
-      }
-    }
   }
   
   public function applyEffectProviders(CombatBase $combat): void {

@@ -144,14 +144,13 @@ class Character {
     foreach($equipment as $eq) {
       if($eq instanceof Equipment) {
         $this->equipment[$eq->id] = $eq;
+        $this->addEffectProvider($eq);
       }
     }
     foreach($pets as $pet) {
       if($pet instanceof Pet) {
         $this->pets[$pet->id] = $pet;
-        if($pet->deployed) {
-          $this->deployPet($pet->id);
-        }
+        $this->addEffectProvider($pet);
       }
     }
     foreach($skills as $skill) {
@@ -341,7 +340,12 @@ class Character {
   }
   
   public function getActivePet(): ?int {
-    return $this->activePet;
+    foreach($this->pets as $pet) {
+      if($pet->deployed) {
+        return $pet->id;
+      }
+    }
+    return NULL;
   }
   
   /**
@@ -416,37 +420,6 @@ class Character {
   }
   
   /**
-   * Equips an owned item
-   *
-   * @throws \OutOfBoundsException
-   */
-  public function equipItem(int $itemId): void {
-    try {
-      $item = $this->getItem($itemId);
-    } catch (\OutOfBoundsException $e) {
-      throw $e;
-    }
-    $itemBonus = new CharacterEffect($item->deployParams);
-    $this->addEffect($itemBonus);
-    $itemBonus->onApply($this, $itemBonus);
-  }
-  
-  /**
-   * Unequips an item
-   *
-   * @throws \OutOfBoundsException
-   */
-  public function unequipItem(int $itemId): void {
-    try {
-      $item = $this->getItem($itemId);
-    } catch (\OutOfBoundsException $e) {
-      throw $e;
-    }
-    $itemBonus = $item->deployParams;
-    $this->removeEffect($itemBonus["id"]);
-  }
-  
-  /**
    * Get specified pet
    *
    * @throws \OutOfBoundsException
@@ -456,27 +429,6 @@ class Character {
       return $this->pets[$petId];
     }
     throw new \OutOfBoundsException("Pet was not found.");
-  }
-  
-  /**
-   * Deploy specified pet (for bonuses)
-   *
-   * @throws \OutOfBoundsException
-   */
-  public function deployPet(int $petId): void {
-    try {
-      $this->getPet($petId);
-    } catch(\OutOfBoundsException $e) {
-      throw $e;
-    }
-    $this->activePet = $petId;
-  }
-  
-  /**
-   * Dismisses active pet
-   */
-  public function dismissPet(): void {
-    $this->activePet = NULL;
   }
   
   /**

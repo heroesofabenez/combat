@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver,
  * @property-read array $deployParams Deploy params of the equipment
  * @property-read bool $worn Is the item worn?
  */
-class Equipment {
+class Equipment implements ICharacterEffectProvider {
   use \Nette\SmartObject;
   
   public const SLOT_WEAPON = "weapon";
@@ -124,6 +124,13 @@ class Equipment {
       "duration" => CharacterEffect::DURATION_COMBAT,
     ];
     return $return;
+  }
+  
+  public function toCombatEffect(): ?CharacterEffect {
+    if(!$this->worn) {
+      return NULL;
+    }
+    return new CharacterEffect($this->deployParams);
   }
 }
 ?>

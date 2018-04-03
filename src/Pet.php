@@ -16,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver,
  * @property-read int $bonusValue
  * @property-read array $deployParams
  */
-class Pet {
+class Pet implements ICharacterEffectProvider {
   use \Nette\SmartObject;
   
   public const STAT_STRENGTH = "strength";
@@ -84,6 +84,13 @@ class Pet {
       "source" => CharacterEffect::SOURCE_PET,
       "duration" => CharacterEffect::DURATION_COMBAT,
     ];
+  }
+  
+  public function toCombatEffect(): ?CharacterEffect {
+    if(!$this->deployed) {
+      return NULL;
+    }
+    return new CharacterEffect($this->deployParams);
   }
 }
 ?>
