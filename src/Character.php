@@ -28,6 +28,7 @@ use Nexendrie\Utils\Numbers,
  * @property-read int $charisma
  * @property-read int $charismaBase
  * @property-read int $maxHitpoints
+ * @property-read int $maxHitpointsBase
  * @property-read int $hitpoints
  * @property-read int $damage
  * @property-read int $damageBase
@@ -89,6 +90,8 @@ class Character {
   protected $charismaBase;
   /** @var int */
   protected $maxHitpoints;
+  /** @var int */
+  protected $maxHitpointsBase;
   /** @var int */
   protected $hitpoints;
   /** @var int */
@@ -188,7 +191,7 @@ class Character {
         $this->$key = $value;
       }
     }
-    $this->hitpoints = $this->maxHitpoints = $this->constitution * 5;
+    $this->hitpoints = $this->maxHitpoints = $this->maxHitpointsBase = $this->constitution * 5;
     $this->recalculateSecondaryStats();
     $this->hitBase = $this->hit;
     $this->dodgeBase = $this->dodge;
@@ -259,6 +262,10 @@ class Character {
   
   public function getMaxHitpoints(): int {
     return $this->maxHitpoints;
+  }
+  
+  public function getMaxHitpointsBase(): int {
+    return $this->maxHitpointsBase;
   }
   
   public function getHitpoints(): int {
@@ -514,14 +521,19 @@ class Character {
    * Recalculate secondary stats from the the primary ones
    */
   public function recalculateSecondaryStats(): void {
-    $stats = ["damage" => $this->damageStat(), "hit" => "dexterity", "dodge" => "dexterity"];
+    $stats = [
+      "damage" => $this->damageStat(), "hit" => "dexterity", "dodge" => "dexterity", "maxHitpoints" => "constitution",
+    ];
     foreach($stats as $secondary => $primary) {
       $gain = $this->$secondary - $this->{$secondary . "Base"};
       if($secondary === "damage") {
         $base = (int) round($this->$primary / 2);
+      } elseif($secondary === "maxHitpoints") {
+        $base = $this->$primary * 5;
       } else {
         $base = $this->$primary * 3;
       }
+      $this->{$secondary . "Base"} = $base;
       $this->$secondary = $base + $gain;
     }
   }
@@ -532,7 +544,7 @@ class Character {
   public function recalculateStats(): void {
     $stats = [
       "strength", "dexterity", "constitution", "intelligence", "charisma",
-      "damage", "hit", "dodge", "initiative", "defense"
+      "damage", "hit", "dodge", "initiative", "defense", "maxHitpoints"
     ];
     $stunned = false;
     $debuffs = [];

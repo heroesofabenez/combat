@@ -25,7 +25,7 @@ class SkillSpecial extends BaseSkill {
   public const TARGET_ENEMY = "enemy";
   public const TARGET_PARTY = "party";
   public const TARGET_ENEMY_PARTY = "enemy_party";
-  public const STAT_HITPOINTS = "hitpoints";
+  public const STAT_HITPOINTS = "maxHitpoints";
   public const STAT_DAMAGE = "damage";
   public const STAT_DEFENSE = "defense";
   public const STAT_HIT = "hit";

@@ -50,7 +50,6 @@ final class CombatLoggerTest extends \Tester\TestCase {
     return new Character($stats);
   }
   
-  
   public function testRendering() {
     /** @var CombatLogger $logger */
     $logger = $this->getService(CombatLogger::class);
