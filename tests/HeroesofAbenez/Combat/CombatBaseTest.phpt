@@ -58,6 +58,26 @@ final class CombatBaseTest extends \Tester\TestCase {
     }, ImmutableException::class);
   }
   
+  public function testEffectProviders() {
+    $character1 = $this->generateCharacter(1);
+    $character2 = $this->generateCharacter(2);
+    $provider = new EffectProvider();
+    $character1->addEffectProvider($provider);
+    Assert::same(50, $character1->maxHitpointsBase);
+    Assert::same(50, $character1->maxHitpoints);
+    Assert::same(50, $character1->hitpoints);
+    $combat = new CombatBase(clone $this->logger);
+    $combat->setDuelParticipants($character1, $character2);
+    $combat->onCombatStart($combat);
+    Assert::same(50, $character1->maxHitpointsBase);
+    Assert::same(60, $character1->maxHitpoints);
+    Assert::same(60, $character1->hitpoints);
+    $combat->onCombatEnd($combat);
+    Assert::same(50, $character1->maxHitpointsBase);
+    Assert::same(50, $character1->maxHitpoints);
+    Assert::same(50, $character1->hitpoints);
+  }
+  
   public function testPostCombat() {
     $combat = new CombatBase(clone $this->logger);
     $combat->healers = function(Team $team1, Team $team2): Team {

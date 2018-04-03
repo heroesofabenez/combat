@@ -46,6 +46,7 @@ use Nexendrie\Utils\Numbers,
  * @property-read BaseCharacterSkill[] $skills
  * @property-read int|NULL $activePet
  * @property-read CharacterEffect[] $effects
+ * @property-read ICharacterEffectProvider[] $effectProviders
  * @property-read bool $stunned
  * @property-read BaseCharacterSkill[] $usableSkills
  */
@@ -126,6 +127,8 @@ class Character {
   protected $activePet = null;
   /** @var CharacterEffect[] Active effects */
   protected $effects = [];
+  /** @var ICharacterEffectProvider[] */
+  protected $effectProviders = [];
   /** @var bool */
   protected $stunned = false;
   
@@ -348,6 +351,13 @@ class Character {
     return $this->effects;
   }
   
+  /**
+   * @return ICharacterEffectProvider[]
+   */
+  public function getEffectProviders(): array {
+    return $this->effectProviders;
+  }
+  
   public function isStunned(): bool {
     return $this->stunned;
   }
@@ -370,6 +380,10 @@ class Character {
   public function addEffect(CharacterEffect $effect): void {
     $this->effects[] = $effect;
     $this->recalculateStats();
+  }
+  
+  public function addEffectProvider(ICharacterEffectProvider $provider): void {
+    $this->effectProviders[] = $provider;
   }
   
   /**

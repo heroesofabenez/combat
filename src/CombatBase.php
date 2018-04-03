@@ -74,6 +74,7 @@ class CombatBase {
     $this->log = $logger;
     $this->onCombatStart[] = [$this, "deployPets"];
     $this->onCombatStart[] = [$this, "equipItems"];
+    $this->onCombatStart[] = [$this, "applyEffectProviders"];
     $this->onCombatStart[] = [$this, "setSkillsCooldowns"];
     $this->onCombatEnd[] = [$this, "removeCombatEffects"];
     $this->onCombatEnd[] = [$this, "logCombatResult"];
@@ -260,6 +261,21 @@ class CombatBase {
         if($item->worn) {
           $character->equipItem($item->id);
         }
+      }
+    }
+  }
+  
+  public function applyEffectProviders(CombatBase $combat): void {
+    /** @var Character[] $characters */
+    $characters = array_merge($combat->team1->items, $combat->team2->items);
+    foreach($characters as $character) {
+      foreach($character->effectProviders as $item) {
+        $effect = $item->toCombatEffect();
+        if(is_null($effect)) {
+          continue;
+        }
+        $character->addEffect($effect);
+        $effect->onApply($character, $effect);
       }
     }
   }
