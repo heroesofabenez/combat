@@ -111,8 +111,9 @@ class Equipment {
   
   public function getDeployParams(): array {
     $stat = [
-      static::SLOT_WEAPON => "damage", static::SLOT_ARMOR => "defense", static::SLOT_HELMET => "hitpoints",
-      static::SLOT_SHIELD => "dodge", static::SLOT_AMULET => "initiative",
+      static::SLOT_WEAPON => SkillSpecial::STAT_DAMAGE, static::SLOT_ARMOR => SkillSpecial::STAT_DEFENSE,
+      static::SLOT_HELMET => SkillSpecial::STAT_HITPOINTS, static::SLOT_SHIELD => SkillSpecial::STAT_DODGE,
+      static::SLOT_AMULET => SkillSpecial::STAT_INITIATIVE,
     ];
     $return = [
       "id" => "equipment" . $this->id . "bonusEffect",
