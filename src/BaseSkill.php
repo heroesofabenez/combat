@@ -41,16 +41,18 @@ abstract class BaseSkill {
   protected $levels;
   
   protected function configureOptions(OptionsResolver $resolver): void {
-    $allStats = [
-      "id", "name", "description", "neededClass", "neededSpecialization", "neededLevel", "target", "levels",
-    ];
-    $resolver->setRequired($allStats);
+    $resolver->setRequired(["id", "name", "target", "levels",]);
+    $resolver->setDefined(["description", "neededClass", "neededSpecialization", "neededLevel",]);
     $resolver->setAllowedTypes("id", "int");
     $resolver->setAllowedTypes("name", "string");
     $resolver->setAllowedTypes("description", "string");
+    $resolver->setDefault("description", "");
     $resolver->setAllowedTypes("neededClass", "integer");
+    $resolver->setDefault("neededClass", 1);
     $resolver->setAllowedTypes("neededSpecialization", ["integer", "null"]);
+    $resolver->setDefault("neededSpecialization", NULL);
     $resolver->setAllowedTypes("neededLevel", "integer");
+    $resolver->setDefault("neededLevel", 1);
     $resolver->setAllowedTypes("target", "string");
     $resolver->setAllowedValues("target", function(string $value) {
       return in_array($value, $this->getAllowedTargets(), true);

@@ -30,13 +30,11 @@ final class CombatBaseTest extends \Tester\TestCase {
       "strength" => 1, "worn" => true,
     ];
     $attackSkillStats = [
-      "id" => 1, "name" => "Charge", "description" => "", "neededClass" => 1, "neededSpecialization" => 1,
-      "neededLevel" => 1, "target" => SkillAttack::TARGET_SINGLE, "levels" => 5,
+      "id" => 1, "name" => "Charge", "target" => SkillAttack::TARGET_SINGLE, "levels" => 5,
       "baseDamage" => "110%", "damageGrowth" => "5%", "strikes" => 1, "hitRate" => NULL,
     ];
     $specialSkillStats = [
-      "id" => 1, "name" => "type", "description" => "", "neededClass" => 1, "neededSpecialization" => 1,
-      "neededLevel" => 1, "target" => SkillSpecial::TARGET_SELF, "levels" => 5,
+      "id" => 1, "name" => "type", "target" => SkillSpecial::TARGET_SELF, "levels" => 5,
       "type" => SkillSpecial::TYPE_BUFF, "stat" => SkillSpecial::STAT_DEFENSE, "value" => 15, "valueGrowth" => 3,
       "duration" => 3,
     ];
