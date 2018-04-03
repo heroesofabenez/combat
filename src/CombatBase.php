@@ -16,6 +16,8 @@ use Nexendrie\Utils\Numbers,
  * @property-read int $roundLimit
  * @property-read Team $team1
  * @property-read Team $team2
+ * @property-read int $team1Damage
+ * @property-read int $team2Damage
  * @property callable $victoryCondition To evaluate the winner of combat. Gets combat as parameter, should return winning team (1/2) or 0 if there is not winner (yet)
  * @property callable $healers To determine characters that are supposed to heal their team. Gets team1 and team2 as parameters, should return Team
  * @method void onCombatStart(CombatBase $combat)
@@ -93,7 +95,7 @@ class CombatBase {
     $this->onSkillSpecial[] = [$this, "logResults"];
     $this->onHeal[] = [$this, "heal"];
     $this->onHeal[] = [$this, "logResults"];
-    $this->victoryCondition = [$this, "victoryConditionMoreDamage"];
+    $this->victoryCondition = [VictoryConditions::class, "moreDamage"];
     $this->healers = function(): Team {
       return new Team("healers");
     };
@@ -155,59 +157,12 @@ class CombatBase {
     $this->healers = $healers;
   }
   
-  /**
-   * Evaluate winner of combat
-   * The team which dealt more damage after round limit, wins
-   * If all members of one team are eliminated before that, the other team wins
-   */
-  public function victoryConditionMoreDamage(CombatBase $combat): int {
-    $result = 0;
-    if($combat->round <= $combat->roundLimit) {
-      if(!$combat->team1->hasAliveMembers()) {
-        $result = 2;
-      } elseif(!$combat->team2->hasAliveMembers()) {
-        $result = 1;
-      }
-    } elseif($combat->round > $combat->roundLimit) {
-      $result = ($combat->damage[1] > $combat->damage[2]) ? 1 : 2;
-    }
-    return $result;
+  public function getTeam1Damage(): int {
+    return $this->damage[1];
   }
   
-  /**
-   * Evaluate winner of combat
-   * Team 1 wins only if they eliminate all opponents before round limit
-   */
-  public function victoryConditionEliminateSecondTeam(CombatBase $combat): int {
-    $result = 0;
-    if($combat->round <= $combat->roundLimit) {
-      if(!$combat->team1->hasAliveMembers()) {
-        $result = 2;
-      } elseif(!$combat->team2->hasAliveMembers()) {
-        $result = 1;
-      }
-    } elseif($combat->round > $combat->roundLimit) {
-      $result = (!$combat->team2->hasAliveMembers()) ? 1 : 2;
-    }
-    return $result;
-  }
-  
-  /**
-   * Evaluate winner of combat
-   * Team 1 wins if at least 1 of its members is alive after round limit
-   */
-  public function victoryConditionFirstTeamSurvives(CombatBase $combat): int {
-    $result = 0;
-    if($combat->round <= $combat->roundLimit) {
-      if(!$combat->team1->hasAliveMembers()) {
-        $result = 2;
-      } elseif(!$combat->team2->hasAliveMembers()) {
-        $result = 1;
-      }
-    } elseif($combat->round > $combat->roundLimit) {
-      $result = ($combat->team1->hasAliveMembers()) ? 1 : 2;
-    }
-    return $result;
+  public function getTeam2Damage(): int {
+    return $this->damage[2];
   }
   
   /**
