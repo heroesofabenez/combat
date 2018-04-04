@@ -507,7 +507,7 @@ class CombatBase {
    */
   protected function calculateHitChance(Character $character1, Character $character2, CharacterAttackSkill $skill = NULL): int {
     $hitChance = $this->successCalculator->calculateHitChance($character1, $character2, $skill);
-    return Numbers::range($hitChance, 15, 100);
+    return Numbers::range($hitChance, ISuccessCalculator::MIN_HIT_CHANCE, ISuccessCalculator::MAX_HIT_CHANCE);
   }
   
   /**

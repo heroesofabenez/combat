@@ -17,7 +17,7 @@ final class RandomSuccessCalculator implements ISuccessCalculator {
     if(!is_null($skill)) {
       $hitRate = $hitRate / 100 * $skill->hitRate;
     }
-    return Numbers::range((int) ($hitRate - $dodgeRate), 15, 100);
+    return Numbers::range((int) ($hitRate - $dodgeRate), 15, static::MAX_HIT_CHANCE);
   }
   
   public function calculateHealingSuccessChance(Character $healer): int {
