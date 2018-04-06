@@ -44,9 +44,46 @@ final class Team extends Collection {
    * @param string|int $id Character's id
    */
   public function hasMember($id): bool {
-    return Arrays::some($this->items, function(Character $value) use($id) {
-      return ($value->id === $id);
+    return $this->hasMembers(["id" => $id]);
+  }
+  
+  /**
+   * Check if the team has at least 1 member matching the filter
+   *
+   * @todo make it possible to use different comparing rules
+   */
+  public function hasMembers(array $filter = []): bool {
+    if(count($filter) === 0) {
+      return (count($this->items) > 0);
+    }
+    return Arrays::some($this->items, function(Character $character) use($filter) {
+      foreach($filter as $key => $value) {
+        if($character->$key !== $value) {
+          return false;
+        }
+      }
+      return true;
     });
+  }
+  
+  /**
+   * Get all team members matching the filter
+   *
+   * @todo make it possible to use different comparing rules
+   * @return Character[]
+   */
+  public function getMembers(array $filter = []): array {
+    if(count($filter) === 0) {
+      return $this->items;
+    }
+    return array_values(array_filter($this->items, function(Character $character) use($filter) {
+      foreach($filter as $key => $value) {
+        if($character->$key !== $value) {
+          return false;
+        }
+      }
+      return true;
+    }));
   }
   
   /**
