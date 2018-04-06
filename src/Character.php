@@ -447,13 +447,9 @@ class Character {
    * @return BaseCharacterSkill[]
    */
   public function getUsableSkills(): array {
-    $skills = [];
-    foreach($this->skills as $skill) {
-      if($skill->canUse()) {
-        $skills[] = $skill;
-      }
-    }
-    return $skills;
+    return array_values(array_filter($this->skills, function(BaseCharacterSkill $skill) {
+      return $skill->canUse();
+    }));
   }
   
   /**
