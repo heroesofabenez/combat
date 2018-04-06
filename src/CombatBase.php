@@ -372,24 +372,24 @@ class CombatBase {
     }
   }
   
-  protected function doSpecialSkill(Character $character1, Character $character2, CharacterSpecialSkill $skill): void {
+  protected function doSpecialSkill(Character $character, CharacterSpecialSkill $skill): void {
     switch($skill->skill->target) {
       case SkillSpecial::TARGET_ENEMY:
-        $this->onSkillSpecial($character1, $character2, $skill);
+        $this->onSkillSpecial($character, $this->selectAttackTarget($character), $skill);
         break;
       case SkillSpecial::TARGET_SELF:
-        $this->onSkillSpecial($character1, $character1, $skill);
+        $this->onSkillSpecial($character, $character, $skill);
         break;
       case SkillSpecial::TARGET_PARTY:
-        $team = $this->getTeam($character1);
+        $team = $this->getTeam($character);
         foreach($team as $target) {
-          $this->onSkillSpecial($character1, $target, $skill);
+          $this->onSkillSpecial($character, $target, $skill);
         }
         break;
       case SkillSpecial::TARGET_ENEMY_PARTY:
-        $team = $this->getEnemyTeam($character1);
+        $team = $this->getEnemyTeam($character);
         foreach($team as $target) {
-          $this->onSkillSpecial($character1, $target, $skill);
+          $this->onSkillSpecial($character, $target, $skill);
         }
         break;
     }
@@ -449,7 +449,7 @@ class CombatBase {
         case CombatAction::ACTION_SKILL_SPECIAL:
           /** @var CharacterSpecialSkill $skill */
           $skill = $character->usableSkills[0];
-          $combat->doSpecialSkill($character, $combat->selectAttackTarget($character), $skill);
+          $combat->doSpecialSkill($character, $skill);
           break;
         case CombatAction::ACTION_HEALING:
           $combat->onHeal($character, $combat->selectHealingTarget($character));
