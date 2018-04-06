@@ -334,8 +334,8 @@ class CombatBase {
    * Find character with lowest hp in the team
    */
   protected function findLowestHpCharacter(Team $team, int $threshold = NULL): ?Character {
-    $lowestHp = 9999;
-    $lowestIndex = -1;
+    $lowestHp = PHP_INT_MAX;
+    $lowestIndex = PHP_INT_MIN;
     if(is_null($threshold)) {
       $threshold = static::LOWEST_HP_THRESHOLD;
     }
@@ -345,7 +345,7 @@ class CombatBase {
         $lowestIndex = $index;
       }
     }
-    if($lowestIndex === -1) {
+    if($lowestIndex === PHP_INT_MIN) {
       return NULL;
     }
     return $team->aliveMembers[$lowestIndex];
