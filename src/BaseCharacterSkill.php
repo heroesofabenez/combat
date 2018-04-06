@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
+use Nexendrie\Utils\Numbers;
+
 /**
  * Base character skill
  *
@@ -15,6 +17,8 @@ namespace HeroesofAbenez\Combat;
 abstract class BaseCharacterSkill {
   use \Nette\SmartObject;
   
+  public const MAX_LEVEL = 10;
+  
   /** @var BaseSkill */
   protected $skill;
   /** @var int */
@@ -24,7 +28,7 @@ abstract class BaseCharacterSkill {
   
   public function __construct(BaseSkill $skill, int $level) {
     $this->skill = $skill;
-    $this->level = $level;
+    $this->setLevel($level);
   }
   
   public function getLevel(): int {
@@ -36,7 +40,7 @@ abstract class BaseCharacterSkill {
   }
   
   public function setLevel(int $level) {
-    $this->level = $level;
+    $this->level = Numbers::range($level, 1, static::MAX_LEVEL);
   }
   
   public function getSkillType(): string {
