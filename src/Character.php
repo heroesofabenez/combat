@@ -146,13 +146,13 @@ class Character {
     $this->setStats($stats);
     foreach($equipment as $eq) {
       if($eq instanceof Equipment) {
-        $this->equipment[$eq->id] = $eq;
+        $this->equipment[] = $eq;
         $this->addEffectProvider($eq);
       }
     }
     foreach($pets as $pet) {
       if($pet instanceof Pet) {
-        $this->pets[$pet->id] = $pet;
+        $this->pets[] = $pet;
         $this->addEffectProvider($pet);
       }
     }
@@ -425,8 +425,10 @@ class Character {
    * @throws \OutOfBoundsException
    */
   public function getItem(int $itemId): Equipment {
-    if(isset($this->equipment[$itemId])) {
-      return $this->equipment[$itemId];
+    foreach($this->equipment as $equipment) {
+      if($equipment->id === $itemId) {
+        return $equipment;
+      }
     }
     throw new \OutOfBoundsException("Item was not found.");
   }
@@ -437,8 +439,10 @@ class Character {
    * @throws \OutOfBoundsException
    */
   public function getPet(int $petId): Pet {
-    if(isset($this->pets[$petId]) AND $this->pets[$petId] instanceof Pet) {
-      return $this->pets[$petId];
+    foreach($this->pets as $pet) {
+      if($pet->id === $petId) {
+        return $pet;
+      }
     }
     throw new \OutOfBoundsException("Pet was not found.");
   }
