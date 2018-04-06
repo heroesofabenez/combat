@@ -12,7 +12,6 @@ use Nexendrie\Utils\Collection,
  * @author Jakub Konečný
  * @property-read string $name
  * @property-read Character[] $items Characters in the team
- * @property-read Character[] $activeMembers
  * @property-read Character[] $aliveMembers
  * @property-read Character[] $usableMembers
  */
@@ -87,17 +86,6 @@ final class Team extends Collection {
   }
   
   /**
-   * Get active members (alive and not stunned) from the team
-   * 
-   * @return Character[]
-   */
-  public function getActiveMembers(): array {
-    return array_values(array_filter($this->items, function(Character $value) {
-      return (!$value->stunned AND $value->hitpoints > 0);
-    }));
-  }
-  
-  /**
    * Get alive members from the team
    * 
    * @return Character[]
@@ -117,13 +105,6 @@ final class Team extends Collection {
     return array_values(array_filter($this->items, function(Character $value) {
       return (!$value->stunned AND $value->hitpoints > 0);
     }));
-  }
-  
-  /**
-   * Check whether the team has at least 1 active member
-   */
-  public function hasActiveMembers(): bool {
-    return count($this->getActiveMembers()) > 0;
   }
   
   /**
