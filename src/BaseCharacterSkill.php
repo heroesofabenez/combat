@@ -17,8 +17,6 @@ use Nexendrie\Utils\Numbers;
 abstract class BaseCharacterSkill {
   use \Nette\SmartObject;
   
-  public const MAX_LEVEL = 10;
-  
   /** @var BaseSkill */
   protected $skill;
   /** @var int */
@@ -40,7 +38,7 @@ abstract class BaseCharacterSkill {
   }
   
   public function setLevel(int $level) {
-    $this->level = Numbers::range($level, 1, static::MAX_LEVEL);
+    $this->level = Numbers::range($level, 1, $this->skill->levels);
   }
   
   public function getSkillType(): string {
