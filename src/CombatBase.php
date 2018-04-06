@@ -366,6 +366,12 @@ class CombatBase {
     return new Team("healers");
   }
   
+  protected function doAttackSkill(Character $character, CharacterAttackSkill $skill): void {
+    for($i = 1; $i <= $skill->skill->strikes; $i++) {
+      $this->onSkillAttack($character, $this->selectAttackTarget($character), $skill);
+    }
+  }
+  
   protected function doSpecialSkill(Character $character1, Character $character2, CharacterSpecialSkill $skill): void {
     switch($skill->skill->target) {
       case SkillSpecial::TARGET_ENEMY:
@@ -438,7 +444,7 @@ class CombatBase {
         case CombatAction::ACTION_SKILL_ATTACK:
           /** @var CharacterAttackSkill $skill */
           $skill = $character->usableSkills[0];
-          $combat->onSkillAttack($character, $combat->selectAttackTarget($character), $skill);
+          $combat->doAttackSkill($character, $skill);
           break;
         case CombatAction::ACTION_SKILL_SPECIAL:
           /** @var CharacterSpecialSkill $skill */
