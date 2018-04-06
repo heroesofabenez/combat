@@ -600,11 +600,8 @@ class CombatBase {
     $hitChance = $this->successCalculator->calculateHealingSuccessChance($healer);
     $hitChance = Numbers::range($hitChance, 0, 100);
     $result["result"] = $this->successCalculator->hasHit($hitChance);
-    $amount = ($result["result"]) ? $healer->intelligence / 2 : 0;
-    if($amount + $patient->hitpoints > $patient->maxHitpoints) {
-      $amount = $patient->maxHitpoints - $patient->hitpoints;
-    }
-    $result["amount"] = (int) $amount;
+    $amount = ($result["result"]) ? (int) ($healer->intelligence / 2) : 0;
+    $result["amount"] = Numbers::range($amount, 0, $patient->maxHitpoints - $patient->hitpoints);
     if($result["amount"]) {
       $patient->heal($result["amount"]);
     }
