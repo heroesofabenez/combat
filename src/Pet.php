@@ -14,7 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver,
  * @property-read bool $deployed
  * @property-read string $bonusStat
  * @property-read int $bonusValue
- * @property-read array $deployParams
  */
 class Pet implements ICharacterEffectProvider {
   use \Nette\SmartObject;
@@ -75,7 +74,7 @@ class Pet implements ICharacterEffectProvider {
     return $this->bonusValue;
   }
   
-  public function getDeployParams(): array {
+  protected function getDeployParams(): array {
     return [
       "id" => "pet" . $this->id . "bonusEffect",
       "type" => "buff",
@@ -90,7 +89,7 @@ class Pet implements ICharacterEffectProvider {
     if(!$this->deployed) {
       return NULL;
     }
-    return new CharacterEffect($this->deployParams);
+    return new CharacterEffect($this->getDeployParams());
   }
 }
 ?>

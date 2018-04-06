@@ -15,7 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver,
  * @property-read string $slot
  * @property-read string|NULL $type
  * @property-read int $strength
- * @property-read array $deployParams Deploy params of the equipment
  * @property-read bool $worn Is the item worn?
  */
 class Equipment implements ICharacterEffectProvider {
@@ -109,7 +108,7 @@ class Equipment implements ICharacterEffectProvider {
     return $this->worn;
   }
   
-  public function getDeployParams(): array {
+  protected function getDeployParams(): array {
     $stat = [
       static::SLOT_WEAPON => SkillSpecial::STAT_DAMAGE, static::SLOT_ARMOR => SkillSpecial::STAT_DEFENSE,
       static::SLOT_HELMET => SkillSpecial::STAT_HITPOINTS, static::SLOT_SHIELD => SkillSpecial::STAT_DODGE,
@@ -130,7 +129,7 @@ class Equipment implements ICharacterEffectProvider {
     if(!$this->worn) {
       return NULL;
     }
-    return new CharacterEffect($this->deployParams);
+    return new CharacterEffect($this->getDeployParams());
   }
 }
 ?>
