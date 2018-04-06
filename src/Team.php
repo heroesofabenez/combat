@@ -39,20 +39,6 @@ final class Team extends Collection {
   }
   
   /**
-   * Get member's index
-   * 
-   * @param int|string $id Character's id
-   */
-  public function getIndex($id): ?int {
-    foreach($this->items as $index => $member) {
-      if($member->id === $id) {
-        return $index;
-      }
-    }
-    return NULL;
-  }
-  
-  /**
    * Check if the team has a character
    * 
    * @param string|int $id Character's id
