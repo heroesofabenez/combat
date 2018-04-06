@@ -38,9 +38,7 @@ class CharacterAttackSkill extends BaseCharacterSkill {
   }
   
   public function getHitRate(): int {
-    if(is_null($this->skill->hitRate)) {
-      return 100;
-    } elseif(substr($this->skill->hitRate, -1) === "%") {
+    if(is_string($this->skill->hitRate) AND substr($this->skill->hitRate, -1) === "%") {
       return (int) $this->skill->hitRate;
     }
     return 100;
