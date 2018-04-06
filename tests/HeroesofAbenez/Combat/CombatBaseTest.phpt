@@ -56,6 +56,13 @@ final class CombatBaseTest extends \Tester\TestCase {
     }, ImmutableException::class);
   }
   
+  public function testVictoryConditions() {
+    $combat = new CombatBase(clone $this->logger);
+    Assert::same([VictoryConditions::class, "moreDamage"], $combat->victoryCondition);
+    $combat->victoryCondition = [VictoryConditions::class, "eliminateSecondTeam"];
+    Assert::same([VictoryConditions::class, "eliminateSecondTeam"], $combat->victoryCondition);
+  }
+  
   public function testEffectProviders() {
     $character1 = $this->generateCharacter(1);
     $character2 = $this->generateCharacter(2);

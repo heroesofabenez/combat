@@ -16,6 +16,21 @@ final class TeamTest extends \Tester\TestCase {
     return new Character($stats);
   }
   
+  public function testGetName() {
+    $name = "Team 1";
+    $team = new Team($name);
+    Assert::same($name, $team->name);
+  }
+  
+  public function testHasMember() {
+    $team = new Team("");
+    Assert::false($team->hasMember(1));
+    $team[] = $this->generateCharacter(1);
+    $team[] = $this->generateCharacter(2);
+    Assert::true($team->hasMember(1));
+    Assert::false($team->hasMember(3));
+  }
+  
   public function testHasMembers() {
     $team = new Team("");
     Assert::false($team->hasMembers());
@@ -34,6 +49,44 @@ final class TeamTest extends \Tester\TestCase {
     Assert::count(2, $team->getMembers());
     Assert::count(1, $team->getMembers(["id" => 1]));
     Assert::count(0, $team->getMembers(["id" => 3]));
+  }
+  
+  public function testGetAliveMembers() {
+    $team = new Team("");
+    Assert::count(0, $team->aliveMembers);
+    $team[] = $this->generateCharacter(1);
+    Assert::count(1, $team->aliveMembers);
+    $team[] = $this->generateCharacter(2);
+    Assert::count(2, $team->aliveMembers);
+    $team[0]->harm($team[0]->maxHitpoints);
+    Assert::count(1, $team->aliveMembers);
+  }
+  
+  public function testGetUsableMembers() {
+    $team = new Team("");
+    Assert::count(0, $team->usableMembers);
+    $team[] = $this->generateCharacter(1);
+    Assert::count(1, $team->usableMembers);
+    $team[] = $this->generateCharacter(2);
+    Assert::count(2, $team->usableMembers);
+    $team[0]->harm($team[0]->maxHitpoints);
+    Assert::count(1, $team->usableMembers);
+    $stunEffect = [
+      "id" => "stunEffect", "type" => SkillSpecial::TYPE_STUN, "source" => CharacterEffect::SOURCE_SKILL,
+      "value" => 0, "duration" => CharacterEffect::DURATION_FOREVER, "stat" => "",
+    ];
+    $team[1]->addEffect(new CharacterEffect($stunEffect));
+    $team[1]->recalculateStats();
+    Assert::count(0, $team->usableMembers);
+  }
+  
+  public function testHasAliveMembers() {
+    $team = new Team("");
+    Assert::false($team->hasAliveMembers());
+    $team[] = $this->generateCharacter(1);
+    Assert::true($team->hasAliveMembers());
+    $team[0]->harm($team[0]->maxHitpoints);
+    Assert::false($team->hasAliveMembers());
   }
 }
 
