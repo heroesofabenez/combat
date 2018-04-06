@@ -43,7 +43,7 @@ final class CharacterTest extends \Tester\TestCase {
     Assert::type(InitiativeFormulaParser::class, $character->initiativeFormulaParser);
     $character->calculateInitiative();
     Assert::notEqual(0, $character->initiative);
-    $character->initiativeFormulaParser = new DummyInitiativeFormulaParser();
+    $character->initiativeFormulaParser = new ConstantInitiativeFormulaParser(0);
     $character->calculateInitiative();
     Assert::equal(0, $character->initiative);
   }
