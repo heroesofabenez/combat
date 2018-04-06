@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver,
  *
  * @author Jakub Konečný
  * @property-read int $id
- * @property-read bool $deployed
+ * @property bool $deployed
  * @property-read string $bonusStat
  * @property-read int $bonusValue
  */
@@ -64,6 +64,10 @@ class Pet implements ICharacterEffectProvider {
   
   public function isDeployed(): bool {
     return $this->deployed;
+  }
+  
+  public function setDeployed(bool $deployed): void {
+    $this->deployed = $deployed;
   }
   
   public function getBonusStat(): string {

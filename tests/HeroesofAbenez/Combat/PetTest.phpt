@@ -9,12 +9,12 @@ use Tester\Assert;
 
 final class PetTest extends \Tester\TestCase {
   public function testToCombatEffect() {
-    $petStats = [
+    $pet = new Pet([
       "id" =>1, "deployed" => false, "bonusStat" => Pet::STAT_STRENGTH, "bonusValue" => 10,
-    ];
-    Assert::null((new Pet($petStats))->toCombatEffect());
-    $petStats["deployed"] = true;
-    Assert::type(CharacterEffect::class, (new Pet($petStats))->toCombatEffect());
+    ]);
+    Assert::null($pet->toCombatEffect());
+    $pet->deployed = true;
+    Assert::type(CharacterEffect::class, $pet->toCombatEffect());
   }
 }
 

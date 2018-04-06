@@ -15,7 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver,
  * @property-read string $slot
  * @property-read string|NULL $type
  * @property-read int $strength
- * @property-read bool $worn Is the item worn?
+ * @property bool $worn Is the item worn?
  */
 class Equipment implements ICharacterEffectProvider {
   use \Nette\SmartObject;
@@ -106,6 +106,10 @@ class Equipment implements ICharacterEffectProvider {
   
   public function isWorn(): bool {
     return $this->worn;
+  }
+  
+  public function setWorn(bool $worn): void {
+    $this->worn = $worn;
   }
   
   protected function getDeployParams(): array {
