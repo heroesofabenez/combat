@@ -210,7 +210,6 @@ class CombatBase {
           continue;
         }
         $character->addEffect($effect);
-        $effect->onApply($character, $effect);
       }
     }
   }
@@ -585,7 +584,6 @@ class CombatBase {
       "duration" => $skill->skill->duration
     ]);
     $target->addEffect($effect);
-    $effect->onApply($target, $effect);
     $skill->resetCooldown();
   }
   

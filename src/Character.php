@@ -395,7 +395,7 @@ class Character {
    */
   public function addEffect(CharacterEffect $effect): void {
     $this->effects[] = $effect;
-    $this->recalculateStats();
+    $effect->onApply($this, $effect);
   }
   
   public function addEffectProvider(ICharacterEffectProvider $provider): void {
@@ -412,7 +412,6 @@ class Character {
       if($effect->id == $effectId) {
         unset($this->effects[$i]);
         $effect->onRemove($this, $effect);
-        $this->recalculateStats();
         return;
       }
     }

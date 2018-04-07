@@ -79,8 +79,18 @@ class CharacterEffect {
     $this->value = $effect["value"];
     $this->source = $effect["source"];
     $this->duration = $effect["duration"];
-    $this->onApply[] = [$this, "increaseHitpoints"];
-    $this->onRemove[] = [$this, "decreaseHitpoints"];
+    $this->onApply[] = function(Character $character, self $effect) {
+      $character->recalculateStats();
+      if($effect->stat === SkillSpecial::STAT_HITPOINTS) {
+        $character->heal($effect->value);
+      }
+    };
+    $this->onRemove[] = function(Character $character, self $effect) {
+      $character->recalculateStats();
+      if($effect->stat === SkillSpecial::STAT_HITPOINTS) {
+        $character->harm($effect->value);
+      }
+    };
   }
   
   protected function getAllowedStats(): array {
@@ -146,20 +156,6 @@ class CharacterEffect {
       throw new \InvalidArgumentException("Invalid value set to CharacterEffect::\$duration. Expected string or integer.");
     }
     $this->duration = $value;
-  }
-  
-  public function increaseHitpoints(Character $character, CharacterEffect $effect): void {
-    if($effect->stat !== SkillSpecial::STAT_HITPOINTS) {
-      return;
-    }
-    $character->heal($effect->value);
-  }
-  
-  public function decreaseHitpoints(Character $character, CharacterEffect $effect): void {
-    if($effect->stat !== SkillSpecial::STAT_HITPOINTS) {
-      return;
-    }
-    $character->harm($effect->value);
   }
 }
 ?>

@@ -51,7 +51,6 @@ final class CharacterEffectTest extends \Tester\TestCase {
       "duration" => CharacterEffect::DURATION_COMBAT,
     ]);
     $character->addEffect($effect);
-    $effect->onApply($character, $effect);
     Assert::same(50, $character->maxHitpointsBase);
     Assert::same(60, $character->maxHitpoints);
     Assert::same(60, $character->hitpoints);
