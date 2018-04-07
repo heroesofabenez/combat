@@ -31,15 +31,6 @@ final class Team extends Collection {
   }
   
   /**
-   * Check if the team has a character
-   * 
-   * @param string|int $id Character's id
-   */
-  public function hasMember($id): bool {
-    return $this->hasMembers(["id" => $id]);
-  }
-  
-  /**
    * Check if the team has at least 1 member matching the filter
    *
    * @todo make it possible to use different comparing rules

@@ -193,11 +193,11 @@ class CombatBase {
   }
   
   protected function getTeam(Character $character): Team {
-    return $this->team1->hasMember($character->id) ? $this->team1 : $this->team2;
+    return $this->team1->hasMembers(["id" => $character->id]) ? $this->team1 : $this->team2;
   }
   
   protected function getEnemyTeam(Character $character): Team {
-    return $this->team1->hasMember($character->id) ? $this->team2 : $this->team1;
+    return $this->team1->hasMembers(["id" => $character->id]) ? $this->team2 : $this->team1;
   }
   
   public function applyEffectProviders(CombatBase $combat): void {
@@ -652,7 +652,7 @@ class CombatBase {
    * Log dealt damage
    */
   public function logDamage(Character $attacker): void {
-    $team = $this->team1->hasMember($attacker->id) ? 1 : 2;
+    $team = $this->team1->hasMembers(["id" => $attacker->id]) ? 1 : 2;
     $this->damage[$team] += $this->results["amount"];
   }
   

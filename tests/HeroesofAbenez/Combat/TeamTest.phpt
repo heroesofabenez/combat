@@ -24,11 +24,11 @@ final class TeamTest extends \Tester\TestCase {
   
   public function testHasMember() {
     $team = new Team("");
-    Assert::false($team->hasMember(1));
+    Assert::false($team->hasMembers(["id" => 1]));
     $team[] = $this->generateCharacter(1);
     $team[] = $this->generateCharacter(2);
-    Assert::true($team->hasMember(1));
-    Assert::false($team->hasMember(3));
+    Assert::true($team->hasMembers(["id" => 1]));
+    Assert::false($team->hasMembers(["id" => 3]));
   }
   
   public function testHasMembers() {
