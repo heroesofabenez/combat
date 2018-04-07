@@ -288,9 +288,6 @@ class CombatBase {
     $characters = array_merge($combat->team1->toArray(), $combat->team2->toArray());
     foreach($characters as $character) {
       $character->recalculateStats();
-      if($character->hitpoints > 0) {
-        $character->calculateInitiative();
-      }
     }
   }
   

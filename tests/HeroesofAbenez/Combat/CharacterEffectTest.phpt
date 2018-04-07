@@ -16,6 +16,27 @@ final class CharacterEffectTest extends \Tester\TestCase {
     return new Character($stats);
   }
   
+  public function testInitiativeEffect() {
+    $character = $this->generateCharacter(1);
+    $character->initiativeFormulaParser = new ConstantInitiativeFormulaParser(1);
+    Assert::same(0, $character->initiative);
+    Assert::same(0, $character->initiativeBase);
+    $effect = new CharacterEffect([
+      "id" => "equipment1bonusEffect",
+      "type" => "buff",
+      "stat" => SkillSpecial::STAT_INITIATIVE,
+      "value" => 10,
+      "source" => CharacterEffect::SOURCE_EQUIPMENT,
+      "duration" => CharacterEffect::DURATION_COMBAT,
+    ]);
+    $character->addEffect($effect);
+    Assert::same(11, $character->initiative);
+    Assert::same(1, $character->initiativeBase);
+    $character->removeEffect($effect->id);
+    Assert::same(1, $character->initiative);
+    Assert::same(1, $character->initiativeBase);
+  }
+  
   public function testHitpointsEffect() {
     $character = $this->generateCharacter(1);
     Assert::same(50, $character->maxHitpointsBase);

@@ -520,6 +520,7 @@ class Character {
    * Recalculates stats of the character (mostly used during combat)
    */
   public function recalculateStats(): void {
+    $this->calculateInitiative();
     $stats = [
       "strength", "dexterity", "constitution", "intelligence", "charisma",
       "damage", "hit", "dodge", "initiative", "defense", "maxHitpoints"
@@ -576,14 +577,15 @@ class Character {
    * Calculate character's initiative
    */
   public function calculateInitiative(): void {
-    $this->initiative = $this->initiativeFormulaParser->calculateInitiative($this->initiativeFormula, $this);
+    $initiative = $this->initiativeFormulaParser->calculateInitiative($this->initiativeFormula, $this);
+    $this->initiative = $this->initiativeBase = $initiative;
   }
   
   /**
    * Reset character's initiative
    */
   public function resetInitiative(): void {
-    $this->initiative = $this->initiativeBase;
+    $this->initiative = $this->initiativeBase = 0;
   }
 }
 ?>
