@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-use Nexendrie\Utils\Collection,
-    Nette\Utils\Arrays;
+use Nexendrie\Utils\Collection;
 
 /**
  * Structure for a team in combat
@@ -32,21 +31,9 @@ final class Team extends Collection {
   
   /**
    * Check if the team has at least 1 member matching the filter
-   *
-   * @todo make it possible to use different comparing rules
    */
   public function hasMembers(array $filter = []): bool {
-    if(count($filter) === 0) {
-      return (count($this->items) > 0);
-    }
-    return Arrays::some($this->items, function(Character $character) use($filter) {
-      foreach($filter as $key => $value) {
-        if($character->$key !== $value) {
-          return false;
-        }
-      }
-      return true;
-    });
+    return (count($this->getMembers($filter)) > 0);
   }
   
   /**
