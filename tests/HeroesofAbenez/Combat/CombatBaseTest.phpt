@@ -94,7 +94,7 @@ final class CombatBaseTest extends \Tester\TestCase {
     $combat = new CombatBase(clone $this->logger);
     $combat->healers = function(Team $team1, Team $team2): Team {
       $team = new Team("healers");
-      foreach(array_merge($team1->items, $team2->items) as $character) {
+      foreach(array_merge($team1->toArray(), $team2->toArray()) as $character) {
         $team[] = $character;
       }
       return $team;
@@ -109,7 +109,7 @@ final class CombatBaseTest extends \Tester\TestCase {
     Assert::true(($combat->round <= 31));
     Assert::type("int", $combat->log->round);
     Assert::same(5000, $combat->log->round);
-    $players = array_merge($team1->items, $team2->items);
+    $players = array_merge($team1->toArray(), $team2->toArray());
     /** @var Character $player */
     foreach($players as $player) {
       Assert::same(0, $player->initiative);

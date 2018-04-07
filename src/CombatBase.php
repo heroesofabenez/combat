@@ -202,7 +202,7 @@ class CombatBase {
   
   public function applyEffectProviders(CombatBase $combat): void {
     /** @var Character[] $characters */
-    $characters = array_merge($combat->team1->items, $combat->team2->items);
+    $characters = array_merge($combat->team1->toArray(), $combat->team2->toArray());
     foreach($characters as $character) {
       foreach($character->effectProviders as $item) {
         $effect = $item->toCombatEffect();
@@ -220,7 +220,7 @@ class CombatBase {
    */
   public function setSkillsCooldowns(CombatBase $combat): void {
     /** @var Character[] $characters */
-    $characters = array_merge($combat->team1->items, $combat->team2->items);
+    $characters = array_merge($combat->team1->toArray(), $combat->team2->toArray());
     foreach($characters as $character) {
       foreach($character->skills as $skill) {
         $skill->resetCooldown();
@@ -233,7 +233,7 @@ class CombatBase {
    */
   public function decreaseSkillsCooldowns(CombatBase $combat): void {
     /** @var Character[] $characters */
-    $characters = array_merge($combat->team1->items, $combat->team2->items);
+    $characters = array_merge($combat->team1->toArray(), $combat->team2->toArray());
     foreach($characters as $character) {
       foreach($character->skills as $skill) {
         $skill->decreaseCooldown();
@@ -246,7 +246,7 @@ class CombatBase {
    */
   public function removeCombatEffects(CombatBase $combat): void {
     /** @var Character[] $characters */
-    $characters = array_merge($combat->team1->items, $combat->team2->items);
+    $characters = array_merge($combat->team1->toArray(), $combat->team2->toArray());
     foreach($characters as $character) {
       foreach($character->effects as $effect) {
         if($effect->duration === CharacterEffect::DURATION_COMBAT OR is_int($effect->duration)) {
@@ -285,7 +285,7 @@ class CombatBase {
    */
   public function recalculateStats(CombatBase $combat): void {
     /** @var Character[] $characters */
-    $characters = array_merge($combat->team1->items, $combat->team2->items);
+    $characters = array_merge($combat->team1->toArray(), $combat->team2->toArray());
     foreach($characters as $character) {
       $character->recalculateStats();
       if($character->hitpoints > 0) {
@@ -299,7 +299,7 @@ class CombatBase {
    */
   public function resetInitiative(CombatBase $combat): void {
     /** @var Character[] $characters */
-    $characters = array_merge($combat->team1->items, $combat->team2->items);
+    $characters = array_merge($combat->team1->toArray(), $combat->team2->toArray());
     foreach($characters as $character) {
       $character->resetInitiative();
     }
@@ -398,7 +398,7 @@ class CombatBase {
   protected function chooseAction(CombatBase $combat, Character $character): ?string {
     if($character->hitpoints < 1) {
       return NULL;
-    } elseif(in_array($character, $combat->findHealers()->items, true) AND !is_null($combat->selectHealingTarget($character))) {
+    } elseif(in_array($character, $combat->findHealers()->toArray(), true) AND !is_null($combat->selectHealingTarget($character))) {
       return CombatAction::ACTION_HEALING;
     }
     $attackTarget = $combat->selectAttackTarget($character);

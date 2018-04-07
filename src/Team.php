@@ -11,7 +11,6 @@ use Nexendrie\Utils\Collection,
  * 
  * @author Jakub Konečný
  * @property-read string $name
- * @property-read Character[] $items Characters in the team
  * @property-read Character[] $aliveMembers
  * @property-read Character[] $usableMembers
  */
@@ -25,13 +24,6 @@ final class Team extends Collection {
   public function __construct(string $name) {
     parent::__construct();
     $this->name = $name;
-  }
-  
-  /**
-   * @return Character[]
-   */
-  public function getItems(): array {
-    return $this->items;
   }
   
   public function getName(): string {
