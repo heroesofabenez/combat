@@ -382,25 +382,25 @@ class CombatBase {
   }
   
   protected function doSpecialSkill(Character $character, CharacterSpecialSkill $skill): void {
+    $targets = [];
     switch($skill->skill->target) {
       case SkillSpecial::TARGET_ENEMY:
-        $this->onSkillSpecial($character, $this->selectAttackTarget($character), $skill);
+        $targets[] = $this->selectAttackTarget($character);
         break;
       case SkillSpecial::TARGET_SELF:
-        $this->onSkillSpecial($character, $character, $skill);
+        $targets[] = $character;
         break;
       case SkillSpecial::TARGET_PARTY:
-        $team = $this->getTeam($character);
-        foreach($team as $target) {
-          $this->onSkillSpecial($character, $target, $skill);
-        }
+        $targets = $this->getTeam($character)->toArray();
         break;
       case SkillSpecial::TARGET_ENEMY_PARTY:
-        $team = $this->getEnemyTeam($character);
-        foreach($team as $target) {
-          $this->onSkillSpecial($character, $target, $skill);
-        }
+        $targets = $this->getEnemyTeam($character)->toArray();
         break;
+      default:
+        throw new NotImplementedException("Target $skill->skill->target for special skills is not implemented.");
+    }
+    foreach($targets as $target) {
+      $this->onSkillSpecial($character, $target, $skill);
     }
   }
   
