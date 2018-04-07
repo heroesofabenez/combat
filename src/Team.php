@@ -23,6 +23,7 @@ final class Team extends Collection {
   use \Nette\SmartObject;
   
   public function __construct(string $name) {
+    parent::__construct();
     $this->name = $name;
   }
   
