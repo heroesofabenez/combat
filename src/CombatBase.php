@@ -393,14 +393,21 @@ class CombatBase {
     return new Team("healers");
   }
   
-  /**
-   * @todo implement row and column targets
-   */
   protected function doAttackSkill(Character $character, CharacterAttackSkill $skill): void {
     $targets = [];
     switch($skill->skill->target) {
       case SkillAttack::TARGET_SINGLE:
         $targets[] = $this->selectAttackTarget($character);
+        break;
+      case SkillAttack::TARGET_ROW:
+        /** @var Character $primaryTarget */
+        $primaryTarget = $this->selectAttackTarget($character);
+        $targets = $this->getTeam($primaryTarget)->getMembers(["positionRow" => $primaryTarget->positionRow]);
+        break;
+      case SkillAttack::TARGET_COLUMN:
+        /** @var Character $primaryTarget */
+        $primaryTarget = $this->selectAttackTarget($character);
+        $targets = $this->getTeam($primaryTarget)->getMembers(["positionColumn" => $primaryTarget->positionColumn]);
         break;
       default:
         throw new NotImplementedException("Target $skill->skill->target for attack skills is not implemented yet.");
