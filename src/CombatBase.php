@@ -79,6 +79,7 @@ class CombatBase {
     $this->log = $logger;
     $this->onCombatStart[] = [$this, "applyEffectProviders"];
     $this->onCombatStart[] = [$this, "setSkillsCooldowns"];
+    $this->onCombatStart[] = [$this, "assignPositions"];
     $this->onCombatEnd[] = [$this, "removeCombatEffects"];
     $this->onCombatEnd[] = [$this, "logCombatResult"];
     $this->onCombatEnd[] = [$this, "resetInitiative"];
@@ -225,6 +226,36 @@ class CombatBase {
         $skill->resetCooldown();
       }
     }
+  }
+  
+  public function assignPositions(CombatBase $combat): void {
+    $assignPositions = function(Team $team) {
+      $row = 1;
+      $column = 0;
+      /** @var Character $character */
+      foreach($team as $character) {
+        try {
+          $column++;
+          if($character->positionRow > 0 AND $character->positionColumn > 0) {
+            continue;
+          }
+          setPosition:
+          $team->setCharacterPosition($character->id, $row, $column);
+        } catch(InvalidCharacterPositionException $e) {
+          if($e->getCode() === InvalidCharacterPositionException::ROW_FULL) {
+            $row++;
+            $column = 1;
+          } elseif($e->getCode() === InvalidCharacterPositionException::POSITION_OCCUPIED) {
+            $column++;
+          } else {
+            throw $e;
+          }
+          goto setPosition;
+        }
+      }
+    };
+    $assignPositions($combat->team1);
+    $assignPositions($combat->team2);
   }
   
   /**
@@ -594,7 +625,7 @@ class CombatBase {
       "stat" => ((in_array($skill->skill->type, SkillSpecial::NO_STAT_TYPES, true)) ? NULL : $skill->skill->stat),
       "value" => $skill->value,
       "source" => CharacterEffect::SOURCE_SKILL,
-      "duration" => $skill->skill->duration
+      "duration" => $skill->skill->duration,
     ]);
     $target->addEffect($effect);
     $skill->resetCooldown();

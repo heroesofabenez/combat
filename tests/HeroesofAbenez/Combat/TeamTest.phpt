@@ -22,6 +22,12 @@ final class TeamTest extends \Tester\TestCase {
     Assert::same($name, $team->name);
   }
   
+  public function testMaxRowSize() {
+    $team = new Team("");
+    $team->maxRowSize = 1;
+    Assert::same(1, $team->maxRowSize);
+  }
+  
   public function testHasMember() {
     $team = new Team("");
     Assert::false($team->hasMembers(["id" => 1]));
@@ -87,6 +93,25 @@ final class TeamTest extends \Tester\TestCase {
     Assert::true($team->hasAliveMembers());
     $team[0]->harm($team[0]->maxHitpoints);
     Assert::false($team->hasAliveMembers());
+  }
+  
+  public function testSetCharacterPosition() {
+    $team = new Team("");
+    $team[] = $this->generateCharacter(1);
+    $team->setCharacterPosition(1, 1, 1);
+    Assert::same(1, $team[0]->positionRow);
+    Assert::same(1, $team[0]->positionColumn);
+    Assert::exception(function() use($team) {
+      $team->setCharacterPosition(2, 1, 1);
+    }, \OutOfBoundsException::class);
+    $team[] = $this->generateCharacter(2);
+    Assert::exception(function() use($team) {
+      $team->setCharacterPosition(2, 1, 1);
+    }, InvalidCharacterPositionException::class, NULL, InvalidCharacterPositionException::POSITION_OCCUPIED);
+    Assert::exception(function() use($team) {
+      $team->maxRowSize = 1;
+      $team->setCharacterPosition(2, 1, 2);
+    }, InvalidCharacterPositionException::class, NULL, InvalidCharacterPositionException::ROW_FULL);
   }
 }
 

@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-use Nexendrie\Utils\Collection;
+use Nexendrie\Utils\Collection,
+    Nexendrie\Utils\Numbers;
 
 /**
  * Structure for a team in combat
@@ -12,11 +13,13 @@ use Nexendrie\Utils\Collection;
  * @property-read string $name
  * @property-read Character[] $aliveMembers
  * @property-read Character[] $usableMembers
+ * @property int $maxRowSize
  */
 final class Team extends Collection {
   protected $class = Character::class;
   /** @var string Name of the team */
   protected $name;
+  protected $maxRowSize = 5;
   
   use \Nette\SmartObject;
   
@@ -27,6 +30,14 @@ final class Team extends Collection {
   
   public function getName(): string {
     return $this->name;
+  }
+  
+  public function getMaxRowSize(): int {
+    return $this->maxRowSize;
+  }
+  
+  public function setMaxRowSize(int $maxRowSize): void {
+    $this->maxRowSize = Numbers::range($maxRowSize, 1, PHP_INT_MAX);
   }
   
   /**
@@ -83,6 +94,26 @@ final class Team extends Collection {
    */
   public function hasAliveMembers(): bool {
     return count($this->getAliveMembers()) > 0;
+  }
+  
+  /**
+   * Set character's position in team
+   *
+   * @param string|int $id
+   * @throws \OutOfBoundsException
+   * @throws InvalidCharacterPositionException
+   */
+  public function setCharacterPosition($id, int $row, int $column): void {
+    if(!$this->hasMembers(["id" => $id])) {
+      throw new \OutOfBoundsException("Character $id is not in the team");
+    } elseif(count($this->getMembers(["positionRow" => $row])) >= $this->maxRowSize) {
+      throw new InvalidCharacterPositionException("Row $row is full.", InvalidCharacterPositionException::ROW_FULL);
+    } elseif($this->hasMembers(["positionRow" => $row, "positionColumn" => $column])) {
+      throw new InvalidCharacterPositionException("Row $row column $column is occupied.", InvalidCharacterPositionException::POSITION_OCCUPIED);
+    }
+    $character = $this->getMembers(["id" => $id])[0];
+    $character->positionRow = $row;
+    $character->positionColumn = $column;
   }
 }
 ?>

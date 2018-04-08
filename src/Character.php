@@ -50,6 +50,8 @@ use Nexendrie\Utils\Numbers,
  * @property-read bool $stunned
  * @property-read BaseCharacterSkill[] $usableSkills
  * @property IInitiativeFormulaParser $initiativeFormulaParser
+ * @property int $positionRow
+ * @property int $positionColumn
  */
 class Character {
   use \Nette\SmartObject;
@@ -134,6 +136,10 @@ class Character {
   protected $effectProviders = [];
   /** @var bool */
   protected $stunned = false;
+  /** @var int */
+  protected $positionRow = 0;
+  /** @var int */
+  protected $positionColumn = 0;
   
   /**
    * 
@@ -388,6 +394,22 @@ class Character {
   
   public function setInitiativeFormulaParser(IInitiativeFormulaParser $initiativeFormulaParser): void {
     $this->initiativeFormulaParser = $initiativeFormulaParser;
+  }
+  
+  public function getPositionRow(): int {
+    return $this->positionRow;
+  }
+  
+  public function setPositionRow(int $positionRow): void {
+    $this->positionRow = Numbers::range($positionRow, 0, PHP_INT_MAX);
+  }
+  
+  public function getPositionColumn(): int {
+    return $this->positionColumn;
+  }
+  
+  public function setPositionColumn(int $positionColumn): void {
+    $this->positionColumn = Numbers::range($positionColumn, 0, PHP_INT_MAX);
   }
   
   /**

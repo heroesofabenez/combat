@@ -90,6 +90,37 @@ final class CombatBaseTest extends \Tester\TestCase {
     Assert::type(StaticSuccessCalculator::class, $combat->successCalculator);
   }
   
+  public function testAssignPositions() {
+    $combat = new CombatBase(clone $this->logger);
+    $team1 = new Team("");
+    $team1->maxRowSize = 2;
+    $team1[] = $this->generateCharacter(1);
+    $team1[0]->positionRow = $team1[0]->positionColumn = 1;
+    $team1[] = $this->generateCharacter(2);
+    $team1[] = $this->generateCharacter(3);
+    $team1[] = $this->generateCharacter(4);
+    $team2 = new Team("");
+    $team2->maxRowSize = 2;
+    $team2[] = $this->generateCharacter(5);
+    $team2[] = $this->generateCharacter(6);
+    $team2[] = $this->generateCharacter(7);
+    $team2[] = $this->generateCharacter(8);
+    $combat->setTeams($team1, $team2);
+    $combat->assignPositions($combat);
+    Assert::count(2, $team1->getMembers(["positionRow" => 1]));
+    Assert::count(2, $team1->getMembers(["positionRow" => 2]));
+    Assert::count(0, $team1->getMembers(["positionRow" => 3]));
+    Assert::count(2, $team1->getMembers(["positionColumn" => 1]));
+    Assert::count(2, $team1->getMembers(["positionColumn" => 2]));
+    Assert::count(0, $team1->getMembers(["positionColumn" => 3]));
+    Assert::count(2, $team2->getMembers(["positionRow" => 1]));
+    Assert::count(2, $team2->getMembers(["positionRow" => 2]));
+    Assert::count(0, $team2->getMembers(["positionRow" => 3]));
+    Assert::count(2, $team2->getMembers(["positionColumn" => 1]));
+    Assert::count(2, $team2->getMembers(["positionColumn" => 2]));
+    Assert::count(0, $team2->getMembers(["positionColumn" => 3]));
+  }
+  
   public function testPostCombat() {
     $combat = new CombatBase(clone $this->logger);
     $combat->healers = function(Team $team1, Team $team2): Team {
