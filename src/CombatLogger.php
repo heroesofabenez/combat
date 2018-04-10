@@ -12,6 +12,7 @@ use Nette\Bridges\ApplicationLatte\ILatteFactory,
  * @author Jakub Konečný
  * @property int $round Current round
  * @property string $title
+ * @property string $template
  */
 class CombatLogger implements \Countable, \IteratorAggregate {
   use \Nette\SmartObject;
@@ -63,6 +64,20 @@ class CombatLogger implements \Countable, \IteratorAggregate {
   
   public function setTitle(string $title): void {
     $this->title = $title;
+  }
+  
+  public function getTemplate(): string {
+    return $this->template;
+  }
+  
+  /**
+   * @throws \RuntimeException
+   */
+  public function setTemplate(string $template): void {
+    if(!is_file($template)) {
+      throw new \RuntimeException("File $template does not exist.");
+    }
+    $this->template = $template;
   }
   
   /**
