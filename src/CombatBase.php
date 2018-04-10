@@ -81,6 +81,7 @@ class CombatBase {
     $this->onCombatEnd[] = [$this, "removeCombatEffects"];
     $this->onCombatEnd[] = [$this, "logCombatResult"];
     $this->onCombatEnd[] = [$this, "resetInitiative"];
+    $this->onRoundStart[] = [$this, "decreaseEffectsDuration"];
     $this->onRoundStart[] = [$this ,"recalculateStats"];
     $this->onRoundStart[] = [$this, "logRoundNumber"];
     $this->onRoundStart[] = [$this, "applyPoison"];
@@ -247,6 +248,16 @@ class CombatBase {
     };
     $assignPositions($combat->team1);
     $assignPositions($combat->team2);
+  }
+  
+  public function decreaseEffectsDuration(self $combat): void {
+    /** @var Character[] $characters */
+    $characters = array_merge($combat->team1->toArray(), $combat->team2->toArray());
+    foreach($characters as $character) {
+      foreach($character->effects as $effect) {
+        $effect->duration--;
+      }
+    }
   }
   
   /**

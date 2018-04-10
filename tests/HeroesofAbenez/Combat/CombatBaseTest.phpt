@@ -121,6 +121,26 @@ final class CombatBaseTest extends \Tester\TestCase {
     Assert::count(0, $team2->getMembers(["positionColumn" => 3]));
   }
   
+  public function testDecreaseEffectsDuration() {
+    $combat = new CombatBase(clone $this->logger);
+    $character1 = $this->generateCharacter(1);
+    $character2 = $this->generateCharacter(2);
+    $combat->setDuelParticipants($character1, $character2);
+    Assert::count(0, $character1->effects);
+    $effect = new CharacterEffect([
+      "id" => "skillEffect", "type" => SkillSpecial::TYPE_STUN, "source" => CharacterEffect::SOURCE_SKILL,
+      "value" => 0, "duration" => 1, "stat" => "",
+    ]);
+    $character1->addEffect($effect);
+    Assert::count(1, $character1->effects);
+    Assert::true($character1->stunned);
+    $combat->decreaseEffectsDuration($combat);
+    Assert::same(0, $effect->duration);
+    $character1->recalculateStats();
+    Assert::count(0, $character1->effects);
+    Assert::false($character1->stunned);
+  }
+  
   public function testPostCombat() {
     $combat = new CombatBase(clone $this->logger);
     $combat->healers = function(Team $team1, Team $team2): Team {
