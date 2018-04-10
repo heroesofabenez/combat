@@ -14,7 +14,7 @@ use Nette\Bridges\ApplicationLatte\ILatteFactory,
  * @property string $title
  * @property string $template
  */
-class CombatLogger implements \Countable, \IteratorAggregate {
+final class CombatLogger implements \Countable, \IteratorAggregate {
   use \Nette\SmartObject;
   
   /** @var \Latte\Engine */
