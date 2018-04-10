@@ -199,10 +199,9 @@ class CombatBase {
     foreach($characters as $character) {
       foreach($character->effectProviders as $item) {
         $effect = $item->toCombatEffect();
-        if(is_null($effect)) {
-          continue;
+        if(!is_null($effect)) {
+          $character->addEffect($effect);
         }
-        $character->addEffect($effect);
       }
     }
   }
