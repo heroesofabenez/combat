@@ -30,6 +30,8 @@ class CombatLogger implements \Countable, \IteratorAggregate {
   protected $round;
   /** @var string */
   protected $title = "";
+  /** @var string */
+  protected $template = __DIR__ . "/CombatLog.latte";
   
   public function __construct(ILatteFactory $latteFactory, ITranslator $translator) {
     $this->latte = $latteFactory->create();
@@ -81,7 +83,7 @@ class CombatLogger implements \Countable, \IteratorAggregate {
     $params = [
       "team1" => $this->team1, "team2" => $this->team2, "actions" => $this->actions, "title" => $this->title,
     ];
-    return $this->latte->renderToString(__DIR__ . "/CombatLog.latte", $params);
+    return $this->latte->renderToString($this->template, $params);
   }
   
   public function count(): int {
