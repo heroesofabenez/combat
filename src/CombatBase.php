@@ -90,10 +90,8 @@ class CombatBase {
     $this->onRoundEnd[] = [$this, "decreaseSkillsCooldowns"];
     $this->onRoundEnd[] = [$this, "resetInitiative"];
     $this->onAttack[] = [$this, "attackHarm"];
-    $this->onAttack[] = [$this, "logDamage"];
     $this->onAttack[] = [$this, "logResults"];
     $this->onSkillAttack[] = [$this, "useAttackSkill"];
-    $this->onSkillAttack[] = [$this, "logDamage"];
     $this->onSkillAttack[] = [$this, "logResults"];
     $this->onSkillSpecial[] = [$this, "useSpecialSkill"];
     $this->onSkillSpecial[] = [$this, "logResults"];
@@ -592,6 +590,7 @@ class CombatBase {
     $result["character1"] = $attacker;
     $result["character2"] = $defender;
     $this->results = $result;
+    $this->logDamage($attacker, $result["amount"]);
   }
   
   /**
@@ -614,6 +613,7 @@ class CombatBase {
     $result["character1"] = $attacker;
     $result["character2"] = $defender;
     $this->results = $result;
+    $this->logDamage($attacker, $result["amount"]);
     $skill->resetCooldown();
   }
   
@@ -689,9 +689,9 @@ class CombatBase {
   /**
    * Log dealt damage
    */
-  public function logDamage(Character $attacker): void {
+  public function logDamage(Character $attacker, int $amount): void {
     $team = $this->team1->hasMembers(["id" => $attacker->id]) ? 1 : 2;
-    $this->damage[$team] += $this->results["amount"];
+    $this->damage[$team] += $amount;
   }
   
   public function getLog(): CombatLogger {
