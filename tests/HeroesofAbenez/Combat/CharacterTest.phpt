@@ -93,6 +93,16 @@ final class CharacterTest extends \Tester\TestCase {
     $character->calculateInitiative();
     Assert::equal(0, $character->initiative);
   }
+  
+  public function testDebuffsCap() {
+    $character = $this->generateCharacter(1);
+    $effect = new CharacterEffect([
+      "id" => "skillEffect", "type" => SkillSpecial::TYPE_DEBUFF, "source" => CharacterEffect::SOURCE_SKILL,
+      "value" => 1000, "duration" => 1, "stat" => "constitution",
+    ]);
+    $character->addEffect($effect);
+    Assert::same(2, $character->constitution);
+  }
 }
 
 $test = new CharacterTest();
