@@ -556,8 +556,8 @@ class Character {
       $stat = $effect->stat;
       $type = $effect->type;
       $duration = $effect->duration;
-      if(is_int($duration) AND $duration < 0) {
-        unset($this->effects[$i]);
+      if(is_int($duration) AND $duration < 1) {
+        $this->removeEffect($effect->id);
         continue;
       }
       switch($effect->source) {
