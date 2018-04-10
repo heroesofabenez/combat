@@ -19,8 +19,8 @@ final class CharacterEffectTest extends \Tester\TestCase {
   public function testInitiativeEffect() {
     $character = $this->generateCharacter(1);
     $character->initiativeFormulaParser = new ConstantInitiativeFormulaParser(1);
-    Assert::same(0, $character->initiative);
-    Assert::same(0, $character->initiativeBase);
+    Assert::same(1, $character->initiative);
+    Assert::same(1, $character->initiativeBase);
     $effect = new CharacterEffect([
       "id" => "equipment1bonusEffect",
       "type" => "buff",

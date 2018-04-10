@@ -149,6 +149,7 @@ class Character {
    * @param BaseCharacterSkill[] $skills Skills acquired by the character
    */
   public function __construct(array $stats, array $equipment = [], array $pets = [], array $skills = [], IInitiativeFormulaParser $initiativeFormulaParser = NULL) {
+    $this->initiativeFormulaParser = $initiativeFormulaParser ?? new InitiativeFormulaParser();
     $this->setStats($stats);
     foreach($equipment as $eq) {
       if($eq instanceof Equipment) {
@@ -167,7 +168,6 @@ class Character {
         $this->skills[] = $skill;
       }
     }
-    $this->initiativeFormulaParser = $initiativeFormulaParser ?? new InitiativeFormulaParser();
   }
   
   protected function setStats(array $stats): void {
@@ -393,7 +393,11 @@ class Character {
   }
   
   public function setInitiativeFormulaParser(IInitiativeFormulaParser $initiativeFormulaParser): void {
+    $oldParser = $this->initiativeFormulaParser;
     $this->initiativeFormulaParser = $initiativeFormulaParser;
+    if($oldParser !== $initiativeFormulaParser) {
+      $this->recalculateStats();
+    }
   }
   
   public function getPositionRow(): int {
@@ -522,6 +526,7 @@ class Character {
   public function recalculateSecondaryStats(): void {
     $stats = [
       "damage" => $this->damageStat(), "hit" => "dexterity", "dodge" => "dexterity", "maxHitpoints" => "constitution",
+      "initiative" => "",
     ];
     foreach($stats as $secondary => $primary) {
       $gain = $this->$secondary - $this->{$secondary . "Base"};
@@ -529,6 +534,8 @@ class Character {
         $base = (int) round($this->$primary / 2);
       } elseif($secondary === "maxHitpoints") {
         $base = $this->$primary * 5;
+      } elseif($secondary === "initiative") {
+        $base = $this->initiativeFormulaParser->calculateInitiative($this->initiativeFormula, $this);
       } else {
         $base = $this->$primary * 3;
       }
@@ -541,7 +548,6 @@ class Character {
    * Recalculates stats of the character (mostly used during combat)
    */
   public function recalculateStats(): void {
-    $this->calculateInitiative();
     $stats = [
       "strength", "dexterity", "constitution", "intelligence", "charisma",
       "damage", "hit", "dodge", "initiative", "defense", "maxHitpoints"
@@ -592,14 +598,6 @@ class Character {
     }
     $this->recalculateSecondaryStats();
     $this->stunned = $stunned;
-  }
-  
-  /**
-   * Calculate character's initiative
-   */
-  public function calculateInitiative(): void {
-    $initiative = $this->initiativeFormulaParser->calculateInitiative($this->initiativeFormula, $this);
-    $this->initiative = $this->initiativeBase = $initiative;
   }
   
   /**
