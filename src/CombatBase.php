@@ -201,7 +201,7 @@ class CombatBase {
     return $this->team1->hasMembers(["id" => $character->id]) ? $this->team2 : $this->team1;
   }
   
-  public function applyEffectProviders(CombatBase $combat): void {
+  public function applyEffectProviders(self $combat): void {
     /** @var Character[] $characters */
     $characters = array_merge($combat->team1->toArray(), $combat->team2->toArray());
     foreach($characters as $character) {
@@ -218,7 +218,7 @@ class CombatBase {
   /**
    * Set skills' cooldowns
    */
-  public function setSkillsCooldowns(CombatBase $combat): void {
+  public function setSkillsCooldowns(self $combat): void {
     /** @var Character[] $characters */
     $characters = array_merge($combat->team1->toArray(), $combat->team2->toArray());
     foreach($characters as $character) {
@@ -228,7 +228,7 @@ class CombatBase {
     }
   }
   
-  public function assignPositions(CombatBase $combat): void {
+  public function assignPositions(self $combat): void {
     $assignPositions = function(Team $team) {
       $row = 1;
       $column = 0;
@@ -261,7 +261,7 @@ class CombatBase {
   /**
    * Decrease skills' cooldowns
    */
-  public function decreaseSkillsCooldowns(CombatBase $combat): void {
+  public function decreaseSkillsCooldowns(self $combat): void {
     /** @var Character[] $characters */
     $characters = array_merge($combat->team1->toArray(), $combat->team2->toArray());
     foreach($characters as $character) {
@@ -289,7 +289,7 @@ class CombatBase {
   /**
    * Add winner to the log
    */
-  public function logCombatResult(CombatBase $combat): void {
+  public function logCombatResult(self $combat): void {
     $combat->log->round = 5000;
     $params = [
       "team1name" => $combat->team1->name, "team1damage" => $combat->damage[1],
@@ -306,14 +306,14 @@ class CombatBase {
   /**
    * Log start of a round
    */
-  public function logRoundNumber(CombatBase $combat): void {
+  public function logRoundNumber(self $combat): void {
     $combat->log->round = ++$this->round;
   }
   
   /**
    * Decrease duration of effects and recalculate stats
    */
-  public function recalculateStats(CombatBase $combat): void {
+  public function recalculateStats(self $combat): void {
     /** @var Character[] $characters */
     $characters = array_merge($combat->team1->toArray(), $combat->team2->toArray());
     foreach($characters as $character) {
@@ -324,7 +324,7 @@ class CombatBase {
   /**
    * Reset characters' initiative
    */
-  public function resetInitiative(CombatBase $combat): void {
+  public function resetInitiative(self $combat): void {
     /** @var Character[] $characters */
     $characters = array_merge($combat->team1->toArray(), $combat->team2->toArray());
     foreach($characters as $character) {
@@ -473,7 +473,7 @@ class CombatBase {
   /**
    * Main stage of a round
    */
-  public function mainStage(CombatBase $combat): void {
+  public function mainStage(self $combat): void {
     /** @var Character[] $characters */
     $characters = array_merge($combat->team1->usableMembers, $combat->team2->usableMembers);
     usort($characters, function(Character $a, Character $b) {
@@ -661,7 +661,7 @@ class CombatBase {
   /**
    * Harm poisoned characters at start of round
    */
-  public function applyPoison(CombatBase $combat): void {
+  public function applyPoison(self $combat): void {
     /** @var Character[] $characters */
     $characters = array_merge($combat->team1->aliveMembers, $combat->team2->aliveMembers);
     foreach($characters as $character) {
