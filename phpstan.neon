@@ -7,4 +7,3 @@ parameters:
     ignoreErrors:
         - '#Variable \$[a-zA-Z0-9_]+ might not be defined#'
         - '#Method Nette\\Localization\\ITranslator::translate\(\) invoked with 3 parameters, 1-2 required#'
-        - '#Parameter \#1 \$action of method HeroesofAbenez\\Combat\\CombatLogger::log\(\) expects array, array\|null given#'

@@ -66,8 +66,6 @@ class CombatBase {
   public $onSkillSpecial = [];
   /** @var callable[] */
   public $onHeal = [];
-  /** @var array|NULL Temporary variable for results of an action */
-  protected $results;
   /** @var callable */
   protected $victoryCondition;
   /** @var callable */
@@ -90,13 +88,9 @@ class CombatBase {
     $this->onRoundEnd[] = [$this, "decreaseSkillsCooldowns"];
     $this->onRoundEnd[] = [$this, "resetInitiative"];
     $this->onAttack[] = [$this, "attackHarm"];
-    $this->onAttack[] = [$this, "logResults"];
     $this->onSkillAttack[] = [$this, "useAttackSkill"];
-    $this->onSkillAttack[] = [$this, "logResults"];
     $this->onSkillSpecial[] = [$this, "useSpecialSkill"];
-    $this->onSkillSpecial[] = [$this, "logResults"];
     $this->onHeal[] = [$this, "heal"];
-    $this->onHeal[] = [$this, "logResults"];
     $this->victoryCondition = [VictoryConditions::class, "moreDamage"];
     $this->successCalculator = $successCalculator ?? new RandomSuccessCalculator();
     $this->healers = function(): Team {
@@ -589,8 +583,8 @@ class CombatBase {
     $result["name"] = "";
     $result["character1"] = $attacker;
     $result["character2"] = $defender;
-    $this->results = $result;
     $this->logDamage($attacker, $result["amount"]);
+    $this->log->log($result);
   }
   
   /**
@@ -612,8 +606,8 @@ class CombatBase {
     $result["name"] = $skill->skill->name;
     $result["character1"] = $attacker;
     $result["character2"] = $defender;
-    $this->results = $result;
     $this->logDamage($attacker, $result["amount"]);
+    $this->log->log($result);
     $skill->resetCooldown();
   }
   
@@ -625,7 +619,6 @@ class CombatBase {
       "result" => true, "amount" => 0, "action" => CombatAction::ACTION_SKILL_SPECIAL, "name" => $skill->skill->name,
       "character1" => $character1, "character2" => $target,
     ];
-    $this->results = $result;
     $effect = new CharacterEffect([
       "id" => "skill{$skill->skill->id}Effect",
       "type" => $skill->skill->type,
@@ -635,6 +628,7 @@ class CombatBase {
       "duration" => $skill->skill->duration,
     ]);
     $target->addEffect($effect);
+    $this->log->log($result);
     $skill->resetCooldown();
   }
   
@@ -655,7 +649,7 @@ class CombatBase {
     $result["name"] = "";
     $result["character1"] = $healer;
     $result["character2"] = $patient;
-    $this->results = $result;
+    $this->log->log($result);
   }
   
   /**
@@ -676,14 +670,6 @@ class CombatBase {
         }
       }
     }
-  }
-  
-  /**
-   * Log results of an action
-   */
-  public function logResults(): void {
-    $this->log->log($this->results);
-    $this->results = NULL;
   }
   
   /**
