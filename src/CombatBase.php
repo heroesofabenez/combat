@@ -402,7 +402,7 @@ class CombatBase {
         $targets = $this->getTeam($primaryTarget)->getMembers(["positionColumn" => $primaryTarget->positionColumn]);
         break;
       default:
-        throw new NotImplementedException("Target $skill->skill->target for attack skills is not implemented yet.");
+        throw new NotImplementedException("Target $skill->skill->target for attack skills is not implemented.");
     }
     foreach($targets as $target) {
       for($i = 1; $i <= $skill->skill->strikes; $i++) {
