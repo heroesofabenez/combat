@@ -23,7 +23,7 @@ class CharacterSpecialSkill extends BaseCharacterSkill {
   }
   
   public function getValue(): int {
-    if($this->skill->type === \HeroesofAbenez\Combat\SkillSpecial::TYPE_STUN) {
+    if($this->skill->type === SkillSpecial::TYPE_STUN) {
       return 0;
     }
     $value = $this->skill->value;
