@@ -120,7 +120,7 @@ class Equipment implements ICharacterEffectsProvider {
     ];
     $return = [
       "id" => "equipment" . $this->id . "bonusEffect",
-      "type" => "buff",
+      "type" => SkillSpecial::TYPE_BUFF,
       "stat" => $stat[$this->slot],
       "value" => $this->strength,
       "source" => CharacterEffect::SOURCE_EQUIPMENT,

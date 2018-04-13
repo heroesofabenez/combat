@@ -81,7 +81,7 @@ class Pet implements ICharacterEffectsProvider {
   protected function getDeployParams(): array {
     return [
       "id" => "pet" . $this->id . "bonusEffect",
-      "type" => "buff",
+      "type" => SkillSpecial::TYPE_BUFF,
       "stat" => $this->bonusStat,
       "value" => $this->bonusValue,
       "source" => CharacterEffect::SOURCE_PET,
