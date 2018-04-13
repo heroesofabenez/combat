@@ -19,6 +19,7 @@ final class Team extends Collection {
   protected $class = Character::class;
   /** @var string Name of the team */
   protected $name;
+  /** @var int */
   protected $maxRowSize = 5;
   
   use \Nette\SmartObject;

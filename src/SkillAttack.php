@@ -6,7 +6,7 @@ namespace HeroesofAbenez\Combat;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * SkillAttackDummy
+ * Skill attack
  *
  * @author Jakub Konečný
  * @property-read string $baseDamage

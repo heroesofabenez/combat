@@ -7,7 +7,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver,
     Nexendrie\Utils\Constants;
 
 /**
- * SkillSpecialDummy
+ * Skill special
  *
  * @author Jakub Konečný
  * @property-read string $type
