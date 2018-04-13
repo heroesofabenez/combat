@@ -135,12 +135,5 @@ class Equipment implements ICharacterEffectsProvider {
     }
     return [new CharacterEffect($this->getDeployParams())];
   }
-  
-  public function toCombatEffect(): ?CharacterEffect {
-    if(!$this->worn) {
-      return NULL;
-    }
-    return new CharacterEffect($this->getDeployParams());
-  }
 }
 ?>
