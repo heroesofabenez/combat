@@ -66,7 +66,7 @@ final class CombatBaseTest extends \Tester\TestCase {
   public function testEffectProviders() {
     $character1 = $this->generateCharacter(1);
     $character2 = $this->generateCharacter(2);
-    $provider = new EffectProvider();
+    $provider = new EffectsProvider();
     $character1->addEffectProvider($provider);
     Assert::same(50, $character1->maxHitpointsBase);
     Assert::same(50, $character1->maxHitpoints);

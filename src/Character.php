@@ -46,7 +46,7 @@ use Nexendrie\Utils\Numbers,
  * @property-read BaseCharacterSkill[] $skills
  * @property-read int|NULL $activePet
  * @property-read CharacterEffect[] $effects
- * @property-read ICharacterEffectProvider[] $effectProviders
+ * @property-read ICharacterEffectsProvider[] $effectProviders
  * @property-read bool $stunned
  * @property-read BaseCharacterSkill[] $usableSkills
  * @property IInitiativeFormulaParser $initiativeFormulaParser
@@ -132,7 +132,7 @@ class Character {
   protected $activePet = null;
   /** @var CharacterEffect[] Active effects */
   protected $effects = [];
-  /** @var ICharacterEffectProvider[] */
+  /** @var ICharacterEffectsProvider[] */
   protected $effectProviders = [];
   /** @var bool */
   protected $stunned = false;
@@ -366,7 +366,7 @@ class Character {
   }
   
   /**
-   * @return ICharacterEffectProvider[]
+   * @return ICharacterEffectsProvider[]
    */
   public function getEffectProviders(): array {
     return $this->effectProviders;
@@ -424,7 +424,7 @@ class Character {
     $effect->onApply($this, $effect);
   }
   
-  public function addEffectProvider(ICharacterEffectProvider $provider): void {
+  public function addEffectProvider(ICharacterEffectsProvider $provider): void {
     $this->effectProviders[] = $provider;
   }
   

@@ -15,7 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver,
  * @property-read string $bonusStat
  * @property-read int $bonusValue
  */
-class Pet implements ICharacterEffectProvider {
+class Pet implements ICharacterEffectsProvider {
   use \Nette\SmartObject;
   
   public const STAT_STRENGTH = "strength";
@@ -89,11 +89,11 @@ class Pet implements ICharacterEffectProvider {
     ];
   }
   
-  public function toCombatEffect(): ?CharacterEffect {
+  public function getCombatEffects(): array {
     if(!$this->deployed) {
-      return NULL;
+      return [];
     }
-    return new CharacterEffect($this->getDeployParams());
+    return [new CharacterEffect($this->getDeployParams())];
   }
 }
 ?>

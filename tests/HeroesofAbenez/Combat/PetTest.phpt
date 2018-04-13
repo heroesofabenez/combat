@@ -8,13 +8,13 @@ require __DIR__ . "/../../bootstrap.php";
 use Tester\Assert;
 
 final class PetTest extends \Tester\TestCase {
-  public function testToCombatEffect() {
+  public function testGetCombatEffects() {
     $pet = new Pet([
       "id" =>1, "deployed" => false, "bonusStat" => Pet::STAT_STRENGTH, "bonusValue" => 10,
     ]);
-    Assert::null($pet->toCombatEffect());
+    Assert::count(0, $pet->getCombatEffects());
     $pet->deployed = true;
-    Assert::type(CharacterEffect::class, $pet->toCombatEffect());
+    Assert::count(1, $pet->getCombatEffects());
   }
 }
 
