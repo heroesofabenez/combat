@@ -41,41 +41,12 @@ final class Team extends Collection {
   }
   
   /**
-   * Check if the team has at least 1 member matching the filter
-   */
-  public function hasMembers(array $filter = []): bool {
-    return (count($this->getMembers($filter)) > 0);
-  }
-  
-  /**
-   * Get all team members matching the filter
-   *
-   * @todo make it possible to use different comparing rules
-   * @return Character[]
-   */
-  public function getMembers(array $filter = []): array {
-    if(count($filter) === 0) {
-      return $this->items;
-    }
-    return array_values(array_filter($this->items, function(Character $character) use($filter) {
-      foreach($filter as $key => $value) {
-        if($character->$key !== $value) {
-          return false;
-        }
-      }
-      return true;
-    }));
-  }
-  
-  /**
    * Get alive members from the team
    * 
    * @return Character[]
    */
   public function getAliveMembers(): array {
-    return array_values(array_filter($this->items, function(Character $value) {
-      return ($value->hitpoints > 0);
-    }));
+    return $this->getItems(["hitpoints>" => 0,]);
   }
   
   /**
@@ -84,9 +55,9 @@ final class Team extends Collection {
    * @return Character[]
    */
   public function getUsableMembers(): array {
-    return array_values(array_filter($this->items, function(Character $value) {
-      return (!$value->stunned AND $value->hitpoints > 0);
-    }));
+    return $this->getItems([
+      "stunned" => false, "hitpoints>" => 0,
+    ]);
   }
   
   /**
@@ -104,14 +75,14 @@ final class Team extends Collection {
    * @throws InvalidCharacterPositionException
    */
   public function setCharacterPosition($id, int $row, int $column): void {
-    if(!$this->hasMembers(["id" => $id])) {
+    if(!$this->hasItems(["id" => $id])) {
       throw new \OutOfBoundsException("Character $id is not in the team");
-    } elseif(count($this->getMembers(["positionRow" => $row])) >= $this->maxRowSize) {
+    } elseif(count($this->getItems(["positionRow" => $row])) >= $this->maxRowSize) {
       throw new InvalidCharacterPositionException("Row $row is full.", InvalidCharacterPositionException::ROW_FULL);
-    } elseif($this->hasMembers(["positionRow" => $row, "positionColumn" => $column])) {
+    } elseif($this->hasItems(["positionRow" => $row, "positionColumn" => $column])) {
       throw new InvalidCharacterPositionException("Row $row column $column is occupied.", InvalidCharacterPositionException::POSITION_OCCUPIED);
     }
-    $character = $this->getMembers(["id" => $id])[0];
+    $character = $this->getItems(["id" => $id])[0];
     $character->positionRow = $row;
     $character->positionColumn = $column;
   }

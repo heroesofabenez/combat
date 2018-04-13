@@ -28,35 +28,6 @@ final class TeamTest extends \Tester\TestCase {
     Assert::same(1, $team->maxRowSize);
   }
   
-  public function testHasMember() {
-    $team = new Team("");
-    Assert::false($team->hasMembers(["id" => 1]));
-    $team[] = $this->generateCharacter(1);
-    $team[] = $this->generateCharacter(2);
-    Assert::true($team->hasMembers(["id" => 1]));
-    Assert::false($team->hasMembers(["id" => 3]));
-  }
-  
-  public function testHasMembers() {
-    $team = new Team("");
-    Assert::false($team->hasMembers());
-    $team[] = $this->generateCharacter(1);
-    $team[] = $this->generateCharacter(2);
-    Assert::true($team->hasMembers());
-    Assert::true($team->hasMembers(["id" => 1]));
-    Assert::false($team->hasMembers(["id" => 3]));
-  }
-  
-  public function testGetMembers() {
-    $team = new Team("");
-    Assert::count(0, $team->getMembers());
-    $team[] = $this->generateCharacter(1);
-    $team[] = $this->generateCharacter(2);
-    Assert::count(2, $team->getMembers());
-    Assert::count(1, $team->getMembers(["id" => 1]));
-    Assert::count(0, $team->getMembers(["id" => 3]));
-  }
-  
   public function testGetAliveMembers() {
     $team = new Team("");
     Assert::count(0, $team->aliveMembers);

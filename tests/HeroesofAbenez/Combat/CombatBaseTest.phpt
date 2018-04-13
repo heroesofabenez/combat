@@ -107,18 +107,18 @@ final class CombatBaseTest extends \Tester\TestCase {
     $team2[] = $this->generateCharacter(8);
     $combat->setTeams($team1, $team2);
     $combat->assignPositions($combat);
-    Assert::count(2, $team1->getMembers(["positionRow" => 1]));
-    Assert::count(2, $team1->getMembers(["positionRow" => 2]));
-    Assert::count(0, $team1->getMembers(["positionRow" => 3]));
-    Assert::count(2, $team1->getMembers(["positionColumn" => 1]));
-    Assert::count(2, $team1->getMembers(["positionColumn" => 2]));
-    Assert::count(0, $team1->getMembers(["positionColumn" => 3]));
-    Assert::count(2, $team2->getMembers(["positionRow" => 1]));
-    Assert::count(2, $team2->getMembers(["positionRow" => 2]));
-    Assert::count(0, $team2->getMembers(["positionRow" => 3]));
-    Assert::count(2, $team2->getMembers(["positionColumn" => 1]));
-    Assert::count(2, $team2->getMembers(["positionColumn" => 2]));
-    Assert::count(0, $team2->getMembers(["positionColumn" => 3]));
+    Assert::count(2, $team1->getItems(["positionRow" => 1]));
+    Assert::count(2, $team1->getItems(["positionRow" => 2]));
+    Assert::count(0, $team1->getItems(["positionRow" => 3]));
+    Assert::count(2, $team1->getItems(["positionColumn" => 1]));
+    Assert::count(2, $team1->getItems(["positionColumn" => 2]));
+    Assert::count(0, $team1->getItems(["positionColumn" => 3]));
+    Assert::count(2, $team2->getItems(["positionRow" => 1]));
+    Assert::count(2, $team2->getItems(["positionRow" => 2]));
+    Assert::count(0, $team2->getItems(["positionRow" => 3]));
+    Assert::count(2, $team2->getItems(["positionColumn" => 1]));
+    Assert::count(2, $team2->getItems(["positionColumn" => 2]));
+    Assert::count(0, $team2->getItems(["positionColumn" => 3]));
   }
   
   public function testDecreaseEffectsDuration() {

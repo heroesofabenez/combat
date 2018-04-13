@@ -187,11 +187,11 @@ class CombatBase {
   }
   
   protected function getTeam(Character $character): Team {
-    return $this->team1->hasMembers(["id" => $character->id]) ? $this->team1 : $this->team2;
+    return $this->team1->hasItems(["id" => $character->id]) ? $this->team1 : $this->team2;
   }
   
   protected function getEnemyTeam(Character $character): Team {
-    return $this->team1->hasMembers(["id" => $character->id]) ? $this->team2 : $this->team1;
+    return $this->team1->hasItems(["id" => $character->id]) ? $this->team2 : $this->team1;
   }
   
   public function applyEffectProviders(self $combat): void {
@@ -404,12 +404,12 @@ class CombatBase {
       case SkillAttack::TARGET_ROW:
         /** @var Character $primaryTarget */
         $primaryTarget = $this->selectAttackTarget($character);
-        $targets = $this->getTeam($primaryTarget)->getMembers(["positionRow" => $primaryTarget->positionRow]);
+        $targets = $this->getTeam($primaryTarget)->getItems(["positionRow" => $primaryTarget->positionRow]);
         break;
       case SkillAttack::TARGET_COLUMN:
         /** @var Character $primaryTarget */
         $primaryTarget = $this->selectAttackTarget($character);
-        $targets = $this->getTeam($primaryTarget)->getMembers(["positionColumn" => $primaryTarget->positionColumn]);
+        $targets = $this->getTeam($primaryTarget)->getItems(["positionColumn" => $primaryTarget->positionColumn]);
         break;
       default:
         throw new NotImplementedException("Target $skill->skill->target for attack skills is not implemented.");
@@ -686,7 +686,7 @@ class CombatBase {
    * Log dealt damage
    */
   public function logDamage(Character $attacker, int $amount): void {
-    $team = $this->team1->hasMembers(["id" => $attacker->id]) ? 1 : 2;
+    $team = $this->team1->hasItems(["id" => $attacker->id]) ? 1 : 2;
     $this->damage[$team] += $amount;
   }
   
