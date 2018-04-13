@@ -405,7 +405,7 @@ class Character {
   }
   
   public function setPositionRow(int $positionRow): void {
-    $this->positionRow = Numbers::range($positionRow, 0, PHP_INT_MAX);
+    $this->positionRow = Numbers::range($positionRow, 1, PHP_INT_MAX);
   }
   
   public function getPositionColumn(): int {
@@ -413,7 +413,7 @@ class Character {
   }
   
   public function setPositionColumn(int $positionColumn): void {
-    $this->positionColumn = Numbers::range($positionColumn, 0, PHP_INT_MAX);
+    $this->positionColumn = Numbers::range($positionColumn, 1, PHP_INT_MAX);
   }
   
   /**
