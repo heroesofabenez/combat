@@ -9,3 +9,7 @@ Installation
 ------------
 
 The best way to install it is via Composer. Just add **heroesofabenez/combat** to your dependencies.
+
+Documentation
+-------------
+See: https://heroesofabenez.gitlab.io/combat .
