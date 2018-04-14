@@ -276,7 +276,7 @@ class CombatBase {
   /**
    * Remove combat effects from character at the end of the combat
    */
-  public function removeCombatEffects(CombatBase $combat): void {
+  public function removeCombatEffects(self $combat): void {
     /** @var Character[] $characters */
     $characters = array_merge($combat->team1->toArray(), $combat->team2->toArray());
     foreach($characters as $character) {
@@ -444,7 +444,7 @@ class CombatBase {
     }
   }
   
-  protected function chooseAction(CombatBase $combat, Character $character): ?string {
+  protected function chooseAction(self $combat, Character $character): ?string {
     if($character->hitpoints < 1) {
       return NULL;
     } elseif(in_array($character, $combat->findHealers()->toArray(), true) AND !is_null($combat->selectHealingTarget($character))) {
