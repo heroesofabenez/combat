@@ -84,6 +84,27 @@ final class TeamTest extends \Tester\TestCase {
       $team->setCharacterPosition(2, 1, 2);
     }, InvalidCharacterPositionException::class, NULL, InvalidCharacterPositionException::ROW_FULL);
   }
+  
+  public function testGetRandomCharacter() {
+    $team = new Team("");
+    Assert::null($team->getRandomCharacter());
+    $team[] = $this->generateCharacter(1);
+    Assert::same($team[0], $team->getRandomCharacter());
+    $team[] = $this->generateCharacter(2);
+    Assert::type(Character::class, $team->getRandomCharacter());
+  }
+  
+  public function testGetLowestHpCharacter() {
+    $team = new Team("");
+    Assert::null($team->getLowestHpCharacter());
+    $team[] = $this->generateCharacter(1);
+    Assert::null($team->getLowestHpCharacter());
+    $team[0]->harm(10);
+    Assert::same($team[0], $team->getLowestHpCharacter(0.8));
+    Assert::null($team->getLowestHpCharacter());
+    $team[0]->harm(20);
+    Assert::same($team[0], $team->getLowestHpCharacter());
+  }
 }
 
 $test = new TeamTest();

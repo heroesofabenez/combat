@@ -16,6 +16,8 @@ use Nexendrie\Utils\Collection,
  * @property int $maxRowSize
  */
 final class Team extends Collection {
+  protected const LOWEST_HP_THRESHOLD = 0.5;
+  
   protected $class = Character::class;
   /** @var string Name of the team */
   protected $name;
@@ -86,6 +88,38 @@ final class Team extends Collection {
     $character = $this->getItems(["id" => $id])[0];
     $character->positionRow = $row;
     $character->positionColumn = $column;
+  }
+  
+  public function getRandomCharacter(): ?Character {
+    $characters = $this->aliveMembers;
+    if(count($characters) === 0) {
+      return NULL;
+    } elseif(count($characters) === 1) {
+      return $characters[0];
+    }
+    $roll = rand(0, count($characters) - 1);
+    return $characters[$roll];
+  }
+  
+  public function getLowestHpCharacter(float $threshold = NULL): ?Character {
+    $lowestHp = PHP_INT_MAX;
+    $lowestIndex = PHP_INT_MIN;
+    if(is_null($threshold)) {
+      $threshold = static::LOWEST_HP_THRESHOLD;
+    }
+    if(count($this->aliveMembers) === 0) {
+      return NULL;
+    }
+    foreach($this->aliveMembers as $index => $member) {
+      if($member->hitpoints <= $member->maxHitpoints * $threshold AND $member->hitpoints < $lowestHp) {
+        $lowestHp = $member->hitpoints;
+        $lowestIndex = $index;
+      }
+    }
+    if($lowestIndex === PHP_INT_MIN) {
+      return NULL;
+    }
+    return $this->aliveMembers[$lowestIndex];
   }
 }
 ?>

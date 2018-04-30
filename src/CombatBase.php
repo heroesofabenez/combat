@@ -34,8 +34,6 @@ use Nexendrie\Utils\Numbers,
 class CombatBase {
   use \Nette\SmartObject;
   
-  protected const LOWEST_HP_THRESHOLD = 0.5;
-  
   /** @var Team First team */
   protected $team1;
   /** @var Team Second team */
@@ -335,57 +333,22 @@ class CombatBase {
   }
   
   /**
-   * Select random character from the team
-   */
-  protected function selectRandomCharacter(Team $team): ?Character {
-    $characters = $team->aliveMembers;
-    if(count($characters) === 0) {
-      return NULL;
-    } elseif(count($characters) === 1) {
-      return $characters[0];
-    }
-    $roll = rand(0, count($characters) - 1);
-    return $characters[$roll];
-  }
-  
-  /**
    * Select target for attack
    */
   protected function selectAttackTarget(Character $attacker): ?Character {
     $enemyTeam = $this->getEnemyTeam($attacker);
-    $target = $this->findLowestHpCharacter($enemyTeam);
+    $target = $enemyTeam->getLowestHpCharacter();
     if(!is_null($target)) {
       return $target;
     }
-    return $this->selectRandomCharacter($enemyTeam);
-  }
-  
-  /**
-   * Find character with lowest hp in the team
-   */
-  protected function findLowestHpCharacter(Team $team, int $threshold = NULL): ?Character {
-    $lowestHp = PHP_INT_MAX;
-    $lowestIndex = PHP_INT_MIN;
-    if(is_null($threshold)) {
-      $threshold = static::LOWEST_HP_THRESHOLD;
-    }
-    foreach($team->aliveMembers as $index => $member) {
-      if($member->hitpoints <= $member->maxHitpoints * $threshold AND $member->hitpoints < $lowestHp) {
-        $lowestHp = $member->hitpoints;
-        $lowestIndex = $index;
-      }
-    }
-    if($lowestIndex === PHP_INT_MIN) {
-      return NULL;
-    }
-    return $team->aliveMembers[$lowestIndex];
+    return $enemyTeam->getRandomCharacter();
   }
   
   /**
    * Select target for healing
    */
   protected function selectHealingTarget(Character $healer): ?Character {
-    return $this->findLowestHpCharacter($this->getTeam($healer));
+    return $this->getTeam($healer)->getLowestHpCharacter();
   }
   
   protected function findHealers(): Team {
