@@ -337,11 +337,17 @@ class CombatBase {
    */
   protected function selectAttackTarget(Character $attacker): ?Character {
     $enemyTeam = $this->getEnemyTeam($attacker);
-    $target = $enemyTeam->getLowestHpCharacter();
+    $rowToAttack = $enemyTeam->rowToAttack;
+    if(is_null($rowToAttack)) {
+      return NULL;
+    }
+    /** @var Team $enemies */
+    $enemies = Team::fromArray($enemyTeam->getItems(["positionRow" => $rowToAttack, "hitpoints>" => 0,]), $enemyTeam->name);
+    $target = $enemies->getLowestHpCharacter();
     if(!is_null($target)) {
       return $target;
     }
-    return $enemyTeam->getRandomCharacter();
+    return $enemies->getRandomCharacter();
   }
   
   /**

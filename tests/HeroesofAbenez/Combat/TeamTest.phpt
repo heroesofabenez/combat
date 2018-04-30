@@ -105,6 +105,20 @@ final class TeamTest extends \Tester\TestCase {
     $team[0]->harm(20);
     Assert::same($team[0], $team->getLowestHpCharacter());
   }
+  
+  public function testGetRowToAttack() {
+    $team = new Team("");
+    Assert::null($team->getRowToAttack());
+    $team[] = $character1 = $this->generateCharacter(1);
+    $character1->positionRow = 1;
+    $team[] = $character2 = $this->generateCharacter(2);
+    $character2->positionRow = 2;
+    Assert::same(1, $team->getRowToAttack());
+    $character1->harm($character1->maxHitpoints);
+    Assert::same(2, $team->getRowToAttack());
+    $character2->harm($character2->maxHitpoints);
+    Assert::null($team->getRowToAttack());
+  }
 }
 
 $test = new TeamTest();

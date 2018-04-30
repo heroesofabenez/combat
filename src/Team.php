@@ -14,6 +14,7 @@ use Nexendrie\Utils\Collection,
  * @property-read Character[] $aliveMembers
  * @property-read Character[] $usableMembers
  * @property int $maxRowSize
+ * @property-read int|NULL $rowToAttack
  */
 final class Team extends Collection {
   protected const LOWEST_HP_THRESHOLD = 0.5;
@@ -70,7 +71,7 @@ final class Team extends Collection {
     return count($this->getAliveMembers()) > 0;
   }
   
-  /**
+  /**"hitpoints>" => 0
    * Set character's position in team
    *
    * @param string|int $id
@@ -120,6 +121,17 @@ final class Team extends Collection {
       return NULL;
     }
     return $this->aliveMembers[$lowestIndex];
+  }
+  
+  public function getRowToAttack(): ?int {
+    if(count($this->aliveMembers) === 0) {
+      return NULL;
+    }
+    for($i = 1; $i <= PHP_INT_MAX; $i++) {
+      if($this->hasItems(["positionRow" => $i, "hitpoints>" => 0,])) {
+        return $i;
+      }
+    }
   }
 }
 ?>
