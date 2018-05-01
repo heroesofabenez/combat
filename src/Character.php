@@ -56,6 +56,8 @@ use Nexendrie\Utils\Numbers,
 class Character {
   use \Nette\SmartObject;
   
+  public const HITPOINTS_PER_CONSTITUTION = 5;
+  
   /** @var int|string */
   protected $id;
   /** @var string */
@@ -203,7 +205,7 @@ class Character {
         $this->$key = $value;
       }
     }
-    $this->hitpoints = $this->maxHitpoints = $this->maxHitpointsBase = $this->constitution * 5;
+    $this->hitpoints = $this->maxHitpoints = $this->maxHitpointsBase = $this->constitution * static::HITPOINTS_PER_CONSTITUTION;
     $this->recalculateSecondaryStats();
     $this->hitBase = $this->hit;
     $this->dodgeBase = $this->dodge;
@@ -533,7 +535,7 @@ class Character {
       if($secondary === "damage") {
         $base = (int) round($this->$primary / 2);
       } elseif($secondary === "maxHitpoints") {
-        $base = $this->$primary * 5;
+        $base = $this->$primary * static::HITPOINTS_PER_CONSTITUTION;
       } elseif($secondary === "initiative") {
         $base = $this->initiativeFormulaParser->calculateInitiative($this->initiativeFormula, $this);
       } else {

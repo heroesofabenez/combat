@@ -39,9 +39,10 @@ final class CharacterEffectTest extends \Tester\TestCase {
   
   public function testHitpointsEffect() {
     $character = $this->generateCharacter(1);
-    Assert::same(50, $character->maxHitpointsBase);
-    Assert::same(50, $character->maxHitpoints);
-    Assert::same(50, $character->hitpoints);
+    $baseHitpoints = $character->constitution * Character::HITPOINTS_PER_CONSTITUTION;
+    Assert::same($baseHitpoints, $character->maxHitpointsBase);
+    Assert::same($baseHitpoints, $character->maxHitpoints);
+    Assert::same($baseHitpoints, $character->hitpoints);
     $effect = new CharacterEffect([
       "id" => "equipment1bonusEffect",
       "type" => "buff",
@@ -51,13 +52,13 @@ final class CharacterEffectTest extends \Tester\TestCase {
       "duration" => CharacterEffect::DURATION_COMBAT,
     ]);
     $character->addEffect($effect);
-    Assert::same(50, $character->maxHitpointsBase);
+    Assert::same($baseHitpoints, $character->maxHitpointsBase);
     Assert::same(60, $character->maxHitpoints);
     Assert::same(60, $character->hitpoints);
     $character->removeEffect("equipment1bonusEffect");
-    Assert::same(50, $character->maxHitpointsBase);
-    Assert::same(50, $character->maxHitpoints);
-    Assert::same(50, $character->hitpoints);
+    Assert::same($baseHitpoints, $character->maxHitpointsBase);
+    Assert::same($baseHitpoints, $character->maxHitpoints);
+    Assert::same($baseHitpoints, $character->hitpoints);
   }
 }
 
