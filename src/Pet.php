@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-use Symfony\Component\OptionsResolver\OptionsResolver,
-    Nexendrie\Utils\Constants;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Pet
@@ -17,12 +16,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver,
  */
 class Pet implements ICharacterEffectsProvider {
   use \Nette\SmartObject;
-  
-  public const STAT_STRENGTH = "strength";
-  public const STAT_DEXTERITY = "dexterity";
-  public const STAT_CONSTITUTION = "constitution";
-  public const STAT_INTELLIGENCE = "intelligence";
-  public const STAT_CHARISMA = "charisma";
   
   /** @var int */
   protected $id;
@@ -55,7 +48,7 @@ class Pet implements ICharacterEffectsProvider {
   }
   
   protected function getAllowedStats(): array {
-    return Constants::getConstantsValues(static::class, "STAT_");
+    return Character::BASE_STATS;
   }
   
   public function getId(): int {

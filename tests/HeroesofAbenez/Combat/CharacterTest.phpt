@@ -22,7 +22,7 @@ final class CharacterTest extends \Tester\TestCase {
       "dexterity" => 10, "constitution" => 10, "intelligence" => 10, "charisma" => 10
     ];
     $petStats = [
-      "id" => 1, "deployed" => false, "bonusStat" => Pet::STAT_STRENGTH, "bonusValue" => 10,
+      "id" => 1, "deployed" => false, "bonusStat" => Character::STAT_STRENGTH, "bonusValue" => 10,
     ];
     $pet = new Pet($petStats);
     $character = new Character($stats, [], [$pet]);
@@ -53,7 +53,7 @@ final class CharacterTest extends \Tester\TestCase {
       "dexterity" => 10, "constitution" => 10, "intelligence" => 10, "charisma" => 10
     ];
     $pet = new Pet([
-      "id" => 1, "deployed" => true, "bonusStat" => Pet::STAT_STRENGTH, "bonusValue" => 10,
+      "id" => 1, "deployed" => true, "bonusStat" => Character::STAT_STRENGTH, "bonusValue" => 10,
     ]);
     $character = new Character($stats, [], [$pet]);
     Assert::type(Pet::class, $character->getPet(1));
@@ -69,7 +69,7 @@ final class CharacterTest extends \Tester\TestCase {
     $character->addEffect(new CharacterEffect([
       "id" => "equipment1bonusEffect",
       "type" => "buff",
-      "stat" => SkillSpecial::STAT_DAMAGE,
+      "stat" => Character::STAT_DAMAGE,
       "value" => 10,
       "source" => CharacterEffect::SOURCE_EQUIPMENT,
       "duration" => CharacterEffect::DURATION_COMBAT,

@@ -11,7 +11,7 @@ final class CharacterSpecialSkillTest extends \Tester\TestCase {
   public function testGetSkillType() {
     $skillData = [
       "id" => 1, "name" => "Skill Special", "levels" => 5, "type" => SkillSpecial::TYPE_BUFF, "duration" => 3,
-      "target" => SkillSpecial::TARGET_SELF, "stat" => SkillSpecial::STAT_DAMAGE, "value" => 10, "valueGrowth" => 2,
+      "target" => SkillSpecial::TARGET_SELF, "stat" => Character::STAT_DAMAGE, "value" => 10, "valueGrowth" => 2,
     ];
     $skill = new SkillSpecial($skillData);
     $characterSkill = new CharacterSpecialSkill($skill, 1);
@@ -21,7 +21,7 @@ final class CharacterSpecialSkillTest extends \Tester\TestCase {
   public function testGetLevel() {
     $skillData = [
       "id" => 1, "name" => "Skill Special", "levels" => 5, "type" => SkillSpecial::TYPE_BUFF, "duration" => 3,
-      "target" => SkillSpecial::TARGET_SELF, "stat" => SkillSpecial::STAT_DAMAGE, "value" => 10, "valueGrowth" => 2,
+      "target" => SkillSpecial::TARGET_SELF, "stat" => Character::STAT_DAMAGE, "value" => 10, "valueGrowth" => 2,
     ];
     $skill = new SkillSpecial($skillData);
     $characterSkill = new CharacterSpecialSkill($skill, 1);
@@ -31,7 +31,7 @@ final class CharacterSpecialSkillTest extends \Tester\TestCase {
   public function testGetValues() {
     $skillData = [
       "id" => 1, "name" => "Skill Special", "levels" => 5, "type" => SkillSpecial::TYPE_BUFF, "duration" => 3,
-      "target" => SkillSpecial::TARGET_SELF, "stat" => SkillSpecial::STAT_DAMAGE, "value" => 10, "valueGrowth" => 2,
+      "target" => SkillSpecial::TARGET_SELF, "stat" => Character::STAT_DAMAGE, "value" => 10, "valueGrowth" => 2,
     ];
     $skill = new SkillSpecial($skillData);
     $characterSkill = new CharacterSpecialSkill($skill, 1);

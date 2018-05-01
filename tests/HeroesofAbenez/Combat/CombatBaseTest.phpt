@@ -35,7 +35,7 @@ final class CombatBaseTest extends \Tester\TestCase {
     ];
     $specialSkillStats = [
       "id" => 1, "name" => "type", "target" => SkillSpecial::TARGET_SELF, "levels" => 5,
-      "type" => SkillSpecial::TYPE_BUFF, "stat" => SkillSpecial::STAT_DEFENSE, "value" => 15, "valueGrowth" => 3,
+      "type" => SkillSpecial::TYPE_BUFF, "stat" => Character::STAT_DEFENSE, "value" => 15, "valueGrowth" => 3,
       "duration" => 3,
     ];
     $skills = [

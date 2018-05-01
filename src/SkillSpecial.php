@@ -25,12 +25,6 @@ class SkillSpecial extends BaseSkill {
   public const TARGET_ENEMY = "enemy";
   public const TARGET_PARTY = "party";
   public const TARGET_ENEMY_PARTY = "enemy_party";
-  public const STAT_HITPOINTS = "maxHitpoints";
-  public const STAT_DAMAGE = "damage";
-  public const STAT_DEFENSE = "defense";
-  public const STAT_HIT = "hit";
-  public const STAT_DODGE = "dodge";
-  public const STAT_INITIATIVE = "initiative";
   /** @var string[] */
   public const NO_STAT_TYPES = [self::TYPE_STUN, self::TYPE_POISON,];
   
@@ -95,7 +89,7 @@ class SkillSpecial extends BaseSkill {
   }
   
   protected function getAllowedStats(): array {
-    return Constants::getConstantsValues(static::class, "STAT_");
+    return Character::SECONDARY_STATS;
   }
   
   public function getCooldown(): int {

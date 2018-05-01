@@ -16,7 +16,7 @@ final class EffectsProvider implements ICharacterEffectsProvider {
       "source" => CharacterEffect::SOURCE_EQUIPMENT,
       "value" => 10,
       "duration" => CharacterEffect::DURATION_COMBAT,
-      "stat" => SkillSpecial::STAT_HITPOINTS,
+      "stat" => Character::STAT_MAX_HITPOINTS,
     ])];
   }
 }

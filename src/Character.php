@@ -57,6 +57,23 @@ class Character {
   use \Nette\SmartObject;
   
   public const HITPOINTS_PER_CONSTITUTION = 5;
+  public const STAT_STRENGTH = "strength";
+  public const STAT_DEXTERITY = "dexterity";
+  public const STAT_CONSTITUTION = "constitution";
+  public const STAT_INTELLIGENCE = "intelligence";
+  public const STAT_CHARISMA = "charisma";
+  public const STAT_MAX_HITPOINTS = "maxHitpoints";
+  public const STAT_DAMAGE = "damage";
+  public const STAT_DEFENSE = "defense";
+  public const STAT_HIT = "hit";
+  public const STAT_DODGE = "dodge";
+  public const STAT_INITIATIVE = "initiative";
+  public const BASE_STATS = [
+    self::STAT_STRENGTH, self::STAT_DEXTERITY, self::STAT_CONSTITUTION, self::STAT_INTELLIGENCE, self::STAT_CHARISMA,
+  ];
+  public const SECONDARY_STATS = [
+    self::STAT_MAX_HITPOINTS, self::STAT_DAMAGE, self::STAT_DEFENSE, self::STAT_HIT, self::STAT_DODGE, self::STAT_INITIATIVE,
+  ];
   
   /** @var int|string */
   protected $id;
@@ -173,9 +190,9 @@ class Character {
   }
   
   protected function setStats(array $stats): void {
-    $requiredStats = ["id", "name", "level", "strength", "dexterity", "constitution", "intelligence", "charisma", "initiativeFormula",];
+    $requiredStats = array_merge(["id", "name", "level", "initiativeFormula",], static::BASE_STATS);
     $allStats = array_merge($requiredStats, ["occupation", "race", "specialization", "gender", "experience",]);
-    $numberStats = ["strength", "dexterity", "constitution", "intelligence", "charisma",];
+    $numberStats = static::BASE_STATS;
     $textStats = ["name", "race", "occupation", "initiativeFormula",];
     $resolver = new OptionsResolver();
     $resolver->setDefined($allStats);
@@ -501,21 +518,21 @@ class Character {
    * Determine which (primary) stat should be used to calculate damage
    */
   public function damageStat(): string {
-    $stat = "strength";
+    $stat = static::STAT_STRENGTH;
     foreach($this->equipment as $item) {
       if(!$item->worn OR $item->slot != Equipment::SLOT_WEAPON) {
         continue;
       }
       switch($item->type) {
         case Equipment::TYPE_STAFF:
-          $stat = "intelligence";
+          $stat = static::STAT_INTELLIGENCE;
           break;
         case Equipment::TYPE_CLUB:
-          $stat = "constitution";
+          $stat = static::STAT_CONSTITUTION;
           break;
         case Equipment::TYPE_BOW:
         case Equipment::TYPE_THROWING_KNIFE:
-          $stat = "dexterity";
+          $stat = static::STAT_DEXTERITY;
           break;
       }
     }
@@ -527,16 +544,17 @@ class Character {
    */
   public function recalculateSecondaryStats(): void {
     $stats = [
-      "damage" => $this->damageStat(), "hit" => "dexterity", "dodge" => "dexterity", "maxHitpoints" => "constitution",
-      "initiative" => "",
+      static::STAT_DAMAGE => $this->damageStat(), static::STAT_HIT => static::STAT_DEXTERITY,
+      static::STAT_DODGE => static::STAT_DEXTERITY, static::STAT_MAX_HITPOINTS => static::STAT_CONSTITUTION,
+      static::STAT_INITIATIVE => "",
     ];
     foreach($stats as $secondary => $primary) {
       $gain = $this->$secondary - $this->{$secondary . "Base"};
-      if($secondary === "damage") {
+      if($secondary === static::STAT_DAMAGE) {
         $base = (int) round($this->$primary / 2);
-      } elseif($secondary === "maxHitpoints") {
+      } elseif($secondary === static::STAT_MAX_HITPOINTS) {
         $base = $this->$primary * static::HITPOINTS_PER_CONSTITUTION;
-      } elseif($secondary === "initiative") {
+      } elseif($secondary === static::STAT_INITIATIVE) {
         $base = $this->initiativeFormulaParser->calculateInitiative($this->initiativeFormula, $this);
       } else {
         $base = $this->$primary * 3;
@@ -550,10 +568,7 @@ class Character {
    * Recalculates stats of the character (mostly used during combat)
    */
   public function recalculateStats(): void {
-    $stats = [
-      "strength", "dexterity", "constitution", "intelligence", "charisma",
-      "damage", "hit", "dodge", "initiative", "defense", "maxHitpoints"
-    ];
+    $stats = array_merge(static::BASE_STATS, static::SECONDARY_STATS);
     $stunned = false;
     $debuffs = [];
     foreach($stats as $stat) {

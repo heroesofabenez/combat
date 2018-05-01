@@ -114,9 +114,9 @@ class Equipment implements ICharacterEffectsProvider {
   
   protected function getDeployParams(): array {
     $stat = [
-      static::SLOT_WEAPON => SkillSpecial::STAT_DAMAGE, static::SLOT_ARMOR => SkillSpecial::STAT_DEFENSE,
-      static::SLOT_HELMET => SkillSpecial::STAT_HITPOINTS, static::SLOT_SHIELD => SkillSpecial::STAT_DODGE,
-      static::SLOT_AMULET => SkillSpecial::STAT_INITIATIVE,
+      static::SLOT_WEAPON => Character::STAT_DAMAGE, static::SLOT_ARMOR => Character::STAT_DEFENSE,
+      static::SLOT_HELMET => Character::STAT_MAX_HITPOINTS, static::SLOT_SHIELD => Character::STAT_DODGE,
+      static::SLOT_AMULET => Character::STAT_INITIATIVE,
     ];
     $return = [
       "id" => "equipment" . $this->id . "bonusEffect",

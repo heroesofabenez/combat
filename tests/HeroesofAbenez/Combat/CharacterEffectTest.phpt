@@ -24,7 +24,7 @@ final class CharacterEffectTest extends \Tester\TestCase {
     $effect = new CharacterEffect([
       "id" => "equipment1bonusEffect",
       "type" => "buff",
-      "stat" => SkillSpecial::STAT_INITIATIVE,
+      "stat" => Character::STAT_INITIATIVE,
       "value" => 10,
       "source" => CharacterEffect::SOURCE_EQUIPMENT,
       "duration" => CharacterEffect::DURATION_COMBAT,
@@ -46,7 +46,7 @@ final class CharacterEffectTest extends \Tester\TestCase {
     $effect = new CharacterEffect([
       "id" => "equipment1bonusEffect",
       "type" => "buff",
-      "stat" => SkillSpecial::STAT_HITPOINTS,
+      "stat" => Character::STAT_MAX_HITPOINTS,
       "value" => 10,
       "source" => CharacterEffect::SOURCE_EQUIPMENT,
       "duration" => CharacterEffect::DURATION_COMBAT,

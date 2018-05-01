@@ -81,20 +81,20 @@ class CharacterEffect {
     $this->duration = $effect["duration"];
     $this->onApply[] = function(Character $character, self $effect) {
       $character->recalculateStats();
-      if($effect->stat === SkillSpecial::STAT_HITPOINTS) {
+      if($effect->stat === Character::STAT_MAX_HITPOINTS) {
         $character->heal($effect->value);
       }
     };
     $this->onRemove[] = function(Character $character, self $effect) {
       $character->recalculateStats();
-      if($effect->stat === SkillSpecial::STAT_HITPOINTS) {
+      if($effect->stat === Character::STAT_MAX_HITPOINTS) {
         $character->harm($effect->value);
       }
     };
   }
   
   protected function getAllowedStats(): array {
-    $stats = Constants::getConstantsValues(SkillSpecial::class, "STAT_");
+    $stats = Constants::getConstantsValues(Character::class, "STAT_");
     $stats = array_merge($stats, ["strength", "dexterity", "constitution", "intelligence", "charisma",]);
     return $stats;
   }
