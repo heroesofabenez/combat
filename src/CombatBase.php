@@ -367,18 +367,16 @@ class CombatBase {
   
   protected function doAttackSkill(Character $character, CharacterAttackSkill $skill): void {
     $targets = [];
+    /** @var Character $primaryTarget */
+    $primaryTarget = $this->selectAttackTarget($character);
     switch($skill->skill->target) {
       case SkillAttack::TARGET_SINGLE:
-        $targets[] = $this->selectAttackTarget($character);
+        $targets[] = $primaryTarget;
         break;
       case SkillAttack::TARGET_ROW:
-        /** @var Character $primaryTarget */
-        $primaryTarget = $this->selectAttackTarget($character);
         $targets = $this->getTeam($primaryTarget)->getItems(["positionRow" => $primaryTarget->positionRow]);
         break;
       case SkillAttack::TARGET_COLUMN:
-        /** @var Character $primaryTarget */
-        $primaryTarget = $this->selectAttackTarget($character);
         $targets = $this->getTeam($primaryTarget)->getItems(["positionColumn" => $primaryTarget->positionColumn]);
         break;
       default:
