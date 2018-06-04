@@ -11,6 +11,8 @@ use Nexendrie\Utils\Constants;
  * @author Jakub Konečný
  */
 final class CombatActionSelector implements ICombatActionSelector {
+  use \Nette\SmartObject;
+  
   public function getAllowedActions(): array {
     $allowedActions = Constants::getConstantsValues(CombatAction::class, "ACTION_");
     return array_values(array_filter($allowedActions, function(string $value) {
