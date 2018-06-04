@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-use Nette\Bridges\ApplicationLatte\ILatteFactory,
-    Nette\Localization\ITranslator;
+use Nette\Bridges\ApplicationLatte\ILatteFactory;
+use Nette\Localization\ITranslator;
 
 /**
  * Combat log

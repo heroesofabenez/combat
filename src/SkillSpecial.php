@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-use Symfony\Component\OptionsResolver\OptionsResolver,
-    Nexendrie\Utils\Constants;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Nexendrie\Utils\Constants;
 
 /**
  * Skill special

@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-use Nette\Localization\ITranslator,
-    Nexendrie\Utils\Constants,
-    Symfony\Component\OptionsResolver\OptionsResolver;
+use Nette\Localization\ITranslator;
+use Nexendrie\Utils\Constants;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Data structure for combat action

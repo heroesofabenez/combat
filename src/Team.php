@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-use Nexendrie\Utils\Collection,
-    Nexendrie\Utils\Numbers;
+use Nexendrie\Utils\Collection;
+use Nexendrie\Utils\Numbers;
 
 /**
  * Structure for a team in combat

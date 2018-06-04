@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-use Nexendrie\Utils\Numbers,
-    Symfony\Component\OptionsResolver\OptionsResolver;
+use Nexendrie\Utils\Numbers;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Structure for single character
