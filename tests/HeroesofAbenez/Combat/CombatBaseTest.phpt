@@ -90,6 +90,13 @@ final class CombatBaseTest extends \Tester\TestCase {
     Assert::type(StaticSuccessCalculator::class, $combat->successCalculator);
   }
   
+  public function testActionSelector() {
+    $combat = new CombatBase(clone $this->logger);
+    Assert::type(CombatActionSelector::class, $combat->actionSelector);
+    $combat->actionSelector = new ActionSelector();
+    Assert::type(ActionSelector::class, $combat->actionSelector);
+  }
+  
   public function testAssignPositions() {
     $combat = new CombatBase(clone $this->logger);
     $team1 = new Team("");

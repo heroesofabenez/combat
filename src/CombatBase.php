@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-use Nexendrie\Utils\Numbers,
-    Nexendrie\Utils\Constants;
+use Nexendrie\Utils\Numbers;
 
 /**
  * Handles combat
@@ -19,6 +18,7 @@ use Nexendrie\Utils\Numbers,
  * @property-read int $team1Damage
  * @property-read int $team2Damage
  * @property ISuccessCalculator $successCalculator
+ * @property ICombatActionSelector $actionSelector
  * @property callable $victoryCondition To evaluate the winner of combat. Gets combat as parameter, should return winning team (1/2) or 0 if there is not winner (yet)
  * @property callable $healers To determine characters that are supposed to heal their team. Gets team1 and team2 as parameters, should return Team
  * @method void onCombatStart(CombatBase $combat)
@@ -70,8 +70,10 @@ class CombatBase {
   protected $healers;
   /** @var ISuccessCalculator */
   protected $successCalculator;
+  /** @var ICombatActionSelector */
+  protected $actionSelector;
   
-  public function __construct(CombatLogger $logger, ?ISuccessCalculator $successCalculator = NULL) {
+  public function __construct(CombatLogger $logger, ?ISuccessCalculator $successCalculator = NULL, ?ICombatActionSelector $actionSelector = NULL) {
     $this->log = $logger;
     $this->onCombatStart[] = [$this, "applyEffectProviders"];
     $this->onCombatStart[] = [$this, "setSkillsCooldowns"];
@@ -92,6 +94,7 @@ class CombatBase {
     $this->onHeal[] = [$this, "heal"];
     $this->victoryCondition = [VictoryConditions::class, "moreDamage"];
     $this->successCalculator = $successCalculator ?? new RandomSuccessCalculator();
+    $this->actionSelector = $actionSelector ?? new CombatActionSelector();
     $this->healers = function(): Team {
       return new Team("healers");
     };
@@ -167,6 +170,14 @@ class CombatBase {
   
   public function setSuccessCalculator(ISuccessCalculator $successCalculator): void {
     $this->successCalculator = $successCalculator;
+  }
+  
+  public function getActionSelector(): ICombatActionSelector {
+    return $this->actionSelector;
+  }
+  
+  public function setActionSelector(ICombatActionSelector $actionSelector): void {
+    $this->actionSelector = $actionSelector;
   }
   
   /**
@@ -334,8 +345,10 @@ class CombatBase {
   
   /**
    * Select target for attack
+   *
+   * @internal
    */
-  protected function selectAttackTarget(Character $attacker): ?Character {
+  public function selectAttackTarget(Character $attacker): ?Character {
     $enemyTeam = $this->getEnemyTeam($attacker);
     $rowToAttack = $enemyTeam->rowToAttack;
     if(is_null($rowToAttack)) {
@@ -352,12 +365,17 @@ class CombatBase {
   
   /**
    * Select target for healing
+   *
+   * @internal
    */
-  protected function selectHealingTarget(Character $healer): ?Character {
+  public function selectHealingTarget(Character $healer): ?Character {
     return $this->getTeam($healer)->getLowestHpCharacter();
   }
   
-  protected function findHealers(): Team {
+  /**
+   * @internal
+   */
+  public function findHealers(): Team {
     $healers = call_user_func($this->healers, $this->team1, $this->team2);
     if($healers instanceof Team) {
       return $healers;
@@ -412,34 +430,6 @@ class CombatBase {
     }
   }
   
-  protected function chooseAction(self $combat, Character $character): ?string {
-    if($character->hitpoints < 1) {
-      return NULL;
-    } elseif(in_array($character, $combat->findHealers()->toArray(), true) AND !is_null($combat->selectHealingTarget($character))) {
-      return CombatAction::ACTION_HEALING;
-    }
-    $attackTarget = $combat->selectAttackTarget($character);
-    if(is_null($attackTarget)) {
-      return NULL;
-    }
-    if(count($character->usableSkills) > 0) {
-      $skill = $character->usableSkills[0];
-      if($skill instanceof CharacterAttackSkill) {
-        return CombatAction::ACTION_SKILL_ATTACK;
-      } elseif($skill instanceof  CharacterSpecialSkill) {
-        return CombatAction::ACTION_SKILL_SPECIAL;
-      }
-    }
-    return CombatAction::ACTION_ATTACK;
-  }
-  
-  protected function getAllowedActions(): array {
-    $allowedActions = Constants::getConstantsValues(CombatAction::class, "ACTION_");
-    return array_values(array_filter($allowedActions, function(string $value) {
-      return ($value !== CombatAction::ACTION_POISON);
-    }));
-  }
-  
   /**
    * Main stage of a round
    */
@@ -450,8 +440,8 @@ class CombatBase {
       return -1 * strcmp((string) $a->initiative, (string) $b->initiative);
     });
     foreach($characters as $character) {
-      $action = $combat->chooseAction($combat, $character);
-      if(!in_array($action, $this->getAllowedActions(), true)) {
+      $action = $combat->actionSelector->chooseAction($combat, $character);
+      if(!in_array($action, $this->actionSelector->getAllowedActions(), true)) {
         continue;
       }
       switch($action) {
