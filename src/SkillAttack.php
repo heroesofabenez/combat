@@ -12,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property-read string $baseDamage
  * @property-read string $damageGrowth
  * @property-read int $strikes
- * @property-read string|NULL $hitRate
+ * @property-read string|null $hitRate
  */
 class SkillAttack extends BaseSkill {
   public const TARGET_SINGLE = "single";
@@ -25,7 +25,7 @@ class SkillAttack extends BaseSkill {
   protected $damageGrowth;
   /** @var int */
   protected $strikes;
-  /** @var string|NULL */
+  /** @var string|null */
   protected $hitRate;
   
   public function __construct(array $data) {

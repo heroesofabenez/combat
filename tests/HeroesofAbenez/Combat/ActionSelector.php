@@ -14,7 +14,7 @@ final class ActionSelector implements ICombatActionSelector {
   }
   
   public function chooseAction(CombatBase $combat, Character $character): ?string {
-    return NULL;
+    return null;
   }
 }
 ?>

@@ -43,7 +43,7 @@ final class CharacterAttackSkillTest extends \Tester\TestCase {
   public function testGetHitRate() {
     $skillData = [
       "id" => 1, "name" => "Skill Attack", "baseDamage" => "120%", "damageGrowth" => "2%", "levels" => 5,
-      "target" => SkillAttack::TARGET_SINGLE, "strikes" => 1, "hitRate" => NULL,
+      "target" => SkillAttack::TARGET_SINGLE, "strikes" => 1, "hitRate" => null,
     ];
     $skill = new SkillAttack($skillData);
     $characterSkill = new CharacterAttackSkill($skill, 1);

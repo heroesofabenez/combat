@@ -44,7 +44,7 @@ use Nexendrie\Utils\Numbers,
  * @property-read Equipment[] $equipment
  * @property-read Pet[] $pets
  * @property-read BaseCharacterSkill[] $skills
- * @property-read int|NULL $activePet
+ * @property-read int|null $activePet
  * @property-read CharacterEffect[] $effects
  * @property-read ICharacterEffectsProvider[] $effectProviders
  * @property-read bool $stunned
@@ -147,7 +147,7 @@ class Character {
   protected $pets = [];
   /** @var BaseCharacterSkill[] Character's skills */
   protected $skills = [];
-  /** @var int|NULL */
+  /** @var int|null */
   protected $activePet = null;
   /** @var CharacterEffect[] Active effects */
   protected $effects = [];
@@ -167,7 +167,7 @@ class Character {
    * @param Pet[] $pets Pets owned by the character
    * @param BaseCharacterSkill[] $skills Skills acquired by the character
    */
-  public function __construct(array $stats, array $equipment = [], array $pets = [], array $skills = [], IInitiativeFormulaParser $initiativeFormulaParser = NULL) {
+  public function __construct(array $stats, array $equipment = [], array $pets = [], array $skills = [], IInitiativeFormulaParser $initiativeFormulaParser = null) {
     $this->initiativeFormulaParser = $initiativeFormulaParser ?? new InitiativeFormulaParser();
     $this->setStats($stats);
     foreach($equipment as $eq) {
@@ -374,7 +374,7 @@ class Character {
         return $pet->id;
       }
     }
-    return NULL;
+    return null;
   }
   
   /**

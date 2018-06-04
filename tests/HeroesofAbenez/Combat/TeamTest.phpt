@@ -78,11 +78,11 @@ final class TeamTest extends \Tester\TestCase {
     $team[] = $this->generateCharacter(2);
     Assert::exception(function() use($team) {
       $team->setCharacterPosition(2, 1, 1);
-    }, InvalidCharacterPositionException::class, NULL, InvalidCharacterPositionException::POSITION_OCCUPIED);
+    }, InvalidCharacterPositionException::class, null, InvalidCharacterPositionException::POSITION_OCCUPIED);
     Assert::exception(function() use($team) {
       $team->maxRowSize = 1;
       $team->setCharacterPosition(2, 1, 2);
-    }, InvalidCharacterPositionException::class, NULL, InvalidCharacterPositionException::ROW_FULL);
+    }, InvalidCharacterPositionException::class, null, InvalidCharacterPositionException::ROW_FULL);
   }
   
   public function testGetRandomCharacter() {

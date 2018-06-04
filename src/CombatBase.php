@@ -73,7 +73,7 @@ class CombatBase {
   /** @var ICombatActionSelector */
   protected $actionSelector;
   
-  public function __construct(CombatLogger $logger, ?ISuccessCalculator $successCalculator = NULL, ?ICombatActionSelector $actionSelector = NULL) {
+  public function __construct(CombatLogger $logger, ?ISuccessCalculator $successCalculator = null, ?ICombatActionSelector $actionSelector = null) {
     $this->log = $logger;
     $this->onCombatStart[] = [$this, "applyEffectProviders"];
     $this->onCombatStart[] = [$this, "setSkillsCooldowns"];
@@ -352,7 +352,7 @@ class CombatBase {
     $enemyTeam = $this->getEnemyTeam($attacker);
     $rowToAttack = $enemyTeam->rowToAttack;
     if(is_null($rowToAttack)) {
-      return NULL;
+      return null;
     }
     /** @var Team $enemies */
     $enemies = Team::fromArray($enemyTeam->getItems(["positionRow" => $rowToAttack, "hitpoints>" => 0,]), $enemyTeam->name);
@@ -518,7 +518,7 @@ class CombatBase {
   /**
    * Calculate hit chance for attack/skill attack
    */
-  protected function calculateHitChance(Character $character1, Character $character2, CharacterAttackSkill $skill = NULL): int {
+  protected function calculateHitChance(Character $character1, Character $character2, CharacterAttackSkill $skill = null): int {
     $hitChance = $this->successCalculator->calculateHitChance($character1, $character2, $skill);
     return Numbers::range($hitChance, ISuccessCalculator::MIN_HIT_CHANCE, ISuccessCalculator::MAX_HIT_CHANCE);
   }
@@ -590,7 +590,7 @@ class CombatBase {
     $effect = new CharacterEffect([
       "id" => "skill{$skill->skill->id}Effect",
       "type" => $skill->skill->type,
-      "stat" => ((in_array($skill->skill->type, SkillSpecial::NO_STAT_TYPES, true)) ? NULL : $skill->skill->stat),
+      "stat" => ((in_array($skill->skill->type, SkillSpecial::NO_STAT_TYPES, true)) ? null : $skill->skill->stat),
       "value" => $skill->value,
       "source" => CharacterEffect::SOURCE_SKILL,
       "duration" => $skill->skill->duration,

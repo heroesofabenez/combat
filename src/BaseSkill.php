@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver,
  * @property-read string $name
  * @property-read string $description
  * @property-read int $neededClass
- * @property-read int|NULL $neededSpecialization
+ * @property-read int|null $neededSpecialization
  * @property-read int $neededLevel
  * @property-read string $target
  * @property-read int $levels
@@ -31,7 +31,7 @@ abstract class BaseSkill {
   protected $description;
   /** @var int */
   protected $neededClass;
-  /** @var int|NULL */
+  /** @var int|null */
   protected $neededSpecialization;
   /** @var int */
   protected $neededLevel;
@@ -50,7 +50,7 @@ abstract class BaseSkill {
     $resolver->setAllowedTypes("neededClass", "integer");
     $resolver->setDefault("neededClass", 1);
     $resolver->setAllowedTypes("neededSpecialization", ["integer", "null"]);
-    $resolver->setDefault("neededSpecialization", NULL);
+    $resolver->setDefault("neededSpecialization", null);
     $resolver->setAllowedTypes("neededLevel", "integer");
     $resolver->setDefault("neededLevel", 1);
     $resolver->setAllowedTypes("target", "string");

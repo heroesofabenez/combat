@@ -14,7 +14,7 @@ use Nexendrie\Utils\Collection,
  * @property-read Character[] $aliveMembers
  * @property-read Character[] $usableMembers
  * @property int $maxRowSize
- * @property-read int|NULL $rowToAttack
+ * @property-read int|null $rowToAttack
  */
 final class Team extends Collection {
   protected const LOWEST_HP_THRESHOLD = 0.5;
@@ -94,7 +94,7 @@ final class Team extends Collection {
   public function getRandomCharacter(): ?Character {
     $characters = $this->aliveMembers;
     if(count($characters) === 0) {
-      return NULL;
+      return null;
     } elseif(count($characters) === 1) {
       return $characters[0];
     }
@@ -102,14 +102,14 @@ final class Team extends Collection {
     return $characters[$roll];
   }
   
-  public function getLowestHpCharacter(float $threshold = NULL): ?Character {
+  public function getLowestHpCharacter(float $threshold = null): ?Character {
     $lowestHp = PHP_INT_MAX;
     $lowestIndex = PHP_INT_MIN;
     if(is_null($threshold)) {
       $threshold = static::LOWEST_HP_THRESHOLD;
     }
     if(count($this->aliveMembers) === 0) {
-      return NULL;
+      return null;
     }
     foreach($this->aliveMembers as $index => $member) {
       if($member->hitpoints <= $member->maxHitpoints * $threshold AND $member->hitpoints < $lowestHp) {
@@ -118,14 +118,14 @@ final class Team extends Collection {
       }
     }
     if($lowestIndex === PHP_INT_MIN) {
-      return NULL;
+      return null;
     }
     return $this->aliveMembers[$lowestIndex];
   }
   
   public function getRowToAttack(): ?int {
     if(count($this->aliveMembers) === 0) {
-      return NULL;
+      return null;
     }
     for($i = 1; $i <= PHP_INT_MAX; $i++) {
       if($this->hasItems(["positionRow" => $i, "hitpoints>" => 0,])) {

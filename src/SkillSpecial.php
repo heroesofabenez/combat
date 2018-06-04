@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver,
  *
  * @author Jakub Konečný
  * @property-read string $type
- * @property-read string|NULL $stat
+ * @property-read string|null $stat
  * @property-read int $value
  * @property-read int $valueGrowth
  * @property-read int $duration
@@ -30,7 +30,7 @@ class SkillSpecial extends BaseSkill {
   
   /** @var string */
   protected $type;
-  /** @var string|NULL */
+  /** @var string|null */
   protected $stat;
   /** @var int */
   protected $value;

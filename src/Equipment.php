@@ -13,7 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver,
  * @property-read int $id
  * @property-read string $name
  * @property-read string $slot
- * @property-read string|NULL $type
+ * @property-read string|null $type
  * @property-read int $strength
  * @property bool $worn Is the item worn?
  */
@@ -41,7 +41,7 @@ class Equipment implements ICharacterEffectsProvider {
   protected $name;
   /** @var string */
   protected $slot;
-  /** @var string|NULL */
+  /** @var string|null */
   protected $type;
   /** @var int */
   protected $strength;

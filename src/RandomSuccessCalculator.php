@@ -11,7 +11,7 @@ use Nexendrie\Utils\Numbers;
  * @author Jakub Konečný
  */
 final class RandomSuccessCalculator implements ISuccessCalculator {
-  public function calculateHitChance(Character $character1, Character $character2, ?CharacterAttackSkill $skill = NULL): int {
+  public function calculateHitChance(Character $character1, Character $character2, ?CharacterAttackSkill $skill = null): int {
     $hitRate = $character1->hit;
     $dodgeRate = $character2->dodge;
     if(!is_null($skill)) {
