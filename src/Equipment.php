@@ -49,8 +49,19 @@ class Equipment implements ICharacterEffectsProvider {
   protected $worn;
   
   public function __construct(array $data) {
-    $allStats = ["id", "name", "slot", "type", "strength", "worn",];
     $resolver = new OptionsResolver();
+    $this->configureOptions($resolver);
+    $data = $resolver->resolve($data);
+    $this->id = $data["id"];
+    $this->name = $data["name"];
+    $this->slot = $data["slot"];
+    $this->type = $data["type"];
+    $this->strength = $data["strength"];
+    $this->worn = $data["worn"];
+  }
+  
+  protected function configureOptions(OptionsResolver $resolver): void {
+    $allStats = ["id", "name", "slot", "type", "strength", "worn",];
     $resolver->setRequired($allStats);
     $resolver->setAllowedTypes("id", "integer");
     $resolver->setAllowedTypes("name", "string");
@@ -67,13 +78,6 @@ class Equipment implements ICharacterEffectsProvider {
       return ($value >= 0);
     });
     $resolver->setAllowedTypes("worn", "boolean");
-    $data = $resolver->resolve($data);
-    $this->id = $data["id"];
-    $this->name = $data["name"];
-    $this->slot = $data["slot"];
-    $this->type = $data["type"];
-    $this->strength = $data["strength"];
-    $this->worn = $data["worn"];
   }
   
   protected function getAllowedSlots(): array {
