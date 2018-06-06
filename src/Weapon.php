@@ -10,6 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Weapon
  *
  * @author Jakub Konečný
+ * @property-read bool $ranged
  */
 class Weapon extends Equipment {
   public const TYPE_SWORD = "sword";
@@ -21,6 +22,12 @@ class Weapon extends Equipment {
   public const TYPE_BOW = "bow";
   public const TYPE_CROSSBOW = "crossbow";
   public const TYPE_THROWING_KNIFE = "throwing knife";
+  
+  public function isRanged(): bool {
+    return in_array($this->type, [
+      static::TYPE_STAFF, static::TYPE_BOW, static::TYPE_CROSSBOW, static::TYPE_THROWING_KNIFE,
+    ], true);
+  }
   
   protected function configureOptions(OptionsResolver $resolver): void {
     parent::configureOptions($resolver);

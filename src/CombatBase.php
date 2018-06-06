@@ -350,12 +350,23 @@ class CombatBase {
    */
   public function selectAttackTarget(Character $attacker): ?Character {
     $enemyTeam = $this->getEnemyTeam($attacker);
-    $rowToAttack = $enemyTeam->rowToAttack;
-    if(is_null($rowToAttack)) {
-      return null;
+    $rangedWeapon = false;
+    foreach($attacker->equipment as $equipment) {
+      if($equipment instanceof Weapon AND $equipment->isWorn() AND $equipment->ranged) {
+        $rangedWeapon = true;
+        break;
+      }
     }
-    /** @var Team $enemies */
-    $enemies = Team::fromArray($enemyTeam->getItems(["positionRow" => $rowToAttack, "hitpoints>" => 0,]), $enemyTeam->name);
+    if(!$rangedWeapon) {
+      $rowToAttack = $enemyTeam->rowToAttack;
+      if(is_null($rowToAttack)) {
+        return null;
+      }
+      /** @var Team $enemies */
+      $enemies = Team::fromArray($enemyTeam->getItems(["positionRow" => $rowToAttack, "hitpoints>" => 0,]), $enemyTeam->name);
+    } else {
+      $enemies = $enemyTeam;
+    }
     $target = $enemies->getLowestHpCharacter();
     if(!is_null($target)) {
       return $target;
