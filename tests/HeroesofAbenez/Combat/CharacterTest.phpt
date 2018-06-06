@@ -37,7 +37,7 @@ final class CharacterTest extends \Tester\TestCase {
       "dexterity" => 10, "constitution" => 10, "intelligence" => 10, "charisma" => 10
     ];
     $equipment = new Equipment([
-      "id" => 1, "name" => "Novice Sword", "slot" => Equipment::SLOT_WEAPON, "type" => Equipment::TYPE_SWORD,
+      "id" => 1, "name" => "Novice Helmet", "slot" => Equipment::SLOT_HELMET, "type" => null,
       "strength" => 1, "worn" => true
     ]);
     $character = new Character($stats, [$equipment]);

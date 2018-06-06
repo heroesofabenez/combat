@@ -25,15 +25,6 @@ class Equipment implements ICharacterEffectsProvider {
   public const SLOT_SHIELD = "shield";
   public const SLOT_AMULET = "amulet";
   public const SLOT_HELMET = "helmet";
-  public const TYPE_SWORD = "sword";
-  public const TYPE_AXE = "axe";
-  public const TYPE_CLUB = "club";
-  public const TYPE_DAGGER = "dagger";
-  public const TYPE_SPEAR = "spear";
-  public const TYPE_STAFF = "staff";
-  public const TYPE_BOW = "bow";
-  public const TYPE_CROSSBOW = "crossbow";
-  public const TYPE_THROWING_KNIFE = "throwing knife";
   
   /** @var int */
   protected $id;
@@ -69,10 +60,7 @@ class Equipment implements ICharacterEffectsProvider {
     $resolver->setAllowedValues("slot", function(string $value) {
       return in_array($value, $this->getAllowedSlots(), true);
     });
-    $resolver->setAllowedTypes("type", ["string", "null"]);
-    $resolver->setAllowedValues("type", function(?string $value) {
-      return is_null($value) OR in_array($value, $this->getAllowedTypes(), true);
-    });
+    $resolver->setAllowedTypes("type", ["null"]);
     $resolver->setAllowedTypes("strength", "integer");
     $resolver->setAllowedValues("strength", function(int $value) {
       return ($value >= 0);
@@ -82,10 +70,6 @@ class Equipment implements ICharacterEffectsProvider {
   
   protected function getAllowedSlots(): array {
     return Constants::getConstantsValues(static::class, "SLOT_");
-  }
-  
-  protected function getAllowedTypes(): array {
-    return Constants::getConstantsValues(static::class, "TYPE_");
   }
   
   public function getId(): int {

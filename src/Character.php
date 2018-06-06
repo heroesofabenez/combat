@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Structure for single character
- * 
+ *
  * @author Jakub Konečný
  * @property-read int|string $id
  * @property-read string $name
@@ -161,7 +161,7 @@ class Character {
   protected $positionColumn = 0;
   
   /**
-   * 
+   *
    * @param array $stats Stats of the character
    * @param Equipment[] $equipment Equipment of the character
    * @param Pet[] $pets Pets owned by the character
@@ -524,14 +524,14 @@ class Character {
         continue;
       }
       switch($item->type) {
-        case Equipment::TYPE_STAFF:
+        case Weapon::TYPE_STAFF:
           $stat = static::STAT_INTELLIGENCE;
           break;
-        case Equipment::TYPE_CLUB:
+        case Weapon::TYPE_CLUB:
           $stat = static::STAT_CONSTITUTION;
           break;
-        case Equipment::TYPE_BOW:
-        case Equipment::TYPE_THROWING_KNIFE:
+        case Weapon::TYPE_BOW:
+        case Weapon::TYPE_THROWING_KNIFE:
           $stat = static::STAT_DEXTERITY;
           break;
       }

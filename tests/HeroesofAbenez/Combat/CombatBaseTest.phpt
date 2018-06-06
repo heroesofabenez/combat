@@ -26,7 +26,7 @@ final class CombatBaseTest extends \Tester\TestCase {
       "id" => $id, "deployed" => true, "bonusStat" => "strength", "bonusValue" => 10
     ];
     $weaponStats = [
-      "id" => 1, "name" => "Novice sword", "slot" => Equipment::SLOT_WEAPON, "type" => Equipment::TYPE_SWORD,
+      "id" => 1, "name" => "Novice sword", "slot" => Equipment::SLOT_WEAPON, "type" => Weapon::TYPE_SWORD,
       "strength" => 1, "worn" => true,
     ];
     $attackSkillStats = [
@@ -42,7 +42,7 @@ final class CombatBaseTest extends \Tester\TestCase {
       new CharacterAttackSkill(new SkillAttack($attackSkillStats), 1),
       new CharacterSpecialSkill(new SkillSpecial($specialSkillStats), 1),
     ];
-    return new Character($stats, [new Equipment($weaponStats)], [new Pet($petStats)], $skills);
+    return new Character($stats, [new Weapon($weaponStats)], [new Pet($petStats)], $skills);
   }
   
   public function testInvalidStates() {

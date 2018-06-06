@@ -10,7 +10,7 @@ use Tester\Assert;
 final class EquipmentTest extends \Tester\TestCase {
   public function testGetCombatEffects() {
     $equipment = new Equipment([
-      "id" => 1, "name" => "Novice Sword", "slot" => Equipment::SLOT_WEAPON, "type" => Equipment::TYPE_SWORD,
+      "id" => 1, "name" => "Novice Helmet", "slot" => Equipment::SLOT_HELMET, "type" => null,
       "strength" => 1, "worn" => false,
     ]);
     Assert::count(0, $equipment->getCombatEffects());
