@@ -31,7 +31,7 @@ class Weapon extends Equipment {
   
   protected function configureOptions(OptionsResolver $resolver): void {
     parent::configureOptions($resolver);
-    $resolver->setAllowedTypes("type", ["string"]);
+    $resolver->setAllowedTypes("type", "string");
     $resolver->setAllowedValues("type", function(string $value) {
       return in_array($value, $this->getAllowedTypes(), true);
     });

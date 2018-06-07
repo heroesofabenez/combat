@@ -60,7 +60,7 @@ class Equipment implements ICharacterEffectsProvider {
     $resolver->setAllowedValues("slot", function(string $value) {
       return in_array($value, $this->getAllowedSlots(), true);
     });
-    $resolver->setAllowedTypes("type", ["null"]);
+    $resolver->setAllowedTypes("type", "null");
     $resolver->setDefault("type", null);
     $resolver->setAllowedTypes("strength", "integer");
     $resolver->setAllowedValues("strength", function(int $value) {
