@@ -23,23 +23,19 @@ final class StaticSuccessCalculatorTest extends \Tester\TestCase {
     return new Character($stats);
   }
   
-  public function testCalculateHitChance() {
+  public function testHasHit() {
     $character1 = $this->generateCharacter(1);
     $character2 = $this->generateCharacter(2);
     for($i = 1; $i <= 10; $i++) {
-      Assert::same(100, $this->calculator->calculateHitChance($character1, $character2));
+      Assert::true($this->calculator->hasHit($character1, $character2));
     }
   }
   
-  public function testCalculateHealingSuccessChance() {
+  public function testHasHealed() {
     $character1 = $this->generateCharacter(1);
     for($i = 1; $i <= 10; $i++) {
-      Assert::same(100, $this->calculator->calculateHealingSuccessChance($character1));
+      Assert::true($this->calculator->hasHealed($character1));
     }
-  }
-  
-  public function testHasHit() {
-    Assert::true($this->calculator->hasHit(0));
   }
 }
 

@@ -534,29 +534,13 @@ class CombatBase {
   }
   
   /**
-   * Calculate hit chance for attack/skill attack
-   */
-  protected function calculateHitChance(Character $character1, Character $character2, CharacterAttackSkill $skill = null): int {
-    $hitChance = $this->successCalculator->calculateHitChance($character1, $character2, $skill);
-    return Numbers::range($hitChance, ISuccessCalculator::MIN_HIT_CHANCE, ISuccessCalculator::MAX_HIT_CHANCE);
-  }
-  
-  /**
-   * Check whether action succeeded
-   */
-  protected function hasHit(int $hitChance): bool {
-    return $this->successCalculator->hasHit($hitChance);
-  }
-  
-  /**
    * Do an attack
    * Hit chance = Attacker's hit - Defender's dodge, but at least 15%
    * Damage = Attacker's damage - defender's defense
    */
   public function attackHarm(Character $attacker, Character $defender): void {
     $result = [];
-    $hitChance = $this->calculateHitChance($attacker, $defender);
-    $result["result"] = $this->hasHit($hitChance);
+    $result["result"] = $this->successCalculator->hasHit($attacker, $defender);
     $result["amount"] = 0;
     if($result["result"]) {
       $amount = $attacker->damage - $defender->defense;
@@ -578,8 +562,7 @@ class CombatBase {
    */
   public function useAttackSkill(Character $attacker, Character $defender, CharacterAttackSkill $skill): void {
     $result = [];
-    $hitChance = $this->calculateHitChance($attacker, $defender, $skill);
-    $result["result"] = $this->hasHit($hitChance);
+    $result["result"] = $this->successCalculator->hasHit($attacker, $defender, $skill);
     $result["amount"] = 0;
     if($result["result"]) {
       $amount = (int) ($attacker->damage - $defender->defense / 100 * $skill->damage);
@@ -623,9 +606,7 @@ class CombatBase {
    */
   public function heal(Character $healer, Character $patient): void {
     $result = [];
-    $hitChance = $this->successCalculator->calculateHealingSuccessChance($healer);
-    $hitChance = Numbers::range($hitChance, 0, 100);
-    $result["result"] = $this->successCalculator->hasHit($hitChance);
+    $result["result"] = $this->successCalculator->hasHealed($healer);
     $amount = ($result["result"]) ? (int) ($healer->intelligence / 2) : 0;
     $result["amount"] = Numbers::range($amount, 0, $patient->maxHitpoints - $patient->hitpoints);
     if($result["amount"]) {

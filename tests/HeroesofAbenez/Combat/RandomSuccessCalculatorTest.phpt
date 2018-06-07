@@ -23,23 +23,22 @@ final class RandomSuccessCalculatorTest extends \Tester\TestCase {
     return new Character($stats);
   }
   
-  public function testCalculateHitChance() {
+  public function testHasHit() {
     $character1 = $this->generateCharacter(1);
     $character2 = $this->generateCharacter(2);
-    for($i = 1; $i <= 10; $i++) {
-      Assert::notSame(0, $this->calculator->calculateHitChance($character1, $character2));
-    }
+    Assert::type("bool", $this->calculator->hasHit($character1, $character2));
+    $skillData = [
+      "id" => 1, "name" => "Skill Attack", "baseDamage" => "120%", "damageGrowth" => "2%", "levels" => 5,
+      "target" => SkillAttack::TARGET_SINGLE, "strikes" => 1, "hitRate" => "100%",
+    ];
+    $skill = new SkillAttack($skillData);
+    $characterSkill = new CharacterAttackSkill($skill, 1);
+    Assert::type("bool", $this->calculator->hasHit($character1, $character2, $characterSkill));
   }
   
-  public function testCalculateHealingSuccessChance() {
+  public function testHasHealed() {
     $character1 = $this->generateCharacter(1);
-    for($i = 1; $i <= 10; $i++) {
-      Assert::notSame(0, $this->calculator->calculateHealingSuccessChance($character1));
-    }
-  }
-  
-  public function testHasHit() {
-    Assert::type("bool", $this->calculator->hasHit(0));
+    Assert::type("bool", $this->calculator->hasHealed($character1));
   }
 }
 

@@ -9,15 +9,11 @@ namespace HeroesofAbenez\Combat;
  * @author Jakub Konečný
  */
 final class StaticSuccessCalculator implements ISuccessCalculator {
-  public function calculateHitChance(Character $character1, Character $character2, ?CharacterAttackSkill $skill = null): int {
-    return static::MAX_HIT_CHANCE;
+  public function hasHit(Character $character1, Character $character2, ?CharacterAttackSkill $skill = null): bool {
+    return true;
   }
   
-  public function calculateHealingSuccessChance(Character $healer): int {
-    return static::MAX_HIT_CHANCE;
-  }
-  
-  public function hasHit(int $hitChance): bool {
+  public function hasHealed(Character $healer): bool {
     return true;
   }
 }
