@@ -394,6 +394,9 @@ class CombatBase {
     return new Team("healers");
   }
   
+  /**
+   * @throws NotImplementedException
+   */
   protected function doAttackSkill(Character $character, CharacterAttackSkill $skill): void {
     $targets = [];
     /** @var Character $primaryTarget */
@@ -418,6 +421,9 @@ class CombatBase {
     }
   }
   
+  /**
+   * @throws NotImplementedException
+   */
   protected function doSpecialSkill(Character $character, CharacterSpecialSkill $skill): void {
     $targets = [];
     switch($skill->skill->target) {
@@ -443,6 +449,8 @@ class CombatBase {
   
   /**
    * Main stage of a round
+   *
+   * @throws NotImplementedException
    */
   public function mainStage(self $combat): void {
     /** @var Character[] $characters */
