@@ -13,13 +13,6 @@ use Nexendrie\Utils\Constants;
 final class CombatActionSelector implements ICombatActionSelector {
   use \Nette\SmartObject;
   
-  public function getAllowedActions(): array {
-    $allowedActions = Constants::getConstantsValues(CombatAction::class, "ACTION_");
-    return array_values(array_filter($allowedActions, function(string $value) {
-      return ($value !== CombatAction::ACTION_POISON);
-    }));
-  }
-  
   public function chooseAction(CombatBase $combat, Character $character): ?string {
     if($character->hitpoints < 1) {
       return null;

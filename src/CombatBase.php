@@ -452,9 +452,6 @@ class CombatBase {
     });
     foreach($characters as $character) {
       $action = $combat->actionSelector->chooseAction($combat, $character);
-      if(!in_array($action, $this->actionSelector->getAllowedActions(), true)) {
-        continue;
-      }
       switch($action) {
         case CombatAction::ACTION_ATTACK:
           $combat->onAttack($character, $combat->selectAttackTarget($character));
@@ -472,6 +469,8 @@ class CombatBase {
         case CombatAction::ACTION_HEALING:
           $combat->onHeal($character, $combat->selectHealingTarget($character));
           break;
+        default:
+          throw new NotImplementedException("Action $action is not implemented.");
       }
     }
   }

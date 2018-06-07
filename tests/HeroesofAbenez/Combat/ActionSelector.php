@@ -9,10 +9,6 @@ namespace HeroesofAbenez\Combat;
  * @author Jakub Konečný
  */
 final class ActionSelector implements ICombatActionSelector {
-  public function getAllowedActions(): array {
-    return [];
-  }
-  
   public function chooseAction(CombatBase $combat, Character $character): ?string {
     return null;
   }
