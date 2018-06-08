@@ -436,6 +436,18 @@ class Character {
   }
   
   /**
+   * @internal
+   */
+  public function applyEffectProviders(): void {
+    foreach($this->effectProviders as $item) {
+      $effects = $item->getCombatEffects();
+      array_walk($effects, function(CharacterEffect $effect) {
+        $this->addEffect($effect);
+      });
+    }
+  }
+  
+  /**
    * Applies new effect on the character
    */
   public function addEffect(CharacterEffect $effect): void {

@@ -207,12 +207,7 @@ class CombatBase {
     /** @var Character[] $characters */
     $characters = array_merge($combat->team1->toArray(), $combat->team2->toArray());
     foreach($characters as $character) {
-      foreach($character->effectProviders as $item) {
-        $effects = $item->getCombatEffects();
-        array_walk($effects, function(CharacterEffect $effect) use($character) {
-          $character->addEffect($effect);
-        });
-      }
+      $character->applyEffectProviders();
     }
   }
   
