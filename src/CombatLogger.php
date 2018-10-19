@@ -54,7 +54,7 @@ final class CombatLogger implements \Countable, \IteratorAggregate {
     return $this->round;
   }
   
-  public function setRound(int $round) {
+  public function setRound(int $round): void {
     $this->round = $round;
   }
   

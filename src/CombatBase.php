@@ -144,7 +144,7 @@ class CombatBase {
     return $this->victoryCondition;
   }
   
-  public function setVictoryCondition(callable $victoryCondition) {
+  public function setVictoryCondition(callable $victoryCondition): void {
     $this->victoryCondition = $victoryCondition;
   }
   
@@ -152,7 +152,7 @@ class CombatBase {
     return $this->healers;
   }
   
-  public function setHealers(callable $healers) {
+  public function setHealers(callable $healers): void {
     $this->healers = $healers;
   }
   
@@ -259,7 +259,9 @@ class CombatBase {
     $characters = array_merge($combat->team1->toArray(), $combat->team2->toArray());
     foreach($characters as $character) {
       foreach($character->effects as $effect) {
-        $effect->duration--;
+        if(is_int($effect->duration)) {
+          $effect->duration--;
+        }
       }
     }
   }
@@ -407,7 +409,7 @@ class CombatBase {
         $targets = $this->getTeam($primaryTarget)->getItems(["positionColumn" => $primaryTarget->positionColumn]);
         break;
       default:
-        throw new NotImplementedException("Target $skill->skill->target for attack skills is not implemented.");
+        throw new NotImplementedException("Target {$skill->skill->target} for attack skills is not implemented.");
     }
     foreach($targets as $target) {
       for($i = 1; $i <= $skill->skill->strikes; $i++) {
@@ -435,7 +437,7 @@ class CombatBase {
         $targets = $this->getEnemyTeam($character)->toArray();
         break;
       default:
-        throw new NotImplementedException("Target $skill->skill->target for special skills is not implemented.");
+        throw new NotImplementedException("Target {$skill->skill->target} for special skills is not implemented.");
     }
     foreach($targets as $target) {
       $this->onSkillSpecial($character, $target, $skill);
@@ -563,7 +565,7 @@ class CombatBase {
       $amount = (int) ($attacker->damage - $defender->defense / 100 * $skill->damage);
       $result["amount"] = Numbers::range($amount, 0, $defender->hitpoints);
     }
-    if($result["amount"]) {
+    if($result["amount"] > 0) {
       $defender->harm($result["amount"]);
     }
     $result["action"] = CombatAction::ACTION_SKILL_ATTACK;
@@ -604,7 +606,7 @@ class CombatBase {
     $result["result"] = $this->successCalculator->hasHealed($healer);
     $amount = ($result["result"]) ? (int) ($healer->intelligence / 2) : 0;
     $result["amount"] = Numbers::range($amount, 0, $patient->maxHitpoints - $patient->hitpoints);
-    if($result["amount"]) {
+    if($result["amount"] > 0) {
       $patient->heal($result["amount"]);
     }
     $result["action"] = CombatAction::ACTION_HEALING;

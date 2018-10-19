@@ -37,7 +37,7 @@ abstract class BaseCharacterSkill {
     return $this->cooldown;
   }
   
-  public function setLevel(int $level) {
+  public function setLevel(int $level): void {
     $this->level = Numbers::range($level, 1, $this->skill->levels);
   }
   

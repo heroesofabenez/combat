@@ -151,7 +151,7 @@ class CharacterEffect {
    * @param string|int $value
    * @throws \InvalidArgumentException
    */
-  public function setDuration($value) {
+  public function setDuration($value): void {
     if(!is_int($value) AND !in_array($value, $this->getDurations(), true)) {
       throw new \InvalidArgumentException("Invalid value set to CharacterEffect::\$duration. Expected string or integer.");
     }
