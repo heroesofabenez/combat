@@ -474,6 +474,8 @@ class CombatBase {
         case CombatAction::ACTION_HEALING:
           $combat->onHeal($character, $combat->selectHealingTarget($character));
           break;
+        case null:
+          break;
         default:
           throw new NotImplementedException("Action $action is not implemented.");
       }
