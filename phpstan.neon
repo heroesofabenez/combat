@@ -10,3 +10,4 @@ parameters:
         - '#Instanceof between HeroesofAbenez\\Combat\\Equipment and HeroesofAbenez\\Combat\\Equipment will always evaluate to true#'
         - '#Instanceof between HeroesofAbenez\\Combat\\Pet and HeroesofAbenez\\Combat\\Pet will always evaluate to true#'
         - '#Instanceof between HeroesofAbenez\\Combat\\BaseCharacterSkill and HeroesofAbenez\\Combat\\BaseCharacterSkill will always evaluate to true#'
+        - '#Method HeroesofAbenez\\Combat\\Team::setCharacterPosition\(\) has parameter \$id with no typehint specified#'
