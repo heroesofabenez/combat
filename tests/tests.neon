@@ -3,6 +3,7 @@ application:
 services:
     testbench.presenterMock: Testbench\Mocks\PresenterMock
     combatLogger: HeroesofAbenez\Combat\CombatLogger
+    combatLogRender: HeroesofAbenez\Combat\TextCombatLogRender
 extensions:
     translation: Nexendrie\Translation\Bridges\NetteDI\TranslationExtension
 translation:

@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-use Nette\Bridges\ApplicationLatte\ILatteFactory;
 use Nette\Localization\ITranslator;
 
 /**
@@ -12,13 +11,12 @@ use Nette\Localization\ITranslator;
  * @author Jakub Konečný
  * @property int $round Current round
  * @property string $title
- * @property string $template
  */
 final class CombatLogger implements \Countable, \IteratorAggregate {
   use \Nette\SmartObject;
-  
-  /** @var \Latte\Engine */
-  protected $latte;
+
+  /** @var ICombatLogRender */
+  protected $render;
   /** @var ITranslator */
   protected $translator;
   /** @var Team First team */
@@ -31,11 +29,9 @@ final class CombatLogger implements \Countable, \IteratorAggregate {
   protected $round;
   /** @var string */
   protected $title = "";
-  /** @var string */
-  protected $template = __DIR__ . "/CombatLog.latte";
   
-  public function __construct(ILatteFactory $latteFactory, ITranslator $translator) {
-    $this->latte = $latteFactory->create();
+  public function __construct(ICombatLogRender $render, ITranslator $translator) {
+    $this->render = $render;
     $this->translator = $translator;
   }
   
@@ -65,21 +61,7 @@ final class CombatLogger implements \Countable, \IteratorAggregate {
   public function setTitle(string $title): void {
     $this->title = $title;
   }
-  
-  public function getTemplate(): string {
-    return $this->template;
-  }
-  
-  /**
-   * @throws \RuntimeException
-   */
-  public function setTemplate(string $template): void {
-    if(!is_file($template)) {
-      throw new \RuntimeException("File $template does not exist.");
-    }
-    $this->template = $template;
-  }
-  
+
   /**
    * Adds new entry
    */
@@ -98,7 +80,7 @@ final class CombatLogger implements \Countable, \IteratorAggregate {
     $params = [
       "team1" => $this->team1, "team2" => $this->team2, "actions" => $this->actions, "title" => $this->title,
     ];
-    return $this->latte->renderToString($this->template, $params);
+    return $this->render->render($params);
   }
   
   public function count(): int {
