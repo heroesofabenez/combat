@@ -46,29 +46,8 @@ class CharacterEffect {
   public $onRemove = [];
   
   public function __construct(array $effect) {
-    $allStats = ["id", "type", "source", "value", "duration", "stat",];
     $resolver = new OptionsResolver();
-    $resolver->setRequired($allStats);
-    $resolver->setAllowedTypes("id", "string");
-    $resolver->setAllowedTypes("type", "string");
-    $resolver->setAllowedValues("type", function(string $value) {
-      return in_array($value, $this->getAllowedTypes(), true);
-    });
-    $resolver->setAllowedTypes("stat", "string");
-    $resolver->setDefault("stat", "");
-    $resolver->setAllowedValues("stat", function(string $value) {
-      return $value === "" OR in_array($value, $this->getAllowedStats(), true);
-    });
-    $resolver->setAllowedTypes("source", "string");
-    $resolver->setAllowedValues("source", function(string $value) {
-      return in_array($value, $this->getAllowedSources(), true);
-    });
-    $resolver->setAllowedTypes("value", "integer");
-    $resolver->setDefault("value", 0);
-    $resolver->setAllowedTypes("duration", ["string", "integer"]);
-    $resolver->setAllowedValues("duration", function($value) {
-      return (in_array($value, $this->getDurations(), true)) OR ($value > 0);
-    });
+    $this->configureOptions($resolver);
     $effect = $resolver->resolve($effect);
     if(!in_array($effect["type"], SkillSpecial::NO_STAT_TYPES, true) AND $effect["stat"] === "") {
       throw new \InvalidArgumentException("The option stat with value '' is invalid.");
@@ -91,6 +70,31 @@ class CharacterEffect {
         $character->harm($effect->value);
       }
     };
+  }
+
+  protected function configureOptions(OptionsResolver $resolver): void {
+    $allStats = ["id", "type", "source", "value", "duration", "stat",];
+    $resolver->setRequired($allStats);
+    $resolver->setAllowedTypes("id", "string");
+    $resolver->setAllowedTypes("type", "string");
+    $resolver->setAllowedValues("type", function(string $value) {
+      return in_array($value, $this->getAllowedTypes(), true);
+    });
+    $resolver->setAllowedTypes("stat", "string");
+    $resolver->setDefault("stat", "");
+    $resolver->setAllowedValues("stat", function(string $value) {
+      return $value === "" OR in_array($value, $this->getAllowedStats(), true);
+    });
+    $resolver->setAllowedTypes("source", "string");
+    $resolver->setAllowedValues("source", function(string $value) {
+      return in_array($value, $this->getAllowedSources(), true);
+    });
+    $resolver->setAllowedTypes("value", "integer");
+    $resolver->setDefault("value", 0);
+    $resolver->setAllowedTypes("duration", ["string", "integer"]);
+    $resolver->setAllowedValues("duration", function($value) {
+      return (in_array($value, $this->getDurations(), true)) OR ($value > 0);
+    });
   }
   
   protected function getAllowedStats(): array {

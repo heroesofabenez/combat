@@ -46,8 +46,21 @@ class CombatAction {
   protected $message;
   
   public function __construct(ITranslator $translator, array $action) {
-    $requiredStats = ["action", "result", "character1", "character2",];
     $resolver = new OptionsResolver();
+    $this->configureOptions($resolver);
+    $action = $resolver->resolve($action);
+    $this->translator = $translator;
+    $this->action = $action["action"];
+    $this->result = $action["result"];
+    $this->amount = $action["amount"];
+    $this->character1 = $action["character1"];
+    $this->character2 = $action["character2"];
+    $this->name = $action["name"];
+    $this->parse();
+  }
+
+  protected function configureOptions(OptionsResolver $resolver): void {
+    $requiredStats = ["action", "result", "character1", "character2",];
     $resolver->setDefined(["amount", "name",]);
     $resolver->setRequired($requiredStats);
     $resolver->setAllowedTypes("action", "string");
@@ -61,17 +74,8 @@ class CombatAction {
     $resolver->setDefault("name", "");
     $resolver->setAllowedTypes("character1", Character::class);
     $resolver->setAllowedTypes("character2", Character::class);
-    $action = $resolver->resolve($action);
-    $this->translator = $translator;
-    $this->action = $action["action"];
-    $this->result = $action["result"];
-    $this->amount = $action["amount"];
-    $this->character1 = $action["character1"];
-    $this->character2 = $action["character2"];
-    $this->name = $action["name"];
-    $this->parse();
   }
-  
+
   /**
    * @return string[]
    */

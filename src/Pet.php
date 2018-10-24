@@ -27,8 +27,17 @@ class Pet implements ICharacterEffectsProvider {
   protected $bonusValue;
   
   public function __construct(array $data) {
-    $allStats = ["id", "deployed", "bonusStat", "bonusValue",];
     $resolver = new OptionsResolver();
+    $this->configureOptions($resolver);
+    $data = $resolver->resolve($data);
+    $this->id = $data["id"];
+    $this->deployed = $data["deployed"];
+    $this->bonusStat = $data["bonusStat"];
+    $this->bonusValue = $data["bonusValue"];
+  }
+
+  protected function configureOptions(OptionsResolver $resolver): void {
+    $allStats = ["id", "deployed", "bonusStat", "bonusValue",];
     $resolver->setRequired($allStats);
     $resolver->setAllowedTypes("id", "integer");
     $resolver->setAllowedTypes("deployed", "boolean");
@@ -40,11 +49,6 @@ class Pet implements ICharacterEffectsProvider {
     $resolver->setAllowedValues("bonusValue", function(int $value) {
       return ($value >= 0);
     });
-    $data = $resolver->resolve($data);
-    $this->id = $data["id"];
-    $this->deployed = $data["deployed"];
-    $this->bonusStat = $data["bonusStat"];
-    $this->bonusValue = $data["bonusValue"];
   }
   
   protected function getAllowedStats(): array {
