@@ -34,10 +34,6 @@ class SkillAttack extends BaseSkill {
     $data = $resolver->resolve($data);
     $this->id = $data["id"];
     $this->name = $data["name"];
-    $this->description = $data["description"];
-    $this->neededClass = $data["neededClass"];
-    $this->neededSpecialization = $data["neededSpecialization"];
-    $this->neededLevel = $data["neededLevel"];
     $this->baseDamage = $data["baseDamage"];
     $this->damageGrowth = $data["damageGrowth"];
     $this->levels = $data["levels"];

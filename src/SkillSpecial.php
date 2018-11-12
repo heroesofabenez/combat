@@ -45,10 +45,6 @@ class SkillSpecial extends BaseSkill {
     $data = $resolver->resolve($data);
     $this->id = $data["id"];
     $this->name = $data["name"];
-    $this->description = $data["description"];
-    $this->neededClass = $data["neededClass"];
-    $this->neededSpecialization = $data["neededSpecialization"];
-    $this->neededLevel = $data["neededLevel"];
     $this->type = $data["type"];
     $this->target = $data["target"];
     $this->stat = $data["stat"];

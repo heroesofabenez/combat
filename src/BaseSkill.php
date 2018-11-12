@@ -42,17 +42,8 @@ abstract class BaseSkill {
   
   protected function configureOptions(OptionsResolver $resolver): void {
     $resolver->setRequired(["id", "name", "target", "levels",]);
-    $resolver->setDefined(["description", "neededClass", "neededSpecialization", "neededLevel",]);
     $resolver->setAllowedTypes("id", "int");
     $resolver->setAllowedTypes("name", "string");
-    $resolver->setAllowedTypes("description", "string");
-    $resolver->setDefault("description", "");
-    $resolver->setAllowedTypes("neededClass", "integer");
-    $resolver->setDefault("neededClass", 1);
-    $resolver->setAllowedTypes("neededSpecialization", ["integer", "null"]);
-    $resolver->setDefault("neededSpecialization", null);
-    $resolver->setAllowedTypes("neededLevel", "integer");
-    $resolver->setDefault("neededLevel", 1);
     $resolver->setAllowedTypes("target", "string");
     $resolver->setAllowedValues("target", function(string $value) {
       return in_array($value, $this->getAllowedTargets(), true);
@@ -75,22 +66,6 @@ abstract class BaseSkill {
   
   public function getName(): string {
     return $this->name;
-  }
-  
-  public function getDescription(): string {
-    return $this->description;
-  }
-  
-  public function getNeededClass(): int {
-    return $this->neededClass;
-  }
-  
-  public function getNeededSpecialization(): ?int {
-    return $this->neededSpecialization;
-  }
-  
-  public function getNeededLevel(): int {
-    return $this->neededLevel;
   }
   
   public function getTarget(): string {
