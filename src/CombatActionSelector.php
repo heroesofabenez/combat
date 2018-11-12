@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-use Nexendrie\Utils\Constants;
-
 /**
  * CombatActionSelector
  *
