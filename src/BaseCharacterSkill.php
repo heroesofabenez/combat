@@ -38,7 +38,7 @@ abstract class BaseCharacterSkill {
   }
   
   public function setLevel(int $level): void {
-    $this->level = Numbers::range($level, 1, $this->skill->levels);
+    $this->level = Numbers::range($level, 0, $this->skill->levels);
   }
   
   public function getSkillType(): string {
