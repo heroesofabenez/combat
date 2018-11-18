@@ -194,12 +194,18 @@ class CombatBase {
     }
     return $result;
   }
-  
-  protected function getTeam(Character $character): Team {
+
+  /**
+   * @internal
+   */
+  public function getTeam(Character $character): Team {
     return $this->team1->hasItems(["id" => $character->id]) ? $this->team1 : $this->team2;
   }
-  
-  protected function getEnemyTeam(Character $character): Team {
+
+  /**
+   * @internal
+   */
+  public function getEnemyTeam(Character $character): Team {
     return $this->team1->hasItems(["id" => $character->id]) ? $this->team2 : $this->team1;
   }
   
