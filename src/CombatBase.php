@@ -413,7 +413,7 @@ class CombatBase {
       foreach($this->combatActions as $combatAction) {
         if($combatAction->getName() === $action) {
           $combatAction->do($this, $character);
-          break 2;
+          continue 2;
         }
       }
       throw new NotImplementedException("Action $action is not implemented.");
