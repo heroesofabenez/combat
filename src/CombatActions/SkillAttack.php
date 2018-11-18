@@ -16,6 +16,21 @@ final class SkillAttack implements ICombatAction {
     return CombatLogEntry::ACTION_SKILL_ATTACK;
   }
 
+  public function getPriority(): int {
+    return 1001;
+  }
+
+  public function shouldUse(CombatBase $combat, Character $character): bool {
+    $attackTarget = $combat->selectAttackTarget($character);
+    if(is_null($attackTarget)) {
+      return false;
+    }
+    if(count($character->usableSkills) < 1) {
+      return false;
+    }
+    return ($character->usableSkills[0] instanceof CharacterAttackSkill);
+  }
+
   protected function doSingleAttack(Character $attacker, Character $defender, CharacterAttackSkill $skill, CombatBase $combat): void {
     $result = [];
     $result["result"] = $combat->successCalculator->hasHit($attacker, $defender, $skill);

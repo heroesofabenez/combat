@@ -16,6 +16,21 @@ final class SkillSpecial implements ICombatAction {
     return CombatLogEntry::ACTION_SKILL_SPECIAL;
   }
 
+  public function getPriority(): int {
+    return 1000;
+  }
+
+  public function shouldUse(CombatBase $combat, Character $character): bool {
+    $attackTarget = $combat->selectAttackTarget($character);
+    if(is_null($attackTarget)) {
+      return false;
+    }
+    if(count($character->usableSkills) < 1) {
+      return false;
+    }
+    return ($character->usableSkills[0] instanceof CharacterSpecialSkill);
+  }
+
   protected function doSingleTarget(Character $character1, Character $target, CharacterSpecialSkill $skill, CombatBase $combat): void {
     $result = [
       "result" => true, "amount" => 0, "action" => CombatLogEntry::ACTION_SKILL_SPECIAL, "name" => $skill->skill->name,

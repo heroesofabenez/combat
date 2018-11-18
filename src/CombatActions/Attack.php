@@ -13,6 +13,14 @@ final class Attack implements ICombatAction {
     return CombatLogEntry::ACTION_ATTACK;
   }
 
+  public function getPriority(): int {
+    return 0;
+  }
+
+  public function shouldUse(CombatBase $combat, Character $character): bool {
+    return true;
+  }
+
   /**
    * Do an attack
    * Hit chance = Attacker's hit - Defender's dodge, but at least 15%

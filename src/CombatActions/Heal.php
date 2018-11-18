@@ -13,6 +13,14 @@ final class Heal implements ICombatAction {
     return CombatLogEntry::ACTION_HEALING;
   }
 
+  public function getPriority(): int {
+    return 1000;
+  }
+
+  public function shouldUse(CombatBase $combat, Character $character): bool {
+    return (in_array($character, $combat->findHealers()->toArray(), true) AND !is_null($combat->selectHealingTarget($character)));
+  }
+
   public function do(CombatBase $combat, Character $character): void {
     $result = [];
     /** @var Character $patient */
