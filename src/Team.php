@@ -103,12 +103,9 @@ final class Team extends Collection {
     return $characters[$roll];
   }
   
-  public function getLowestHpCharacter(float $threshold = null): ?Character {
+  public function getLowestHpCharacter(float $threshold = self::LOWEST_HP_THRESHOLD): ?Character {
     $lowestHp = PHP_INT_MAX;
     $lowestIndex = PHP_INT_MIN;
-    if(is_null($threshold)) {
-      $threshold = static::LOWEST_HP_THRESHOLD;
-    }
     if(count($this->aliveMembers) === 0) {
       return null;
     }
