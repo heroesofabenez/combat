@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace HeroesofAbenez\Combat;
 
 use Nexendrie\Utils\Numbers;
+use HeroesofAbenez\Combat\CombatActions\ICombatAction;
+use Nexendrie\Utils\Collection;
 
 /**
  * Handles combat
@@ -26,10 +28,6 @@ use Nexendrie\Utils\Numbers;
  * @method void onRoundStart(CombatBase $combat)
  * @method void onRound(CombatBase $combat)
  * @method void onRoundEnd(CombatBase $combat)
- * @method void onAttack(Character $attacker, Character $defender)
- * @method void onSkillAttack(Character $attacker, Character $defender, CharacterAttackSkill $skill)
- * @method void onSkillSpecial(Character $character1, Character $target, CharacterSpecialSkill $skill)
- * @method void onHeal(Character $healer, Character $patient)
  */
 class CombatBase {
   use \Nette\SmartObject;
@@ -56,14 +54,6 @@ class CombatBase {
   public $onRound = [];
   /** @var callable[] */
   public $onRoundEnd = [];
-  /** @var callable[] */
-  public $onAttack = [];
-  /** @var callable[] */
-  public $onSkillAttack = [];
-  /** @var callable[] */
-  public $onSkillSpecial = [];
-  /** @var callable[] */
-  public $onHeal = [];
   /** @var callable */
   protected $victoryCondition;
   /** @var callable */
@@ -72,6 +62,8 @@ class CombatBase {
   protected $successCalculator;
   /** @var ICombatActionSelector */
   protected $actionSelector;
+  /** @var Collection|ICombatAction[] */
+  public $combatActions;
   
   public function __construct(CombatLogger $logger, ?ISuccessCalculator $successCalculator = null, ?ICombatActionSelector $actionSelector = null) {
     $this->log = $logger;
@@ -88,16 +80,20 @@ class CombatBase {
     $this->onRound[] = [$this, "mainStage"];
     $this->onRoundEnd[] = [$this, "decreaseSkillsCooldowns"];
     $this->onRoundEnd[] = [$this, "resetInitiative"];
-    $this->onAttack[] = [$this, "attackHarm"];
-    $this->onSkillAttack[] = [$this, "useAttackSkill"];
-    $this->onSkillSpecial[] = [$this, "useSpecialSkill"];
-    $this->onHeal[] = [$this, "heal"];
     $this->victoryCondition = [VictoryConditions::class, "moreDamage"];
     $this->successCalculator = $successCalculator ?? new RandomSuccessCalculator();
     $this->actionSelector = $actionSelector ?? new CombatActionSelector();
     $this->healers = function(): Team {
       return new Team("healers");
     };
+    $this->combatActions = new class extends Collection {
+      /** @var string */
+      protected $class = ICombatAction::class;
+    };
+    $this->combatActions[] = new CombatActions\Attack();
+    $this->combatActions[] = new CombatActions\Heal();
+    $this->combatActions[] = new CombatActions\SkillAttack();
+    $this->combatActions[] = new CombatActions\SkillSpecial();
   }
   
   public function getRound(): int {
@@ -398,59 +394,6 @@ class CombatBase {
   }
   
   /**
-   * @throws NotImplementedException
-   */
-  protected function doAttackSkill(Character $character, CharacterAttackSkill $skill): void {
-    $targets = [];
-    /** @var Character $primaryTarget */
-    $primaryTarget = $this->selectAttackTarget($character);
-    switch($skill->skill->target) {
-      case SkillAttack::TARGET_SINGLE:
-        $targets[] = $primaryTarget;
-        break;
-      case SkillAttack::TARGET_ROW:
-        $targets = $this->getTeam($primaryTarget)->getItems(["positionRow" => $primaryTarget->positionRow]);
-        break;
-      case SkillAttack::TARGET_COLUMN:
-        $targets = $this->getTeam($primaryTarget)->getItems(["positionColumn" => $primaryTarget->positionColumn]);
-        break;
-      default:
-        throw new NotImplementedException("Target {$skill->skill->target} for attack skills is not implemented.");
-    }
-    foreach($targets as $target) {
-      for($i = 1; $i <= $skill->skill->strikes; $i++) {
-        $this->onSkillAttack($character, $target, $skill);
-      }
-    }
-  }
-  
-  /**
-   * @throws NotImplementedException
-   */
-  protected function doSpecialSkill(Character $character, CharacterSpecialSkill $skill): void {
-    $targets = [];
-    switch($skill->skill->target) {
-      case SkillSpecial::TARGET_ENEMY:
-        $targets[] = $this->selectAttackTarget($character);
-        break;
-      case SkillSpecial::TARGET_SELF:
-        $targets[] = $character;
-        break;
-      case SkillSpecial::TARGET_PARTY:
-        $targets = $this->getTeam($character)->toArray();
-        break;
-      case SkillSpecial::TARGET_ENEMY_PARTY:
-        $targets = $this->getEnemyTeam($character)->toArray();
-        break;
-      default:
-        throw new NotImplementedException("Target {$skill->skill->target} for special skills is not implemented.");
-    }
-    foreach($targets as $target) {
-      $this->onSkillSpecial($character, $target, $skill);
-    }
-  }
-  
-  /**
    * Main stage of a round
    *
    * @throws NotImplementedException
@@ -463,28 +406,17 @@ class CombatBase {
     });
     foreach($characters as $character) {
       $action = $combat->actionSelector->chooseAction($combat, $character);
-      switch($action) {
-        case CombatLogEntry::ACTION_ATTACK:
-          $combat->onAttack($character, $combat->selectAttackTarget($character));
-          break;
-        case CombatLogEntry::ACTION_SKILL_ATTACK:
-          /** @var CharacterAttackSkill $skill */
-          $skill = $character->usableSkills[0];
-          $combat->doAttackSkill($character, $skill);
-          break;
-        case CombatLogEntry::ACTION_SKILL_SPECIAL:
-          /** @var CharacterSpecialSkill $skill */
-          $skill = $character->usableSkills[0];
-          $combat->doSpecialSkill($character, $skill);
-          break;
-        case CombatLogEntry::ACTION_HEALING:
-          $combat->onHeal($character, $combat->selectHealingTarget($character));
-          break;
-        case null:
-          break;
-        default:
-          throw new NotImplementedException("Action $action is not implemented.");
+      if(is_null($action)) {
+        break;
       }
+      /** @var ICombatAction $combatAction */
+      foreach($this->combatActions as $combatAction) {
+        if($combatAction->getName() === $action) {
+          $combatAction->do($this, $character);
+          break 2;
+        }
+      }
+      throw new NotImplementedException("Action $action is not implemented.");
     }
   }
   
@@ -537,93 +469,7 @@ class CombatBase {
     $this->onCombatEnd($this);
     return $this->getWinner();
   }
-  
-  /**
-   * Do an attack
-   * Hit chance = Attacker's hit - Defender's dodge, but at least 15%
-   * Damage = Attacker's damage - defender's defense
-   */
-  public function attackHarm(Character $attacker, Character $defender): void {
-    $result = [];
-    $result["result"] = $this->successCalculator->hasHit($attacker, $defender);
-    $result["amount"] = 0;
-    if($result["result"]) {
-      $amount = $attacker->damage - $defender->defense;
-      $result["amount"] = Numbers::range($amount, 0, $defender->hitpoints);
-    }
-    if($result["amount"] > 0) {
-      $defender->harm($result["amount"]);
-    }
-    $result["action"] = CombatLogEntry::ACTION_ATTACK;
-    $result["name"] = "";
-    $result["character1"] = $attacker;
-    $result["character2"] = $defender;
-    $this->logDamage($attacker, $result["amount"]);
-    $this->log->log($result);
-  }
-  
-  /**
-   * Use an attack skill
-   */
-  public function useAttackSkill(Character $attacker, Character $defender, CharacterAttackSkill $skill): void {
-    $result = [];
-    $result["result"] = $this->successCalculator->hasHit($attacker, $defender, $skill);
-    $result["amount"] = 0;
-    if($result["result"]) {
-      $amount = (int) ($attacker->damage - $defender->defense / 100 * $skill->damage);
-      $result["amount"] = Numbers::range($amount, 0, $defender->hitpoints);
-    }
-    if($result["amount"] > 0) {
-      $defender->harm($result["amount"]);
-    }
-    $result["action"] = CombatLogEntry::ACTION_SKILL_ATTACK;
-    $result["name"] = $skill->skill->name;
-    $result["character1"] = $attacker;
-    $result["character2"] = $defender;
-    $this->logDamage($attacker, $result["amount"]);
-    $this->log->log($result);
-    $skill->resetCooldown();
-  }
-  
-  /**
-   * Use a special skill
-   */
-  public function useSpecialSkill(Character $character1, Character $target, CharacterSpecialSkill $skill): void {
-    $result = [
-      "result" => true, "amount" => 0, "action" => CombatLogEntry::ACTION_SKILL_SPECIAL, "name" => $skill->skill->name,
-      "character1" => $character1, "character2" => $target,
-    ];
-    $effect = new CharacterEffect([
-      "id" => "skill{$skill->skill->id}Effect",
-      "type" => $skill->skill->type,
-      "stat" => ((in_array($skill->skill->type, SkillSpecial::NO_STAT_TYPES, true)) ? null : $skill->skill->stat),
-      "value" => $skill->value,
-      "source" => CharacterEffect::SOURCE_SKILL,
-      "duration" => $skill->skill->duration,
-    ]);
-    $target->addEffect($effect);
-    $this->log->log($result);
-    $skill->resetCooldown();
-  }
-  
-  /**
-   * Heal a character
-   */
-  public function heal(Character $healer, Character $patient): void {
-    $result = [];
-    $result["result"] = $this->successCalculator->hasHealed($healer);
-    $amount = ($result["result"]) ? (int) ($healer->intelligence / 2) : 0;
-    $result["amount"] = Numbers::range($amount, 0, $patient->maxHitpoints - $patient->hitpoints);
-    if($result["amount"] > 0) {
-      $patient->heal($result["amount"]);
-    }
-    $result["action"] = CombatLogEntry::ACTION_HEALING;
-    $result["name"] = "";
-    $result["character1"] = $healer;
-    $result["character2"] = $patient;
-    $this->log->log($result);
-  }
-  
+
   /**
    * Harm poisoned characters at start of round
    */
