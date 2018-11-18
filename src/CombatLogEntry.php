@@ -19,7 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property-read int $amount
  * @property-read string $message
  */
-class CombatAction {
+class CombatLogEntry {
   use \Nette\SmartObject;
   
   public const ACTION_ATTACK = "attack";

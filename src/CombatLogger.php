@@ -66,7 +66,7 @@ final class CombatLogger implements \Countable, \IteratorAggregate {
    * Adds new entry
    */
   public function log(array $action): void {
-    $this->actions[$this->round][] = new CombatAction($this->translator, $action);
+    $this->actions[$this->round][] = new CombatLogEntry($this->translator, $action);
   }
   
   /**

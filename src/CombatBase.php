@@ -458,20 +458,20 @@ class CombatBase {
     foreach($characters as $character) {
       $action = $combat->actionSelector->chooseAction($combat, $character);
       switch($action) {
-        case CombatAction::ACTION_ATTACK:
+        case CombatLogEntry::ACTION_ATTACK:
           $combat->onAttack($character, $combat->selectAttackTarget($character));
           break;
-        case CombatAction::ACTION_SKILL_ATTACK:
+        case CombatLogEntry::ACTION_SKILL_ATTACK:
           /** @var CharacterAttackSkill $skill */
           $skill = $character->usableSkills[0];
           $combat->doAttackSkill($character, $skill);
           break;
-        case CombatAction::ACTION_SKILL_SPECIAL:
+        case CombatLogEntry::ACTION_SKILL_SPECIAL:
           /** @var CharacterSpecialSkill $skill */
           $skill = $character->usableSkills[0];
           $combat->doSpecialSkill($character, $skill);
           break;
-        case CombatAction::ACTION_HEALING:
+        case CombatLogEntry::ACTION_HEALING:
           $combat->onHeal($character, $combat->selectHealingTarget($character));
           break;
         case null:
@@ -548,7 +548,7 @@ class CombatBase {
     if($result["amount"] > 0) {
       $defender->harm($result["amount"]);
     }
-    $result["action"] = CombatAction::ACTION_ATTACK;
+    $result["action"] = CombatLogEntry::ACTION_ATTACK;
     $result["name"] = "";
     $result["character1"] = $attacker;
     $result["character2"] = $defender;
@@ -570,7 +570,7 @@ class CombatBase {
     if($result["amount"] > 0) {
       $defender->harm($result["amount"]);
     }
-    $result["action"] = CombatAction::ACTION_SKILL_ATTACK;
+    $result["action"] = CombatLogEntry::ACTION_SKILL_ATTACK;
     $result["name"] = $skill->skill->name;
     $result["character1"] = $attacker;
     $result["character2"] = $defender;
@@ -584,7 +584,7 @@ class CombatBase {
    */
   public function useSpecialSkill(Character $character1, Character $target, CharacterSpecialSkill $skill): void {
     $result = [
-      "result" => true, "amount" => 0, "action" => CombatAction::ACTION_SKILL_SPECIAL, "name" => $skill->skill->name,
+      "result" => true, "amount" => 0, "action" => CombatLogEntry::ACTION_SKILL_SPECIAL, "name" => $skill->skill->name,
       "character1" => $character1, "character2" => $target,
     ];
     $effect = new CharacterEffect([
@@ -611,7 +611,7 @@ class CombatBase {
     if($result["amount"] > 0) {
       $patient->heal($result["amount"]);
     }
-    $result["action"] = CombatAction::ACTION_HEALING;
+    $result["action"] = CombatLogEntry::ACTION_HEALING;
     $result["name"] = "";
     $result["character1"] = $healer;
     $result["character2"] = $patient;
@@ -629,7 +629,7 @@ class CombatBase {
         if($effect->type === SkillSpecial::TYPE_POISON) {
           $character->harm($effect->value);
           $action = [
-            "action" => CombatAction::ACTION_POISON, "result" => true, "amount" => $effect->value,
+            "action" => CombatLogEntry::ACTION_POISON, "result" => true, "amount" => $effect->value,
             "character1" => $character, "character2" => $character,
           ];
           $combat->log->log($action);
