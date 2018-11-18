@@ -16,7 +16,7 @@ final class ConstantInitiativeFormulaParser implements IInitiativeFormulaParser 
     $this->initiative = $initiative;
   }
   
-  public function calculateInitiative(string $formula, Character $character): int {
+  public function calculateInitiative(Character $character): int {
     return $this->initiative;
   }
 }

@@ -20,7 +20,7 @@ final class InitiativeFormulaParserTest extends \Tester\TestCase {
     $character = $this->generateCharacter(1);
     $parser = new InitiativeFormulaParser();
     for($i = 1; $i <= 10; $i++) {
-      $initiative = $parser->calculateInitiative($character->initiativeFormula, $character);
+      $initiative = $parser->calculateInitiative($character);
       Assert::true($initiative >= 4);
       Assert::true($initiative <= 8);
     }

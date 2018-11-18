@@ -11,8 +11,9 @@ namespace HeroesofAbenez\Combat;
 final class InitiativeFormulaParser implements IInitiativeFormulaParser {
   use \Nette\SmartObject;
   
-  public function calculateInitiative(string $formula, Character $character): int {
+  public function calculateInitiative(Character $character): int {
     $result = 0;
+    $formula = $character->initiativeFormula;
     $stats = [
       "INT" => $character->intelligence, "DEX" => $character->dexterity, "STR" => $character->strength, "CON" => $character->constitution,
       "CHAR" => $character->charisma,

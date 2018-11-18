@@ -567,7 +567,7 @@ class Character {
       } elseif($secondary === static::STAT_MAX_HITPOINTS) {
         $base = $this->$primary * static::HITPOINTS_PER_CONSTITUTION;
       } elseif($secondary === static::STAT_INITIATIVE) {
-        $base = $this->initiativeFormulaParser->calculateInitiative($this->initiativeFormula, $this);
+        $base = $this->initiativeFormulaParser->calculateInitiative($this);
       } else {
         $base = $this->$primary * 3;
       }
