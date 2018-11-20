@@ -24,16 +24,49 @@ final class TextCombatLogRenderTest extends \Tester\TestCase {
     /** @var CombatLogger $logger */
     $logger = $this->getService(CombatLogger::class);
     $team1 = new Team("Team 1");
-    $team1[] = $this->generateCharacter(1);
+    $team1[] = $character1 = $this->generateCharacter(1);
     $team2 = new Team("Team 2");
-    $team2[] = $this->generateCharacter(2);
+    $team2[] = $character2 = $this->generateCharacter(2);
     $logger->setTeams($team1, $team2);
     $logger->round = 1;
     $logger->logText("abc.abc");
-    $logger->logText("abc.abc");
+    $logger->log([
+      "action" => CombatLogEntry::ACTION_ATTACK, "name" => "", "result" => true, "amount" => 1,
+      "character1" => $character1, "character2" => $character2,
+    ]);
+    $logger->log([
+      "action" => CombatLogEntry::ACTION_ATTACK, "name" => "", "result" => false, "amount" => 1,
+      "character1" => $character2, "character2" => $character1,
+    ]);
     $logger->round = 2;
-    $logger->logText("abc.abc");
-    $logger->logText("abc.abc");
+    $logger->log([
+      "action" => CombatLogEntry::ACTION_SKILL_ATTACK, "name" => "Abc", "result" => true, "amount" => 1,
+      "character1" => $character1, "character2" => $character2,
+    ]);
+    $logger->log([
+      "action" => CombatLogEntry::ACTION_SKILL_ATTACK, "name" => "Def", "result" => false, "amount" => 1,
+      "character1" => $character2, "character2" => $character1,
+    ]);
+    $logger->log([
+      "action" => CombatLogEntry::ACTION_SKILL_SPECIAL, "name" => "Abc", "result" => true, "amount" => 1,
+      "character1" => $character1, "character2" => $character2,
+    ]);
+    $logger->log([
+      "action" => CombatLogEntry::ACTION_SKILL_SPECIAL, "name" => "Def", "result" => false, "amount" => 1,
+      "character1" => $character2, "character2" => $character1,
+    ]);
+    $logger->log([
+      "action" => CombatLogEntry::ACTION_HEALING, "name" => "", "result" => true, "amount" => 1,
+      "character1" => $character1, "character2" => $character2,
+    ]);
+    $logger->log([
+      "action" => CombatLogEntry::ACTION_HEALING, "name" => "", "result" => false, "amount" => 1,
+      "character1" => $character2, "character2" => $character1,
+    ]);
+    $logger->log([
+      "action" => CombatLogEntry::ACTION_POISON, "name" => "", "result" => true, "amount" => 1,
+      "character1" => $character1, "character2" => $character2,
+    ]);
     $params = [
       "team1" => $team1, "team2" => $team2, "actions" => $logger->getIterator(), "title" => "",
     ];

@@ -17,7 +17,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property-read string $name
  * @property-read bool $result
  * @property-read int $amount
- * @property-read string $message
  */
 class CombatLogEntry {
   use \Nette\SmartObject;
@@ -42,8 +41,6 @@ class CombatLogEntry {
   protected $result;
   /** @var int */
   protected $amount;
-  /** @var string */
-  protected $message;
   
   public function __construct(ITranslator $translator, array $action) {
     $resolver = new OptionsResolver();
@@ -53,10 +50,9 @@ class CombatLogEntry {
     $this->action = $action["action"];
     $this->result = $action["result"];
     $this->amount = $action["amount"];
-    $this->character1 = $action["character1"];
-    $this->character2 = $action["character2"];
+    $this->character1 = clone $action["character1"];
+    $this->character2 = clone $action["character2"];
     $this->name = $action["name"];
-    $this->parse();
   }
 
   protected function configureOptions(OptionsResolver $resolver): void {
@@ -105,60 +101,6 @@ class CombatLogEntry {
   
   public function getAmount(): int {
     return $this->amount;
-  }
-  
-  public function getMessage(): string {
-    return $this->message;
-  }
-  
-  protected function parse(): void {
-    $character1 = $this->character1->name;
-    $character2 = $this->character2->name;
-    $text = "";
-    switch($this->action) {
-      case static::ACTION_ATTACK:
-        if($this->result) {
-          $text = $this->translator->translate("combat.log.attackHits", $this->amount, ["character1" => $character1, "character2" => $character2]);
-          if($this->character2->hitpoints < 1) {
-            $text .= $this->translator->translate("combat.log.characterFalls");
-          }
-        } else {
-          $text = $this->translator->translate("combat.log.attackFails", $this->amount, ["character1" => $character1, "character2" => $character2]);
-        }
-        break;
-      case static::ACTION_SKILL_ATTACK:
-        if($this->result) {
-          $text = $this->translator->translate("combat.log.specialAttackHits", $this->amount, ["character1" => $character1, "character2" => $character2, "name" => $this->name]);
-          if($this->character2->hitpoints < 1) {
-            $text .= $this->translator->translate("combat.log.characterFalls");
-          }
-        } else {
-          $text = $this->translator->translate("combat.log.specialAttackFails", $this->amount, ["character1" => $character1, "character2" => $character2, "name" => $this->name]);
-        }
-        break;
-      case static::ACTION_SKILL_SPECIAL:
-        if($this->result) {
-          $text = $this->translator->translate("combat.log.specialSkillSuccess", 0, ["character1" => $character1, "character2" => $character2, "name" => $this->name]);
-        } else {
-          $text = $this->translator->translate("combat.log.specialSKillFailure", 0, ["character1" => $character1, "character2" => $character2, "name" => $this->name]);
-        }
-        break;
-      case static::ACTION_HEALING:
-        if($this->result) {
-          $text = $this->translator->translate("combat.log.healingSuccess", $this->amount, ["character1" => $character1, "character2" => $character2]);
-        } else {
-          $text = $this->translator->translate("combat.log.healingFailure", $this->amount, ["character1" => $character1, "character2" => $character2]);
-        }
-        break;
-      case static::ACTION_POISON:
-        $text = $this->translator->translate("combat.log.poison", $this->amount, ["character1" => $character1]);
-        break;
-    }
-    $this->message =  $text;
-  }
-  
-  public function __toString(): string {
-    return $this->message;
   }
 }
 ?>
