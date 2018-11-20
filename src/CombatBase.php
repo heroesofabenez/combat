@@ -412,7 +412,7 @@ class CombatBase {
       /** @var ICombatAction $combatAction */
       foreach($this->combatActions as $combatAction) {
         if($combatAction->getName() === $action) {
-          $combatAction->do($this, $character);
+          $combatAction->do($combat, $character);
           continue 2;
         }
       }
