@@ -98,9 +98,7 @@ class CharacterEffect {
   }
   
   protected function getAllowedStats(): array {
-    $stats = Constants::getConstantsValues(Character::class, "STAT_");
-    $stats = array_merge($stats, ["strength", "dexterity", "constitution", "intelligence", "charisma",]);
-    return $stats;
+    return Constants::getConstantsValues(Character::class, "STAT_");
   }
   
   /**
