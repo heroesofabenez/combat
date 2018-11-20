@@ -9,6 +9,8 @@ use HeroesofAbenez\Combat\CombatLogEntry;
 use Nexendrie\Utils\Numbers;
 
 final class Heal implements ICombatAction {
+  use \Nette\SmartObject;
+
   public function getName(): string {
     return CombatLogEntry::ACTION_HEALING;
   }

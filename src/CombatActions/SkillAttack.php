@@ -12,6 +12,8 @@ use HeroesofAbenez\Combat\NotImplementedException;
 use Nexendrie\Utils\Numbers;
 
 final class SkillAttack implements ICombatAction {
+  use \Nette\SmartObject;
+
   public function getName(): string {
     return CombatLogEntry::ACTION_SKILL_ATTACK;
   }

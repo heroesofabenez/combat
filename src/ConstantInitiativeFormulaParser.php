@@ -9,6 +9,8 @@ namespace HeroesofAbenez\Combat;
  * @author Jakub Konečný
  */
 final class ConstantInitiativeFormulaParser implements IInitiativeFormulaParser {
+  use \Nette\SmartObject;
+
   /** @var int */
   protected $initiative;
   

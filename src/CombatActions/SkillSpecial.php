@@ -12,6 +12,8 @@ use HeroesofAbenez\Combat\NotImplementedException;
 use HeroesofAbenez\Combat\CharacterEffect;
 
 final class SkillSpecial implements ICombatAction {
+  use \Nette\SmartObject;
+
   public function getName(): string {
     return CombatLogEntry::ACTION_SKILL_SPECIAL;
   }

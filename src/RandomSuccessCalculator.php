@@ -11,6 +11,8 @@ use Nexendrie\Utils\Numbers;
  * @author Jakub Konečný
  */
 final class RandomSuccessCalculator implements ISuccessCalculator {
+  use \Nette\SmartObject;
+
   public function hasHit(Character $character1, Character $character2, ?CharacterAttackSkill $skill = null): bool {
     $hitRate = $character1->hit;
     $dodgeRate = $character2->dodge;

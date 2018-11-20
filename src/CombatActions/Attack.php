@@ -9,6 +9,8 @@ use HeroesofAbenez\Combat\CombatLogEntry;
 use Nexendrie\Utils\Numbers;
 
 final class Attack implements ICombatAction {
+  use \Nette\SmartObject;
+
   public function getName(): string {
     return CombatLogEntry::ACTION_ATTACK;
   }
