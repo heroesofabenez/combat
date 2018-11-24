@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @author Jakub Konečný
  * @property-read bool $ranged
+ * @property-read string $damageStat
  */
 class Weapon extends Equipment {
   public const TYPE_SWORD = "sword";
@@ -27,6 +28,20 @@ class Weapon extends Equipment {
     return in_array($this->type, [
       static::TYPE_STAFF, static::TYPE_BOW, static::TYPE_CROSSBOW, static::TYPE_THROWING_KNIFE,
     ], true);
+  }
+
+  public function getDamageStat(): string {
+    switch($this->type) {
+      case static::TYPE_STAFF:
+        return Character::STAT_INTELLIGENCE;
+      case static::TYPE_CLUB:
+        return Character::STAT_CONSTITUTION;
+      case static::TYPE_BOW:
+      case static::TYPE_THROWING_KNIFE:
+        return Character::STAT_DEXTERITY;
+      default:
+        return Character::STAT_STRENGTH;
+    }
   }
   
   protected function configureOptions(OptionsResolver $resolver): void {

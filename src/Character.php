@@ -530,25 +530,13 @@ class Character {
    * Determine which (primary) stat should be used to calculate damage
    */
   public function damageStat(): string {
-    $stat = static::STAT_STRENGTH;
     foreach($this->equipment as $item) {
-      if(!$item->worn OR $item->slot != Equipment::SLOT_WEAPON) {
+      if(!$item->worn OR !$item instanceof Weapon) {
         continue;
       }
-      switch($item->type) {
-        case Weapon::TYPE_STAFF:
-          $stat = static::STAT_INTELLIGENCE;
-          break;
-        case Weapon::TYPE_CLUB:
-          $stat = static::STAT_CONSTITUTION;
-          break;
-        case Weapon::TYPE_BOW:
-        case Weapon::TYPE_THROWING_KNIFE:
-          $stat = static::STAT_DEXTERITY;
-          break;
-      }
+      return $item->damageStat;
     }
-    return $stat;
+    return static::STAT_STRENGTH;
   }
   
   /**
