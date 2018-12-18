@@ -41,7 +41,7 @@ final class Attack implements ICombatAction {
     if($result["amount"] > 0) {
       $defender->harm($result["amount"]);
     }
-    $result["action"] = CombatLogEntry::ACTION_ATTACK;
+    $result["action"] = $this->getName();
     $result["name"] = "";
     $result["character1"] = $character;
     $result["character2"] = $defender;

@@ -44,7 +44,7 @@ final class SkillAttack implements ICombatAction {
     if($result["amount"] > 0) {
       $defender->harm($result["amount"]);
     }
-    $result["action"] = CombatLogEntry::ACTION_SKILL_ATTACK;
+    $result["action"] = $this->getName();
     $result["name"] = $skill->skill->name;
     $result["character1"] = $attacker;
     $result["character2"] = $defender;

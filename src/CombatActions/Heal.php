@@ -33,7 +33,7 @@ final class Heal implements ICombatAction {
     if($result["amount"] > 0) {
       $patient->heal($result["amount"]);
     }
-    $result["action"] = CombatLogEntry::ACTION_HEALING;
+    $result["action"] = $this->getName();
     $result["name"] = "";
     $result["character1"] = $character;
     $result["character2"] = $patient;

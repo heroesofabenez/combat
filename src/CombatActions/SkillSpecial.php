@@ -35,7 +35,7 @@ final class SkillSpecial implements ICombatAction {
 
   protected function doSingleTarget(Character $character1, Character $target, CharacterSpecialSkill $skill, CombatBase $combat): void {
     $result = [
-      "result" => true, "amount" => 0, "action" => CombatLogEntry::ACTION_SKILL_SPECIAL, "name" => $skill->skill->name,
+      "result" => true, "amount" => 0, "action" => $this->getName(), "name" => $skill->skill->name,
       "character1" => $character1, "character2" => $target,
     ];
     $effect = new CharacterEffect([
