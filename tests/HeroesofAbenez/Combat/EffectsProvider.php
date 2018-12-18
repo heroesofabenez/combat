@@ -13,7 +13,7 @@ final class EffectsProvider implements ICharacterEffectsProvider {
     return [new CharacterEffect([
       "id" => "provider1Effect",
       "type" => SkillSpecial::TYPE_BUFF,
-      "source" => CharacterEffect::SOURCE_EQUIPMENT,
+      "valueAbsolute" => true,
       "value" => 10,
       "duration" => CharacterEffect::DURATION_COMBAT,
       "stat" => Character::STAT_MAX_HITPOINTS,

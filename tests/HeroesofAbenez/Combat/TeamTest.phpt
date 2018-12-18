@@ -49,7 +49,7 @@ final class TeamTest extends \Tester\TestCase {
     $team[0]->harm($team[0]->maxHitpoints);
     Assert::count(1, $team->usableMembers);
     $stunEffect = [
-      "id" => "stunEffect", "type" => SkillSpecial::TYPE_STUN, "source" => CharacterEffect::SOURCE_SKILL,
+      "id" => "stunEffect", "type" => SkillSpecial::TYPE_STUN, "valueAbsolute" => false,
       "value" => 0, "duration" => CharacterEffect::DURATION_FOREVER, "stat" => "",
     ];
     $team[1]->addEffect(new CharacterEffect($stunEffect));

@@ -135,7 +135,7 @@ final class CombatBaseTest extends \Tester\TestCase {
     $combat->setDuelParticipants($character1, $character2);
     Assert::count(0, $character1->effects);
     $effect = new CharacterEffect([
-      "id" => "skillEffect", "type" => SkillSpecial::TYPE_STUN, "source" => CharacterEffect::SOURCE_SKILL,
+      "id" => "skillEffect", "type" => SkillSpecial::TYPE_STUN, "valueAbsolute" => false,
       "value" => 0, "duration" => 1, "stat" => "",
     ]);
     $character1->addEffect($effect);
@@ -154,7 +154,7 @@ final class CombatBaseTest extends \Tester\TestCase {
     $character2 = $this->generateCharacter(2);
     $combat->setDuelParticipants($character1, $character2);
     $effect = new CharacterEffect([
-      "id" => "skillEffect", "type" => SkillSpecial::TYPE_POISON, "source" => CharacterEffect::SOURCE_SKILL,
+      "id" => "skillEffect", "type" => SkillSpecial::TYPE_POISON, "valueAbsolute" => false,
       "value" => 10, "duration" => 1, "stat" => "",
     ]);
     $character1->addEffect($effect);

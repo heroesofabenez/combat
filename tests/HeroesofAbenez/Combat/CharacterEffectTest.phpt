@@ -26,7 +26,7 @@ final class CharacterEffectTest extends \Tester\TestCase {
       "type" => "buff",
       "stat" => Character::STAT_INITIATIVE,
       "value" => 10,
-      "source" => CharacterEffect::SOURCE_EQUIPMENT,
+      "valueAbsolute" => true,
       "duration" => CharacterEffect::DURATION_COMBAT,
     ]);
     $character->addEffect($effect);
@@ -48,7 +48,7 @@ final class CharacterEffectTest extends \Tester\TestCase {
       "type" => "buff",
       "stat" => Character::STAT_MAX_HITPOINTS,
       "value" => 10,
-      "source" => CharacterEffect::SOURCE_EQUIPMENT,
+      "valueAbsolute" => true,
       "duration" => CharacterEffect::DURATION_COMBAT,
     ]);
     $character->addEffect($effect);

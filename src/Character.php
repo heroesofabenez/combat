@@ -583,18 +583,8 @@ class Character {
         $this->removeEffect($effect->id);
         continue;
       }
-      switch($effect->source) {
-        case CharacterEffect::SOURCE_PET:
-        case CharacterEffect::SOURCE_SKILL:
-          if(!in_array($type, SkillSpecial::NO_STAT_TYPES, true)) {
-            $bonus_value = $$stat / 100 * $effect->value;
-          }
-          break;
-        case CharacterEffect::SOURCE_EQUIPMENT:
-          if(!in_array($type, SkillSpecial::NO_STAT_TYPES, true)) {
-            $bonus_value = $effect->value;
-          }
-          break;
+      if(!in_array($type, SkillSpecial::NO_STAT_TYPES, true)) {
+        $bonus_value = ($effect->valueAbsolute) ? $effect->value : $$stat / 100 * $effect->value;
       }
       if($type == SkillSpecial::TYPE_BUFF) {
         $$stat += $bonus_value;

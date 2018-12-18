@@ -14,17 +14,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property-read string $type
  * @property-read string $stat
  * @property-read int $value
- * @property-read string $source
+ * @property-read bool $valueAbsolute
  * @property int|string $duration
  * @method void onApply(Character $character, CharacterEffect $effect)
  * @method void onRemove(Character $character, CharacterEffect $effect)
  */
 class CharacterEffect {
   use \Nette\SmartObject;
-  
-  public const SOURCE_PET = "pet";
-  public const SOURCE_SKILL = "skill";
-  public const SOURCE_EQUIPMENT = "equipment";
+
   public const DURATION_COMBAT = "combat";
   public const DURATION_FOREVER = "forever";
   
@@ -36,8 +33,8 @@ class CharacterEffect {
   protected $stat = "";
   /** @var int */
   protected $value = 0;
-  /** @var string */
-  protected $source;
+  /** @var bool */
+  protected $valueAbsolute;
   /** @var int|string */
   protected $duration;
   /** @var callable[] */
@@ -56,7 +53,7 @@ class CharacterEffect {
     $this->type = $effect["type"];
     $this->stat = $effect["stat"];
     $this->value = $effect["value"];
-    $this->source = $effect["source"];
+    $this->valueAbsolute = $effect["valueAbsolute"];
     $this->duration = $effect["duration"];
     $this->onApply[] = function(Character $character, self $effect) {
       $character->recalculateStats();
@@ -73,7 +70,7 @@ class CharacterEffect {
   }
 
   protected function configureOptions(OptionsResolver $resolver): void {
-    $allStats = ["id", "type", "source", "value", "duration", "stat",];
+    $allStats = ["id", "type", "value", "valueAbsolute", "duration", "stat",];
     $resolver->setRequired($allStats);
     $resolver->setAllowedTypes("id", "string");
     $resolver->setAllowedTypes("type", "string");
@@ -85,11 +82,8 @@ class CharacterEffect {
     $resolver->setAllowedValues("stat", function(string $value) {
       return $value === "" OR in_array($value, $this->getAllowedStats(), true);
     });
-    $resolver->setAllowedTypes("source", "string");
-    $resolver->setAllowedValues("source", function(string $value) {
-      return in_array($value, $this->getAllowedSources(), true);
-    });
     $resolver->setAllowedTypes("value", "integer");
+    $resolver->setAllowedTypes("valueAbsolute", "bool");
     $resolver->setDefault("value", 0);
     $resolver->setAllowedTypes("duration", ["string", "integer"]);
     $resolver->setAllowedValues("duration", function($value) {
@@ -137,11 +131,11 @@ class CharacterEffect {
   public function getValue(): int {
     return $this->value;
   }
-  
-  public function getSource(): string {
-    return $this->source;
+
+  public function isValueAbsolute(): bool {
+    return $this->valueAbsolute;
   }
-  
+
   /**
    * @return int|string
    */

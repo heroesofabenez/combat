@@ -112,7 +112,7 @@ class Equipment implements ICharacterEffectsProvider {
       "type" => SkillSpecial::TYPE_BUFF,
       "stat" => $stat[$this->slot],
       "value" => $this->strength,
-      "source" => CharacterEffect::SOURCE_EQUIPMENT,
+      "valueAbsolute" => true,
       "duration" => CharacterEffect::DURATION_COMBAT,
     ];
     return $return;

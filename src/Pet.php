@@ -81,7 +81,7 @@ class Pet implements ICharacterEffectsProvider {
       "type" => SkillSpecial::TYPE_BUFF,
       "stat" => $this->bonusStat,
       "value" => $this->bonusValue,
-      "source" => CharacterEffect::SOURCE_PET,
+      "valueAbsolute" => false,
       "duration" => CharacterEffect::DURATION_COMBAT,
     ];
   }

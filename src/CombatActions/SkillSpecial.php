@@ -43,7 +43,7 @@ final class SkillSpecial implements ICombatAction {
       "type" => $skill->skill->type,
       "stat" => ((in_array($skill->skill->type, Skill::NO_STAT_TYPES, true)) ? null : $skill->skill->stat),
       "value" => $skill->value,
-      "source" => CharacterEffect::SOURCE_SKILL,
+      "valueAbsolute" => false,
       "duration" => $skill->skill->duration,
     ]);
     $target->addEffect($effect);

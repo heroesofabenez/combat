@@ -71,7 +71,7 @@ final class CharacterTest extends \Tester\TestCase {
       "type" => "buff",
       "stat" => Character::STAT_DAMAGE,
       "value" => 10,
-      "source" => CharacterEffect::SOURCE_EQUIPMENT,
+      "valueAbsolute" => true,
       "duration" => CharacterEffect::DURATION_COMBAT,
     ]));
     Assert::count(1, $character->effects);
@@ -95,7 +95,7 @@ final class CharacterTest extends \Tester\TestCase {
   public function testDebuffsCap() {
     $character = $this->generateCharacter(1);
     $effect = new CharacterEffect([
-      "id" => "skillEffect", "type" => SkillSpecial::TYPE_DEBUFF, "source" => CharacterEffect::SOURCE_SKILL,
+      "id" => "skillEffect", "type" => SkillSpecial::TYPE_DEBUFF, "valueAbsolute" => false,
       "value" => 1000, "duration" => 1, "stat" => "constitution",
     ]);
     $character->addEffect($effect);
