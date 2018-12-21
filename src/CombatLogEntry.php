@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-use Nexendrie\Utils\Constants;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -56,9 +55,6 @@ class CombatLogEntry {
     $resolver->setDefined(["amount", "name",]);
     $resolver->setRequired($requiredStats);
     $resolver->setAllowedTypes("action", "string");
-    $resolver->setAllowedValues("action", function(string $value) {
-      return in_array($value, $this->getAllowedActions(), true);
-    });
     $resolver->setAllowedTypes("result", "bool");
     $resolver->setAllowedTypes("amount", "integer");
     $resolver->setDefault("amount", 0);
@@ -68,13 +64,6 @@ class CombatLogEntry {
     $resolver->setAllowedTypes("character2", Character::class);
   }
 
-  /**
-   * @return string[]
-   */
-  protected function getAllowedActions(): array {
-    return Constants::getConstantsValues(static::class, "ACTION_");
-  }
-  
   public function getCharacter1(): Character {
     return $this->character1;
   }
