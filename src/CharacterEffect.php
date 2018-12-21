@@ -94,14 +94,7 @@ class CharacterEffect {
   protected function getAllowedStats(): array {
     return Constants::getConstantsValues(Character::class, "STAT_");
   }
-  
-  /**
-   * @return string[]
-   */
-  protected function getAllowedSources(): array {
-    return Constants::getConstantsValues(static::class, "SOURCE_");
-  }
-  
+
   /**
    * @return string[]
    */
