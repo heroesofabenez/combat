@@ -17,7 +17,11 @@ class CharacterSpecialSkill extends BaseCharacterSkill {
   public function __construct(SkillSpecial $skill, int $level) {
     parent::__construct($skill, $level);
   }
-  
+
+  public function getSkillType(): string {
+    return "special";
+  }
+
   public function getSkill(): SkillSpecial {
     return $this->skill;
   }

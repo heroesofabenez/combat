@@ -28,6 +28,8 @@ abstract class BaseCharacterSkill {
     $this->skill = $skill;
     $this->setLevel($level);
   }
+
+  abstract public function getSkillType(): string;
   
   public function getLevel(): int {
     return $this->level;
@@ -39,15 +41,6 @@ abstract class BaseCharacterSkill {
   
   public function setLevel(int $level): void {
     $this->level = Numbers::range($level, 0, $this->skill->levels);
-  }
-  
-  public function getSkillType(): string {
-    if($this->skill instanceof SkillAttack) {
-      return "attack";
-    } elseif($this->skill instanceof SkillSpecial) {
-      return "special";
-    }
-    return "";
   }
   
   public function canUse(): bool {

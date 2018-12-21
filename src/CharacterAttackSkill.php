@@ -18,7 +18,11 @@ class CharacterAttackSkill extends BaseCharacterSkill {
   public function __construct(SkillAttack $skill, int $level) {
     parent::__construct($skill, $level);
   }
-  
+
+  public function getSkillType(): string {
+    return "attack";
+  }
+
   /**
    * @return SkillAttack
    */
