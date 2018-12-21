@@ -9,27 +9,9 @@ use HeroesofAbenez\Combat\CombatActions\ICombatAction;
  * CombatActionSelector
  *
  * @author Jakub Konečný
- * @property string $defaultAction
  */
 final class CombatActionSelector implements ICombatActionSelector {
   use \Nette\SmartObject;
-
-  /** @var string */
-  protected $defaultAction = CombatLogEntry::ACTION_ATTACK;
-
-  /**
-   * @return string
-   */
-  public function getDefaultAction(): string {
-    return $this->defaultAction;
-  }
-
-  /**
-   * @param string $defaultAction
-   */
-  public function setDefaultAction(string $defaultAction): void {
-    $this->defaultAction = $defaultAction;
-  }
 
   public function chooseAction(CombatBase $combat, Character $character): ?string {
     if($character->hitpoints < 1) {
@@ -45,7 +27,7 @@ final class CombatActionSelector implements ICombatActionSelector {
         return $action->getName();
       }
     }
-    return $this->defaultAction;
+    return null;
   }
 }
 ?>
