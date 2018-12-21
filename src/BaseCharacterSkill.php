@@ -27,6 +27,7 @@ abstract class BaseCharacterSkill {
   public function __construct(BaseSkill $skill, int $level) {
     $this->skill = $skill;
     $this->setLevel($level);
+    $this->resetCooldown();
   }
 
   abstract public function getSkillType(): string;

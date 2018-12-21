@@ -68,7 +68,6 @@ class CombatBase {
   public function __construct(CombatLogger $logger, ?ISuccessCalculator $successCalculator = null, ?ICombatActionSelector $actionSelector = null) {
     $this->log = $logger;
     $this->onCombatStart[] = [$this, "applyEffectProviders"];
-    $this->onCombatStart[] = [$this, "setSkillsCooldowns"];
     $this->onCombatStart[] = [$this, "assignPositions"];
     $this->onCombatEnd[] = [$this, "removeCombatEffects"];
     $this->onCombatEnd[] = [$this, "logCombatResult"];
@@ -212,20 +211,7 @@ class CombatBase {
       $character->applyEffectProviders();
     }
   }
-  
-  /**
-   * Set skills' cooldowns
-   */
-  public function setSkillsCooldowns(self $combat): void {
-    /** @var Character[] $characters */
-    $characters = array_merge($combat->team1->toArray(), $combat->team2->toArray());
-    foreach($characters as $character) {
-      foreach($character->skills as $skill) {
-        $skill->resetCooldown();
-      }
-    }
-  }
-  
+
   public function assignPositions(self $combat): void {
     $assignPositions = function(Team $team) {
       $row = 1;
