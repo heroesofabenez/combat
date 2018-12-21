@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-use Nette\Localization\ITranslator;
 use Nexendrie\Utils\Constants;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,9 +25,7 @@ class CombatLogEntry {
   public const ACTION_SKILL_SPECIAL = "skill_special";
   public const ACTION_HEALING = "healing";
   public const ACTION_POISON = "poison";
-  
-  /** @var ITranslator */
-  protected $translator;
+
   /** @var Character */
   protected $character1;
   /** @var Character */
@@ -42,11 +39,10 @@ class CombatLogEntry {
   /** @var int */
   protected $amount;
   
-  public function __construct(ITranslator $translator, array $action) {
+  public function __construct(array $action) {
     $resolver = new OptionsResolver();
     $this->configureOptions($resolver);
     $action = $resolver->resolve($action);
-    $this->translator = $translator;
     $this->action = $action["action"];
     $this->result = $action["result"];
     $this->amount = $action["amount"];
