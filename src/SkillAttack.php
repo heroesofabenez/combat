@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property-read int $strikes
  * @property-read string|null $hitRate
  */
-class SkillAttack extends BaseSkill {
+final class SkillAttack extends BaseSkill {
   public const TARGET_SINGLE = "single";
   public const TARGET_ROW = "row";
   public const TARGET_COLUMN = "column";

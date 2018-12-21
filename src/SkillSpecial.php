@@ -16,7 +16,7 @@ use Nexendrie\Utils\Constants;
  * @property-read int $valueGrowth
  * @property-read int $duration
  */
-class SkillSpecial extends BaseSkill {
+final class SkillSpecial extends BaseSkill {
   public const TYPE_BUFF = "buff";
   public const TYPE_DEBUFF = "debuff";
   public const TYPE_STUN = "stun";

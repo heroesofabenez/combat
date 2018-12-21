@@ -11,7 +11,7 @@ namespace HeroesofAbenez\Combat;
  * @property-read int $damage
  * @property-read int $hitRate
  */
-class CharacterAttackSkill extends BaseCharacterSkill {
+final class CharacterAttackSkill extends BaseCharacterSkill {
   /** @var SkillAttack */
   protected $skill;
   

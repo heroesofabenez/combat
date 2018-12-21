@@ -10,7 +10,7 @@ namespace HeroesofAbenez\Combat;
  * @property-read SkillSpecial $skill
  * @property-read int $value
  */
-class CharacterSpecialSkill extends BaseCharacterSkill {
+final class CharacterSpecialSkill extends BaseCharacterSkill {
   /** @var SkillSpecial */
   protected $skill;
   

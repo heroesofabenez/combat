@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property-read string $bonusStat
  * @property-read int $bonusValue
  */
-class Pet implements ICharacterEffectsProvider {
+final class Pet implements ICharacterEffectsProvider {
   use \Nette\SmartObject;
   
   /** @var int */
