@@ -1,3 +1,13 @@
+{define team, $team, $id}
+  <div id="{$id}">
+    <h3 class="teamName">{$team->name}</h3>
+    <div class="members">
+      {foreach $team as $member}
+      {_"combat.log.participant", 0, ["name" => $member->name, "level" => $member->level]}{if !$iterator->last}<br>{/if}
+      {/foreach}
+    </div>
+  </div>
+{/define}
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,22 +17,8 @@
 <body>
 <article id="main">
   <h1>{_"combat.log.title"}</h1>
-  <div id="team1">
-    <h3 class="teamName">{$team1->name}</h3>
-    <div class="members">
-      {foreach $team1 as $member}
-      {_"combat.log.participant", 0, ["name" => $member->name, "level" => $member->level]}{if !$iterator->last}<br>{/if}
-      {/foreach}
-    </div>
-  </div>
-  <div id="team2">
-    <h3 class="teamName">{$team2->name}</h3>
-    <div class="members">
-      {foreach $team2 as $member}
-      {_"combat.log.participant", 0, ["name" => $member->name, "level" => $member->level]}{if !$iterator->last}<br>{/if}
-      {/foreach}
-    </div>
-  </div>
+  {include team, $team1, "team1"}
+  {include team, $team2, "team2"}
   <div id="combat">
     <h3>{_"combat.log.battle"}</h3>
     {foreach $actions as $i => $round}
