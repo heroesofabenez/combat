@@ -50,47 +50,31 @@ final class TextCombatLogRender implements ICombatLogRender {
     }
     $character1 = $item->character1->name;
     $character2 = $item->character2->name;
-    $text = "";
     switch($item->action) {
       case CombatLogEntry::ACTION_ATTACK:
-        if($item->result) {
-          $text = $this->translator->translate("combat.log.attackHits", $item->amount, ["character1" => $character1, "character2" => $character2]);
-          if($item->character2->hitpoints < 1) {
-            $text .= $this->translator->translate("combat.log.characterFalls");
-          }
-        } else {
-          $text = $this->translator->translate("combat.log.attackFails", $item->amount, ["character1" => $character1, "character2" => $character2]);
+        $message = ($item->result) ? "combat.log.attackHits" : "combat.log.attackFails";
+        $text = $this->translator->translate($message, $item->amount, ["character1" => $character1, "character2" => $character2]);
+        if($item->result AND $item->character2->hitpoints < 1) {
+          $text .= $this->translator->translate("combat.log.characterFalls");
         }
-        break;
+        return $text;
       case CombatLogEntry::ACTION_SKILL_ATTACK:
-        if($item->result) {
-          $text = $this->translator->translate("combat.log.specialAttackHits", $item->amount, ["character1" => $character1, "character2" => $character2, "name" => $item->name]);
-          if($item->character2->hitpoints < 1) {
-            $text .= $this->translator->translate("combat.log.characterFalls");
-          }
-        } else {
-          $text = $this->translator->translate("combat.log.specialAttackFails", $item->amount, ["character1" => $character1, "character2" => $character2, "name" => $item->name]);
+        $message = ($item->result) ? "combat.log.specialAttackHits" : "combat.log.specialAttackFails";
+        $text = $this->translator->translate($message, $item->amount, ["character1" => $character1, "character2" => $character2, "name" => $item->name]);
+        if($item->result AND $item->character2->hitpoints < 1) {
+          $text .= $this->translator->translate("combat.log.characterFalls");
         }
-        break;
+        return $text;
       case CombatLogEntry::ACTION_SKILL_SPECIAL:
-        if($item->result) {
-          $text = $this->translator->translate("combat.log.specialSkillSuccess", 0, ["character1" => $character1, "character2" => $character2, "name" => $item->name]);
-        } else {
-          $text = $this->translator->translate("combat.log.specialSKillFailure", 0, ["character1" => $character1, "character2" => $character2, "name" => $item->name]);
-        }
-        break;
+        $message = ($item->result) ? "combat.log.specialSkillSuccess" : "combat.log.specialSKillFailure";
+        return $this->translator->translate($message, 0, ["character1" => $character1, "character2" => $character2, "name" => $item->name]);
       case CombatLogEntry::ACTION_HEALING:
-        if($item->result) {
-          $text = $this->translator->translate("combat.log.healingSuccess", $item->amount, ["character1" => $character1, "character2" => $character2]);
-        } else {
-          $text = $this->translator->translate("combat.log.healingFailure", $item->amount, ["character1" => $character1, "character2" => $character2]);
-        }
-        break;
+        $message = ($item->result) ? "combat.log.healingSuccess" : "combat.log.healingFailure";
+        return $this->translator->translate($message, $item->amount, ["character1" => $character1, "character2" => $character2]);
       case CombatLogEntry::ACTION_POISON:
-        $text = $this->translator->translate("combat.log.poison", $item->amount, ["character1" => $character1]);
-        break;
+        return $this->translator->translate("combat.log.poison", $item->amount, ["character1" => $character1]);
     }
-    return $text;
+    return "";
   }
 }
 ?>
