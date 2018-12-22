@@ -25,6 +25,7 @@ class Equipment implements ICharacterEffectsProvider {
   public const SLOT_SHIELD = "shield";
   public const SLOT_AMULET = "amulet";
   public const SLOT_HELMET = "helmet";
+  public const SLOT_RING = "ring";
   
   /** @var int */
   protected $id;
@@ -105,7 +106,7 @@ class Equipment implements ICharacterEffectsProvider {
     $stat = [
       static::SLOT_WEAPON => Character::STAT_DAMAGE, static::SLOT_ARMOR => Character::STAT_DEFENSE,
       static::SLOT_HELMET => Character::STAT_MAX_HITPOINTS, static::SLOT_SHIELD => Character::STAT_DODGE,
-      static::SLOT_AMULET => Character::STAT_INITIATIVE,
+      static::SLOT_AMULET => Character::STAT_INITIATIVE, static::SLOT_RING => Character::STAT_HIT,
     ];
     $return = [
       "id" => "equipment" . $this->id . "bonusEffect",
