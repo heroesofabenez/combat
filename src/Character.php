@@ -5,6 +5,7 @@ namespace HeroesofAbenez\Combat;
 
 use Nexendrie\Utils\Numbers;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Nexendrie\Utils\Collection;
 
 /**
  * Structure for single character
@@ -41,9 +42,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property-read string $initiativeFormula
  * @property-read int $defense
  * @property-read int $defenseBase
- * @property-read Equipment[] $equipment
- * @property-read Pet[] $pets
- * @property-read BaseCharacterSkill[] $skills
+ * @property-read Equipment[]|Collection $equipment
+ * @property-read Pet[]|Collection $pets
+ * @property-read BaseCharacterSkill[]|Collection $skills
  * @property-read int|null $activePet
  * @property-read CharacterEffect[] $effects
  * @property-read ICharacterEffectsProvider[] $effectProviders
@@ -141,12 +142,12 @@ class Character {
   protected $defense = 0;
   /** @var float */
   protected $defenseBase = 0;
-  /** @var Equipment[] Character's equipment */
-  protected $equipment = [];
-  /** @var Pet[] Character's pets */
-  protected $pets = [];
-  /** @var BaseCharacterSkill[] Character's skills */
-  protected $skills = [];
+  /** @var Equipment[]|Collection Character's equipment */
+  protected $equipment;
+  /** @var Pet[]|Collection Character's pets */
+  protected $pets;
+  /** @var BaseCharacterSkill[]|Collection Character's skills */
+  protected $skills;
   /** @var int|null */
   protected $activePet = null;
   /** @var CharacterEffect[] Active effects */
@@ -169,24 +170,39 @@ class Character {
    */
   public function __construct(array $stats, array $equipment = [], array $pets = [], array $skills = [], IInitiativeFormulaParser $initiativeFormulaParser = null) {
     $this->initiativeFormulaParser = $initiativeFormulaParser ?? new InitiativeFormulaParser();
-    $this->setStats($stats);
+    $this->equipment = new class extends Collection {
+      /** @var string */
+      protected $class = Equipment::class;
+    };
     foreach($equipment as $eq) {
       if($eq instanceof Equipment) {
         $this->equipment[] = $eq;
         $this->addEffectProvider($eq);
       }
     }
+    $this->pets = new class extends Collection {
+      /** @var string */
+      protected $class = Pet::class;
+    };
     foreach($pets as $pet) {
       if($pet instanceof Pet) {
         $this->pets[] = $pet;
         $this->addEffectProvider($pet);
       }
     }
+    $this->skills = new class extends Collection {
+      /** @var string */
+      protected $class = BaseCharacterSkill::class;
+    };
     foreach($skills as $skill) {
       if($skill instanceof BaseCharacterSkill) {
         $this->skills[] = $skill;
       }
     }
+    $this->equipment->lock();
+    $this->pets->lock();
+    $this->skills->lock();
+    $this->setStats($stats);
   }
   
   protected function setStats(array $stats): void {
@@ -348,33 +364,33 @@ class Character {
   }
   
   /**
-   * @return Equipment[]
+   * @return Equipment[]|Collection
    */
-  public function getEquipment(): array {
+  public function getEquipment(): Collection {
     return $this->equipment;
   }
   
   /**
-   * @return Pet[]
+   * @return Pet[]|Collection
    */
-  public function getPets(): array {
+  public function getPets(): Collection {
     return $this->pets;
   }
   
   /**
-   * @return BaseCharacterSkill[]
+   * @return BaseCharacterSkill[]|Collection
    */
-  public function getSkills(): array {
+  public function getSkills(): Collection {
     return $this->skills;
   }
   
   public function getActivePet(): ?int {
-    foreach($this->pets as $pet) {
-      if($pet->deployed) {
-        return $pet->id;
-      }
+    /** @var Pet[] $pets */
+    $pets = $this->pets->getItems(["deployed" => true]);
+    if(count($pets) === 0) {
+      return null;
     }
-    return null;
+    return $pets[0]->id;
   }
   
   /**
@@ -481,12 +497,11 @@ class Character {
    * @throws \OutOfBoundsException
    */
   public function getItem(int $itemId): Equipment {
-    foreach($this->equipment as $equipment) {
-      if($equipment->id === $itemId) {
-        return $equipment;
-      }
+    $equipment = $this->equipment->getItems(["id" => $itemId]);
+    if(count($equipment) === 0) {
+      throw new \OutOfBoundsException("Item was not found.");
     }
-    throw new \OutOfBoundsException("Item was not found.");
+    return $equipment[0];
   }
   
   /**
@@ -495,19 +510,18 @@ class Character {
    * @throws \OutOfBoundsException
    */
   public function getPet(int $petId): Pet {
-    foreach($this->pets as $pet) {
-      if($pet->id === $petId) {
-        return $pet;
-      }
+    $pets = $this->pets->getItems(["id" => $petId]);
+    if(count($pets) === 0) {
+      throw new \OutOfBoundsException("Pet was not found.");
     }
-    throw new \OutOfBoundsException("Pet was not found.");
+    return $pets[0];
   }
   
   /**
    * @return BaseCharacterSkill[]
    */
   public function getUsableSkills(): array {
-    return array_values(array_filter($this->skills, function(BaseCharacterSkill $skill) {
+    return array_values(array_filter($this->skills->toArray(), function(BaseCharacterSkill $skill) {
       return $skill->canUse();
     }));
   }
