@@ -21,6 +21,7 @@ use Nexendrie\Utils\Collection;
  * @property-read int $team2Damage
  * @property ISuccessCalculator $successCalculator
  * @property ICombatActionSelector $actionSelector
+ * @property-read Collection|ICombatAction[] $combatActions
  * @property callable $victoryCondition To evaluate the winner of combat. Gets combat as parameter, should return winning team (1/2) or 0 if there is not winner (yet)
  * @property callable $healers To determine characters that are supposed to heal their team. Gets team1 and team2 as parameters, should return Team
  * @method void onCombatStart(CombatBase $combat)
@@ -63,7 +64,7 @@ class CombatBase {
   /** @var ICombatActionSelector */
   protected $actionSelector;
   /** @var Collection|ICombatAction[] */
-  public $combatActions;
+  protected $combatActions;
   
   public function __construct(CombatLogger $logger, ?ISuccessCalculator $successCalculator = null, ?ICombatActionSelector $actionSelector = null) {
     $this->log = $logger;
@@ -174,7 +175,14 @@ class CombatBase {
   public function setActionSelector(ICombatActionSelector $actionSelector): void {
     $this->actionSelector = $actionSelector;
   }
-  
+
+  /**
+   * @return Collection|ICombatAction[]
+   */
+  public function getCombatActions(): Collection {
+    return $this->combatActions;
+  }
+
   /**
    * Get winner of combat
    * 
