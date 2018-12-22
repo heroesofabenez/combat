@@ -13,6 +13,7 @@ use Nexendrie\Utils\Numbers;
  * @property int $level
  * @property-read int $cooldown
  * @property-read string $skillType
+ * @property-read bool $usable
  */
 abstract class BaseCharacterSkill {
   use \Nette\SmartObject;
@@ -44,7 +45,7 @@ abstract class BaseCharacterSkill {
     $this->level = Numbers::range($level, 0, $this->skill->levels);
   }
   
-  public function canUse(): bool {
+  public function isUsable(): bool {
     return ($this->cooldown < 1);
   }
   

@@ -521,9 +521,7 @@ class Character {
    * @return BaseCharacterSkill[]
    */
   public function getUsableSkills(): array {
-    return array_values(array_filter($this->skills->toArray(), function(BaseCharacterSkill $skill) {
-      return $skill->canUse();
-    }));
+    return $this->skills->getItems(["usable" => true]);
   }
   
   /**
