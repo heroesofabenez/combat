@@ -337,7 +337,7 @@ class CombatBase {
     $enemyTeam = $this->getEnemyTeam($attacker);
     $rangedWeapon = false;
     foreach($attacker->equipment as $equipment) {
-      if($equipment instanceof Weapon AND $equipment->isWorn() AND $equipment->ranged) {
+      if($equipment instanceof Weapon AND $equipment->worn AND $equipment->ranged) {
         $rangedWeapon = true;
         break;
       }
