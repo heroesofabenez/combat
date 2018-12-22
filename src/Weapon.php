@@ -23,11 +23,15 @@ class Weapon extends Equipment {
   public const TYPE_BOW = "bow";
   public const TYPE_CROSSBOW = "crossbow";
   public const TYPE_THROWING_KNIFE = "throwing knife";
+  public const MELEE_TYPES = [
+    self::TYPE_SWORD, self::TYPE_AXE, self::TYPE_CLUB, self::TYPE_DAGGER, self::TYPE_SPEAR,
+  ];
+  public const RANGED_TYPES = [
+    self::TYPE_STAFF, self::TYPE_BOW, self::TYPE_CROSSBOW, self::TYPE_THROWING_KNIFE,
+  ];
   
   public function isRanged(): bool {
-    return in_array($this->type, [
-      static::TYPE_STAFF, static::TYPE_BOW, static::TYPE_CROSSBOW, static::TYPE_THROWING_KNIFE,
-    ], true);
+    return in_array($this->type, static::RANGED_TYPES, true);
   }
 
   public function getDamageStat(): string {
