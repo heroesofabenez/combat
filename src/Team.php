@@ -72,7 +72,7 @@ final class Team extends Collection {
     return count($this->getAliveMembers()) > 0;
   }
   
-  /**"hitpoints>" => 0
+  /**
    * Set character's position in team
    *
    * @param string|int $id

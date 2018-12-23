@@ -7,10 +7,3 @@ parameters:
     ignoreErrors:
         - '#Variable \$[a-zA-Z0-9_]+ might not be defined#'
         - '#Method Nette\\Localization\\ITranslator::translate\(\) invoked with 3 parameters, 1-2 required#'
-        - '#Instanceof between HeroesofAbenez\\Combat\\Equipment and HeroesofAbenez\\Combat\\Equipment will always evaluate to true#'
-        - '#Instanceof between HeroesofAbenez\\Combat\\Pet and HeroesofAbenez\\Combat\\Pet will always evaluate to true#'
-        - '#Instanceof between HeroesofAbenez\\Combat\\BaseCharacterSkill and HeroesofAbenez\\Combat\\BaseCharacterSkill will always evaluate to true#'
-        - '#Method HeroesofAbenez\\Combat\\Team::setCharacterPosition\(\) has parameter \$id with no typehint specified#'
-        # for some reason this error does not appear in ci
-        - '#Property class@anonymous/CombatBase.php:89::\$class has no typehint specified#'
-    reportUnmatchedIgnoredErrors: false
