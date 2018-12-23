@@ -42,12 +42,12 @@ use Nexendrie\Utils\Collection;
  * @property-read string $initiativeFormula
  * @property-read int $defense
  * @property-read int $defenseBase
- * @property-read Equipment[]|Collection $equipment
- * @property-read Pet[]|Collection $pets
- * @property-read BaseCharacterSkill[]|Collection $skills
+ * @property Equipment[]|Collection $equipment
+ * @property Pet[]|Collection $pets
+ * @property BaseCharacterSkill[]|Collection $skills
  * @property-read int|null $activePet
  * @property-read CharacterEffect[] $effects
- * @property-read ICharacterEffectsProvider[] $effectProviders
+ * @property ICharacterEffectsProvider[]|Collection $effectProviders
  * @property-read bool $stunned
  * @property-read BaseCharacterSkill[] $usableSkills
  * @property IInitiativeFormulaParser $initiativeFormulaParser
@@ -152,8 +152,8 @@ class Character {
   protected $activePet = null;
   /** @var CharacterEffect[] Active effects */
   protected $effects = [];
-  /** @var ICharacterEffectsProvider[] */
-  protected $effectProviders = [];
+  /** @var ICharacterEffectsProvider[]|Collection */
+  protected $effectProviders;
   /** @var bool */
   protected $stunned = false;
   /** @var int */
@@ -170,21 +170,23 @@ class Character {
    */
   public function __construct(array $stats, array $equipment = [], array $pets = [], array $skills = [], IInitiativeFormulaParser $initiativeFormulaParser = null) {
     $this->initiativeFormulaParser = $initiativeFormulaParser ?? new InitiativeFormulaParser();
+    $this->effectProviders = new class extends  Collection {
+      /** @var string */
+      protected $class = ICharacterEffectsProvider::class;
+    };
     $this->equipment = new class extends Collection {
       /** @var string */
       protected $class = Equipment::class;
     };
     foreach($equipment as $eq) {
-      $this->equipment[] = $eq;
-      $this->addEffectProvider($eq);
+      $this->equipment[] = $this->effectProviders[] = $eq;
     }
     $this->pets = new class extends Collection {
       /** @var string */
       protected $class = Pet::class;
     };
     foreach($pets as $pet) {
-      $this->pets[] = $pet;
-      $this->addEffectProvider($pet);
+      $this->pets[] = $this->effectProviders[] = $pet;
     }
     $this->skills = new class extends Collection {
       /** @var string */
@@ -395,9 +397,9 @@ class Character {
   }
   
   /**
-   * @return ICharacterEffectsProvider[]
+   * @return ICharacterEffectsProvider[]|Collection
    */
-  public function getEffectProviders(): array {
+  public function getEffectProviders(): Collection {
     return $this->effectProviders;
   }
   
@@ -464,11 +466,7 @@ class Character {
     $this->effects[] = $effect;
     $effect->onApply($this, $effect);
   }
-  
-  public function addEffectProvider(ICharacterEffectsProvider $provider): void {
-    $this->effectProviders[] = $provider;
-  }
-  
+
   /**
    * Removes specified effect from the character
    *
