@@ -175,29 +175,23 @@ class Character {
       protected $class = Equipment::class;
     };
     foreach($equipment as $eq) {
-      if($eq instanceof Equipment) {
-        $this->equipment[] = $eq;
-        $this->addEffectProvider($eq);
-      }
+      $this->equipment[] = $eq;
+      $this->addEffectProvider($eq);
     }
     $this->pets = new class extends Collection {
       /** @var string */
       protected $class = Pet::class;
     };
     foreach($pets as $pet) {
-      if($pet instanceof Pet) {
-        $this->pets[] = $pet;
-        $this->addEffectProvider($pet);
-      }
+      $this->pets[] = $pet;
+      $this->addEffectProvider($pet);
     }
     $this->skills = new class extends Collection {
       /** @var string */
       protected $class = BaseCharacterSkill::class;
     };
     foreach($skills as $skill) {
-      if($skill instanceof BaseCharacterSkill) {
-        $this->skills[] = $skill;
-      }
+      $this->skills[] = $skill;
     }
     $this->equipment->lock();
     $this->pets->lock();
