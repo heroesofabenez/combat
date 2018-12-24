@@ -23,7 +23,8 @@
         "latte/latte": "^2.4",
         "nette/utils": "^2.4",
         "nexendrie/translation": "^1.1.1",
-        "nexendrie/utils": "^1.4"
+        "nexendrie/utils": "^1.4",
+        "symfony/options-resolver": "^4.0"
     },
     "require-dev": {
         "nexendrie/code-quality": "dev-master",
