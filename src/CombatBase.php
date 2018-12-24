@@ -68,11 +68,11 @@ class CombatBase {
   
   public function __construct(CombatLogger $logger, ?ISuccessCalculator $successCalculator = null, ?ICombatActionSelector $actionSelector = null) {
     $this->log = $logger;
-    $this->onCombatStart[] = [$this, "applyEffectProviders"];
     $this->onCombatStart[] = [$this, "assignPositions"];
     $this->onCombatEnd[] = [$this, "removeCombatEffects"];
     $this->onCombatEnd[] = [$this, "logCombatResult"];
     $this->onCombatEnd[] = [$this, "resetInitiative"];
+    $this->onRoundStart[] = [$this, "applyEffectProviders"];
     $this->onRoundStart[] = [$this, "decreaseEffectsDuration"];
     $this->onRoundStart[] = [$this ,"recalculateStats"];
     $this->onRoundStart[] = [$this, "logRoundNumber"];

@@ -454,6 +454,11 @@ class Character {
     foreach($this->effectProviders as $item) {
       $effects = $item->getCombatEffects();
       array_walk($effects, function(CharacterEffect $effect) {
+        try {
+          $this->removeEffect($effect->id);
+        } catch(\OutOfBoundsException $e) {
+
+        }
         $this->addEffect($effect);
       });
     }

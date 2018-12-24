@@ -73,10 +73,15 @@ final class CombatBaseTest extends \Tester\TestCase {
     Assert::same(50, $character1->hitpoints);
     $combat = new CombatBase(clone $this->logger);
     $combat->setDuelParticipants($character1, $character2);
-    $combat->onCombatStart($combat);
+    $combat->onRoundStart($combat);
     Assert::same(50, $character1->maxHitpointsBase);
     Assert::same(60, $character1->maxHitpoints);
     Assert::same(60, $character1->hitpoints);
+    $provider->value = 1;
+    $combat->onRoundStart($combat);
+    Assert::same(50, $character1->maxHitpointsBase);
+    Assert::same(51, $character1->maxHitpoints);
+    Assert::same(51, $character1->hitpoints);
     $combat->onCombatEnd($combat);
     Assert::same(50, $character1->maxHitpointsBase);
     Assert::same(50, $character1->maxHitpoints);
