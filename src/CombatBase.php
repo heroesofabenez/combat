@@ -15,13 +15,13 @@ use Nexendrie\Utils\Collection;
  * @property-read int $winner Team which won the combat/0 if there is no winner yet
  * @property-read int $round Number of current round
  * @property-read int $roundLimit
- * @property-read Team $team1
- * @property-read Team $team2
+ * @property Team $team1
+ * @property Team $team2
  * @property-read int $team1Damage
  * @property-read int $team2Damage
  * @property ISuccessCalculator $successCalculator
  * @property ICombatActionSelector $actionSelector
- * @property-read Collection|ICombatAction[] $combatActions
+ * @property Collection|ICombatAction[] $combatActions
  * @property callable $victoryCondition To evaluate the winner of combat. Gets combat as parameter, should return winning team (1/2) or 0 if there is not winner (yet)
  * @property callable $healers To determine characters that are supposed to heal their team. Gets team1 and team2 as parameters, should return Team
  * @method void onCombatStart(CombatBase $combat)
