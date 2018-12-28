@@ -42,9 +42,9 @@ use Nexendrie\Utils\Collection;
  * @property-read string $initiativeFormula
  * @property-read int $defense
  * @property-read int $defenseBase
- * @property Equipment[]|Collection $equipment
- * @property Pet[]|Collection $pets
- * @property BaseCharacterSkill[]|Collection $skills
+ * @property-read Equipment[]|Collection $equipment
+ * @property-read Pet[]|Collection $pets
+ * @property-read BaseCharacterSkill[]|Collection $skills
  * @property-read int|null $activePet
  * @property-read CharacterEffect[] $effects
  * @property ICharacterEffectsProvider[]|Collection $effectProviders
