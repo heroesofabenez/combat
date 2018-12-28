@@ -23,11 +23,12 @@ class Weapon extends Equipment {
   public const TYPE_BOW = "bow";
   public const TYPE_CROSSBOW = "crossbow";
   public const TYPE_THROWING_KNIFE = "throwing knife";
+  public const TYPE_INSTRUMENT = "instrument";
   public const MELEE_TYPES = [
     self::TYPE_SWORD, self::TYPE_AXE, self::TYPE_CLUB, self::TYPE_DAGGER, self::TYPE_SPEAR,
   ];
   public const RANGED_TYPES = [
-    self::TYPE_STAFF, self::TYPE_BOW, self::TYPE_CROSSBOW, self::TYPE_THROWING_KNIFE,
+    self::TYPE_STAFF, self::TYPE_BOW, self::TYPE_CROSSBOW, self::TYPE_THROWING_KNIFE, self::TYPE_INSTRUMENT,
   ];
   
   public function isRanged(): bool {
@@ -43,6 +44,8 @@ class Weapon extends Equipment {
       case static::TYPE_BOW:
       case static::TYPE_THROWING_KNIFE:
         return Character::STAT_DEXTERITY;
+      case static::TYPE_INSTRUMENT:
+        return Character::STAT_CHARISMA;
       default:
         return Character::STAT_STRENGTH;
     }
