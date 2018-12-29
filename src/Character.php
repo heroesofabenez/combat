@@ -17,7 +17,6 @@ use Nexendrie\Utils\Collection;
  * @property-read string $race
  * @property-read string $occupation
  * @property-read int $level
- * @property-read int $experience
  * @property-read int $strength
  * @property-read int $strengthBase
  * @property-read int $dexterity
@@ -90,8 +89,6 @@ class Character {
   protected $specialization;
   /** @var int */
   protected $level;
-  /** @var int */
-  protected $experience = 0;
   /** @var int */
   protected $strength;
   /** @var int */
@@ -203,13 +200,12 @@ class Character {
   
   protected function setStats(array $stats): void {
     $requiredStats = array_merge(["id", "name", "level", "initiativeFormula",], static::BASE_STATS);
-    $allStats = array_merge($requiredStats, ["occupation", "race", "specialization", "gender", "experience",]);
+    $allStats = array_merge($requiredStats, ["occupation", "race", "specialization", "gender",]);
     $numberStats = static::BASE_STATS;
     $textStats = ["name", "race", "occupation", "initiativeFormula",];
     $resolver = new OptionsResolver();
     $resolver->setDefined($allStats);
     $resolver->setAllowedTypes("id", ["integer", "string"]);
-    $resolver->setAllowedTypes("experience", "integer");
     foreach($numberStats as $stat) {
       $resolver->setAllowedTypes($stat, ["integer", "float"]);
       $resolver->setNormalizer($stat, function(OptionsResolver $resolver, $value) {
@@ -265,10 +261,6 @@ class Character {
   
   public function getLevel(): int {
     return $this->level;
-  }
-  
-  public function getExperience(): int {
-    return $this->experience;
   }
   
   public function getStrength(): int {
