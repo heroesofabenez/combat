@@ -343,13 +343,7 @@ class CombatBase {
    */
   public function selectAttackTarget(Character $attacker): ?Character {
     $enemyTeam = $this->getEnemyTeam($attacker);
-    $rangedWeapon = false;
-    foreach($attacker->equipment as $equipment) {
-      if($equipment instanceof Weapon AND $equipment->worn AND $equipment->ranged) {
-        $rangedWeapon = true;
-        break;
-      }
-    }
+    $rangedWeapon = ($attacker->equipment->hasItems(["%class%" => Weapon::class, "worn" => true, "ranged" => true,]));
     if(!$rangedWeapon) {
       $rowToAttack = $enemyTeam->rowToAttack;
       if(is_null($rowToAttack)) {

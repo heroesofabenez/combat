@@ -101,6 +101,29 @@ final class CharacterTest extends \Tester\TestCase {
     $character->addEffect($effect);
     Assert::same(2, $character->constitution);
   }
+
+  public function testDamageStat() {
+    $stats = [
+      "id" => 1, "name" => "Player 1", "level" => 1, "initiativeFormula" => "1d2+DEX/4", "strength" => 10,
+      "dexterity" => 10, "constitution" => 10, "intelligence" => 10, "charisma" => 10
+    ];
+    $equipment = [
+      new Weapon([
+        "id" => 1, "name" => "Novice Sword", "slot" => Equipment::SLOT_WEAPON, "type" => Weapon::TYPE_SWORD,
+        "strength" => 1, "worn" => true
+      ]),
+      new Weapon([
+        "id" => 2, "name" => "Novice Staff", "slot" => Equipment::SLOT_WEAPON, "type" => Weapon::TYPE_STAFF,
+        "strength" => 1, "worn" => true
+      ])
+    ];
+    $character = new Character($stats, $equipment);
+    Assert::same(Character::STAT_STRENGTH, $character->damageStat());
+    $equipment[0]->worn = false;
+    Assert::same(Character::STAT_INTELLIGENCE, $character->damageStat());
+    $equipment[1]->worn = false;
+    Assert::same(Character::STAT_STRENGTH, $character->damageStat());
+  }
 }
 
 $test = new CharacterTest();

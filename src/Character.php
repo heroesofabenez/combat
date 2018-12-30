@@ -373,12 +373,12 @@ class Character {
   }
   
   public function getActivePet(): ?int {
-    /** @var Pet[] $pets */
-    $pets = $this->pets->getItems(["deployed" => true]);
-    if(count($pets) === 0) {
+    /** @var Pet|null $pet */
+    $pet = $this->pets->getItem(["deployed" => true]);
+    if(is_null($pet)) {
       return null;
     }
-    return $pets[0]->id;
+    return $pet->id;
   }
   
   /**
@@ -486,11 +486,12 @@ class Character {
    * @throws \OutOfBoundsException
    */
   public function getItem(int $itemId): Equipment {
-    $equipment = $this->equipment->getItems(["id" => $itemId]);
-    if(count($equipment) === 0) {
+    /** @var Equipment|null $equipment */
+    $equipment = $this->equipment->getItem(["id" => $itemId]);
+    if(is_null($equipment)) {
       throw new \OutOfBoundsException("Item was not found.");
     }
-    return $equipment[0];
+    return $equipment;
   }
   
   /**
@@ -499,11 +500,12 @@ class Character {
    * @throws \OutOfBoundsException
    */
   public function getPet(int $petId): Pet {
-    $pets = $this->pets->getItems(["id" => $petId]);
-    if(count($pets) === 0) {
+    /** @var Pet|null $pet */
+    $pet = $this->pets->getItem(["id" => $petId]);
+    if(is_null($pet)) {
       throw new \OutOfBoundsException("Pet was not found.");
     }
-    return $pets[0];
+    return $pet;
   }
   
   /**
@@ -531,13 +533,12 @@ class Character {
    * Determine which (primary) stat should be used to calculate damage
    */
   public function damageStat(): string {
-    foreach($this->equipment as $item) {
-      if(!$item->worn OR !$item instanceof Weapon) {
-        continue;
-      }
-      return $item->damageStat;
+    /** @var Weapon|null $item */
+    $item = $this->equipment->getItem(["%class%" => Weapon::class, "worn" => true, ]);
+    if(is_null($item)) {
+      return static::STAT_STRENGTH;
     }
-    return static::STAT_STRENGTH;
+    return $item->damageStat;
   }
   
   /**
