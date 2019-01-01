@@ -46,7 +46,7 @@ final class SkillSpecial implements ICombatAction {
       "valueAbsolute" => false,
       "duration" => $skill->skill->duration,
     ]);
-    $target->addEffect($effect);
+    $target->effects[] = $effect;
     $combat->log->log($result);
     $skill->resetCooldown();
   }

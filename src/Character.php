@@ -45,7 +45,7 @@ use Nexendrie\Utils\Collection;
  * @property-read Pet[]|Collection $pets
  * @property-read BaseCharacterSkill[]|Collection $skills
  * @property-read int|null $activePet
- * @property-read CharacterEffect[] $effects
+ * @property CharacterEffect[]|CharacterEffectsCollection $effects
  * @property ICharacterEffectsProvider[]|Collection $effectProviders
  * @property-read bool $stunned
  * @property-read BaseCharacterSkill[] $usableSkills
@@ -147,8 +147,8 @@ class Character {
   protected $skills;
   /** @var int|null */
   protected $activePet = null;
-  /** @var CharacterEffect[] Active effects */
-  protected $effects = [];
+  /** @var CharacterEffect[]|CharacterEffectsCollection Active effects */
+  protected $effects;
   /** @var ICharacterEffectsProvider[]|Collection */
   protected $effectProviders;
   /** @var bool */
@@ -196,6 +196,7 @@ class Character {
     $this->pets->lock();
     $this->skills->lock();
     $this->setStats($stats);
+    $this->effects = new CharacterEffectsCollection($this);
   }
   
   protected function setStats(array $stats): void {
@@ -380,11 +381,8 @@ class Character {
     }
     return $pet->id;
   }
-  
-  /**
-   * @return CharacterEffect[]
-   */
-  public function getEffects(): array {
+
+  public function getEffects(): CharacterEffectsCollection {
     return $this->effects;
   }
   
@@ -446,38 +444,10 @@ class Character {
     foreach($this->effectProviders as $item) {
       $effects = $item->getCombatEffects();
       array_walk($effects, function(CharacterEffect $effect) {
-        try {
-          $this->removeEffect($effect->id);
-        } catch(\OutOfBoundsException $e) {
-
-        }
-        $this->addEffect($effect);
+        $this->effects->removeByFilter(["id" => $effect->id]);
+        $this->effects[] = $effect;
       });
     }
-  }
-  
-  /**
-   * Applies new effect on the character
-   */
-  public function addEffect(CharacterEffect $effect): void {
-    $this->effects[] = $effect;
-    $effect->onApply($this, $effect);
-  }
-
-  /**
-   * Removes specified effect from the character
-   *
-   * @throws \OutOfBoundsException
-   */
-  public function removeEffect(string $effectId): void {
-    foreach($this->effects as $i => $effect) {
-      if($effect->id == $effectId) {
-        unset($this->effects[$i]);
-        $effect->onRemove($this, $effect);
-        return;
-      }
-    }
-    throw new \OutOfBoundsException("Effect to remove was not found.");
   }
   
   /**
@@ -577,14 +547,10 @@ class Character {
       $$stat = $this->{$stat . "Base"};
       $debuffs[$stat] = 0;
     }
+    $this->effects->removeByFilter(["duration<" => 1]);
     foreach($this->effects as $i => $effect) {
       $stat = $effect->stat;
       $type = $effect->type;
-      $duration = $effect->duration;
-      if(is_int($duration) AND $duration < 1) {
-        $this->removeEffect($effect->id);
-        continue;
-      }
       if(!in_array($type, SkillSpecial::NO_STAT_TYPES, true)) {
         $bonus_value = ($effect->valueAbsolute) ? $effect->value : $$stat / 100 * $effect->value;
       }
@@ -595,7 +561,7 @@ class Character {
       } elseif($type == SkillSpecial::TYPE_STUN) {
         $stunned = true;
       }
-      unset($stat, $type, $duration, $bonus_value);
+      unset($stat, $type, $bonus_value);
     }
     foreach($debuffs as $stat => $value) {
       $value = min($value, 80);

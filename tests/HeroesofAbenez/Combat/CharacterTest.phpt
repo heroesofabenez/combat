@@ -66,20 +66,17 @@ final class CharacterTest extends \Tester\TestCase {
     $character = $this->generateCharacter(1);
     Assert::count(0, $character->effects);
     Assert::same(5, $character->damage);
-    $character->addEffect(new CharacterEffect([
+    $character->effects[] = new CharacterEffect([
       "id" => "equipment1bonusEffect",
       "type" => "buff",
       "stat" => Character::STAT_DAMAGE,
       "value" => 10,
       "valueAbsolute" => true,
       "duration" => CharacterEffect::DURATION_COMBAT,
-    ]));
+    ]);
     Assert::count(1, $character->effects);
     Assert::same(15, $character->damage);
-    Assert::exception(function() use($character) {
-      $character->removeEffect("abc");
-    }, \OutOfBoundsException::class);
-    $character->removeEffect("equipment1bonusEffect");
+    $character->effects->removeByFilter(["id" => "equipment1bonusEffect"]);
     Assert::count(0, $character->effects);
     Assert::same(5, $character->damage);
   }
@@ -98,7 +95,7 @@ final class CharacterTest extends \Tester\TestCase {
       "id" => "skillEffect", "type" => SkillSpecial::TYPE_DEBUFF, "valueAbsolute" => false,
       "value" => 1000, "duration" => 1, "stat" => "constitution",
     ]);
-    $character->addEffect($effect);
+    $character->effects[] = $effect;
     Assert::same(2, $character->constitution);
   }
 

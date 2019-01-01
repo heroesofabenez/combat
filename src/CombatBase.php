@@ -282,11 +282,7 @@ class CombatBase {
     /** @var Character[] $characters */
     $characters = array_merge($combat->team1->toArray(), $combat->team2->toArray());
     foreach($characters as $character) {
-      foreach($character->effects as $effect) {
-        if($effect->duration === CharacterEffect::DURATION_COMBAT OR is_int($effect->duration)) {
-          $character->removeEffect($effect->id);
-        }
-      }
+      $character->effects->removeByFilter(["duration!=" => CharacterEffect::DURATION_FOREVER]);
     }
   }
   

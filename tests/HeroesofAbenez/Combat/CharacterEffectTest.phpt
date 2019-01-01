@@ -29,10 +29,10 @@ final class CharacterEffectTest extends \Tester\TestCase {
       "valueAbsolute" => true,
       "duration" => CharacterEffect::DURATION_COMBAT,
     ]);
-    $character->addEffect($effect);
+    $character->effects[] = $effect;
     Assert::same(11, $character->initiative);
     Assert::same(1, $character->initiativeBase);
-    $character->removeEffect($effect->id);
+    $character->effects->removeByFilter(["id" => $effect->id]);
     Assert::same(1, $character->initiative);
     Assert::same(1, $character->initiativeBase);
   }
@@ -51,11 +51,11 @@ final class CharacterEffectTest extends \Tester\TestCase {
       "valueAbsolute" => true,
       "duration" => CharacterEffect::DURATION_COMBAT,
     ]);
-    $character->addEffect($effect);
+    $character->effects[] = $effect;
     Assert::same($baseHitpoints, $character->maxHitpointsBase);
     Assert::same(60, $character->maxHitpoints);
     Assert::same(60, $character->hitpoints);
-    $character->removeEffect("equipment1bonusEffect");
+    $character->effects->removeByFilter(["id" => "equipment1bonusEffect"]);
     Assert::same($baseHitpoints, $character->maxHitpointsBase);
     Assert::same($baseHitpoints, $character->maxHitpoints);
     Assert::same($baseHitpoints, $character->hitpoints);

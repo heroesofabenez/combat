@@ -143,7 +143,7 @@ final class CombatBaseTest extends \Tester\TestCase {
       "id" => "skillEffect", "type" => SkillSpecial::TYPE_STUN, "valueAbsolute" => false,
       "value" => 0, "duration" => 1, "stat" => "",
     ]);
-    $character1->addEffect($effect);
+    $character1->effects[] = $effect;
     Assert::count(1, $character1->effects);
     Assert::true($character1->stunned);
     $combat->decreaseEffectsDuration($combat);
@@ -162,7 +162,7 @@ final class CombatBaseTest extends \Tester\TestCase {
       "id" => "skillEffect", "type" => SkillSpecial::TYPE_POISON, "valueAbsolute" => false,
       "value" => 10, "duration" => 1, "stat" => "",
     ]);
-    $character1->addEffect($effect);
+    $character1->effects[] = $effect;
     Assert::same(50, $character1->hitpoints);
     $combat->applyPoison($combat);
     Assert::same(40, $character1->hitpoints);
