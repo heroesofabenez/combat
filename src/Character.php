@@ -16,6 +16,7 @@ use Nexendrie\Utils\Collection;
  * @property-read string $gender
  * @property-read string $race
  * @property-read string $occupation
+ * @property-read string $specialization
  * @property-read int $level
  * @property-read int $strength
  * @property-read int $strengthBase
@@ -203,7 +204,7 @@ class Character {
     $requiredStats = array_merge(["id", "name", "level", "initiativeFormula",], static::BASE_STATS);
     $allStats = array_merge($requiredStats, ["occupation", "race", "specialization", "gender",]);
     $numberStats = static::BASE_STATS;
-    $textStats = ["name", "race", "occupation", "initiativeFormula",];
+    $textStats = ["name", "race", "occupation", "specialization", "initiativeFormula",];
     $resolver = new OptionsResolver();
     $resolver->setDefined($allStats);
     $resolver->setAllowedTypes("id", ["integer", "string"]);
