@@ -389,33 +389,6 @@ class CombatBase {
   }
   
   /**
-   * Start next round
-   * 
-   * @return int Winning team/0
-   */
-  protected function startRound(): int {
-    $this->onRoundStart($this);
-    return $this->getWinner();
-  }
-  
-  /**
-   * Do a round
-   */
-  protected function doRound(): void {
-    $this->onRound($this);
-  }
-  
-  /**
-   * End round
-   * 
-   * @return int Winning team/0
-   */
-  protected function endRound(): int {
-    $this->onRoundEnd($this);
-    return $this->getWinner();
-  }
-  
-  /**
    * Executes the combat
    * 
    * @return int Winning team
@@ -426,11 +399,13 @@ class CombatBase {
     }
     $this->onCombatStart($this);
     while($this->round <= $this->roundLimit) {
-      if($this->startRound() > 0) {
+      $this->onRoundStart($this);
+      if($this->getWinner() > 0) {
         break;
       }
-      $this->doRound();
-      if($this->endRound() > 0) {
+      $this->onRound($this);
+      $this->onRoundEnd($this);
+      if($this->getWinner() > 0) {
         break;
       }
     }
