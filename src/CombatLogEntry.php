@@ -16,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property-read bool $result
  * @property-read int $amount
  */
-class CombatLogEntry {
+final class CombatLogEntry {
   use \Nette\SmartObject;
 
   public const ACTION_POISON = "poison";
