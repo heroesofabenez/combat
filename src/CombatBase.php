@@ -358,26 +358,6 @@ class CombatBase {
   }
   
   /**
-   * Select target for healing
-   *
-   * @internal
-   */
-  public function selectHealingTarget(Character $healer): ?Character {
-    return $this->getTeam($healer)->getLowestHpCharacter();
-  }
-  
-  /**
-   * @internal
-   */
-  public function findHealers(): Team {
-    $healers = call_user_func($this->healers, $this->team1, $this->team2);
-    if($healers instanceof Team) {
-      return $healers;
-    }
-    return new Team("healers");
-  }
-  
-  /**
    * Main stage of a round
    *
    * @throws NotImplementedException
