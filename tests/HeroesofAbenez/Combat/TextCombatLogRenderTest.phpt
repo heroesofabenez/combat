@@ -6,6 +6,7 @@ namespace HeroesofAbenez\Combat;
 require __DIR__ . "/../../bootstrap.php";
 
 use Tester\Assert;
+use HeroesofAbenez\Combat\CombatActions;
 
 final class TextCombatLogRenderTest extends \Tester\TestCase {
   use \Testbench\TCompiledContainer;
@@ -31,36 +32,36 @@ final class TextCombatLogRenderTest extends \Tester\TestCase {
     $logger->round = 1;
     $logger->logText("abc.abc");
     $logger->log([
-      "action" => CombatLogEntry::ACTION_ATTACK, "name" => "", "result" => true, "amount" => 1,
+      "action" => CombatActions\Attack::ACTION_NAME, "name" => "", "result" => true, "amount" => 1,
       "character1" => $character1, "character2" => $character2,
     ]);
     $logger->log([
-      "action" => CombatLogEntry::ACTION_ATTACK, "name" => "", "result" => false, "amount" => 1,
+      "action" => CombatActions\Attack::ACTION_NAME, "name" => "", "result" => false, "amount" => 1,
       "character1" => $character2, "character2" => $character1,
     ]);
     $logger->round = 2;
     $logger->log([
-      "action" => CombatLogEntry::ACTION_SKILL_ATTACK, "name" => "Abc", "result" => true, "amount" => 1,
+      "action" => CombatActions\SkillAttack::ACTION_NAME, "name" => "Abc", "result" => true, "amount" => 1,
       "character1" => $character1, "character2" => $character2,
     ]);
     $logger->log([
-      "action" => CombatLogEntry::ACTION_SKILL_ATTACK, "name" => "Def", "result" => false, "amount" => 1,
+      "action" => CombatActions\SkillAttack::ACTION_NAME, "name" => "Def", "result" => false, "amount" => 1,
       "character1" => $character2, "character2" => $character1,
     ]);
     $logger->log([
-      "action" => CombatLogEntry::ACTION_SKILL_SPECIAL, "name" => "Abc", "result" => true, "amount" => 1,
+      "action" => CombatActions\SkillSpecial::ACTION_NAME, "name" => "Abc", "result" => true, "amount" => 1,
       "character1" => $character1, "character2" => $character2,
     ]);
     $logger->log([
-      "action" => CombatLogEntry::ACTION_SKILL_SPECIAL, "name" => "Def", "result" => false, "amount" => 1,
+      "action" => CombatActions\SkillSpecial::ACTION_NAME, "name" => "Def", "result" => false, "amount" => 1,
       "character1" => $character2, "character2" => $character1,
     ]);
     $logger->log([
-      "action" => CombatLogEntry::ACTION_HEALING, "name" => "", "result" => true, "amount" => 1,
+      "action" => CombatActions\Heal::ACTION_NAME, "name" => "", "result" => true, "amount" => 1,
       "character1" => $character1, "character2" => $character2,
     ]);
     $logger->log([
-      "action" => CombatLogEntry::ACTION_HEALING, "name" => "", "result" => false, "amount" => 1,
+      "action" => CombatActions\Heal::ACTION_NAME, "name" => "", "result" => false, "amount" => 1,
       "character1" => $character2, "character2" => $character1,
     ]);
     $logger->log([

@@ -18,11 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CombatLogEntry {
   use \Nette\SmartObject;
-  
-  public const ACTION_ATTACK = "attack";
-  public const ACTION_SKILL_ATTACK = "skill_attack";
-  public const ACTION_SKILL_SPECIAL = "skill_special";
-  public const ACTION_HEALING = "healing";
+
   public const ACTION_POISON = "poison";
 
   /** @var Character */

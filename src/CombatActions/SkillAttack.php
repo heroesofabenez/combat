@@ -5,7 +5,6 @@ namespace HeroesofAbenez\Combat\CombatActions;
 
 use HeroesofAbenez\Combat\Character;
 use HeroesofAbenez\Combat\CombatBase;
-use HeroesofAbenez\Combat\CombatLogEntry;
 use HeroesofAbenez\Combat\CharacterAttackSkill;
 use HeroesofAbenez\Combat\SkillAttack as Skill;
 use HeroesofAbenez\Combat\NotImplementedException;
@@ -14,8 +13,10 @@ use Nexendrie\Utils\Numbers;
 final class SkillAttack implements ICombatAction {
   use \Nette\SmartObject;
 
+  public const ACTION_NAME = "skill_attack";
+
   public function getName(): string {
-    return CombatLogEntry::ACTION_SKILL_ATTACK;
+    return static::ACTION_NAME;
   }
 
   public function getPriority(): int {

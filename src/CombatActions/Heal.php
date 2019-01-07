@@ -5,14 +5,15 @@ namespace HeroesofAbenez\Combat\CombatActions;
 
 use HeroesofAbenez\Combat\Character;
 use HeroesofAbenez\Combat\CombatBase;
-use HeroesofAbenez\Combat\CombatLogEntry;
 use Nexendrie\Utils\Numbers;
 
 final class Heal implements ICombatAction {
   use \Nette\SmartObject;
 
+  public const ACTION_NAME = "healing";
+
   public function getName(): string {
-    return CombatLogEntry::ACTION_HEALING;
+    return static::ACTION_NAME;
   }
 
   public function getPriority(): int {

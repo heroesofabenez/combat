@@ -5,14 +5,15 @@ namespace HeroesofAbenez\Combat\CombatActions;
 
 use HeroesofAbenez\Combat\Character;
 use HeroesofAbenez\Combat\CombatBase;
-use HeroesofAbenez\Combat\CombatLogEntry;
 use Nexendrie\Utils\Numbers;
 
 final class Attack implements ICombatAction {
   use \Nette\SmartObject;
 
+  public const ACTION_NAME = "attack";
+
   public function getName(): string {
-    return CombatLogEntry::ACTION_ATTACK;
+    return static::ACTION_NAME;
   }
 
   public function getPriority(): int {

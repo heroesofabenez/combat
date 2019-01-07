@@ -5,6 +5,7 @@ namespace HeroesofAbenez\Combat;
 
 use Nette\Bridges\ApplicationLatte\ILatteFactory;
 use Nette\Localization\ITranslator;
+use HeroesofAbenez\Combat\CombatActions;
 
 /**
  * TextCombatLogRender
@@ -51,24 +52,24 @@ final class TextCombatLogRender implements ICombatLogRender {
     $character1 = $item->character1->name;
     $character2 = $item->character2->name;
     switch($item->action) {
-      case CombatLogEntry::ACTION_ATTACK:
+      case CombatActions\Attack::ACTION_NAME:
         $message = ($item->result) ? "combat.log.attackHits" : "combat.log.attackFails";
         $text = $this->translator->translate($message, $item->amount, ["character1" => $character1, "character2" => $character2]);
         if($item->result AND $item->character2->hitpoints < 1) {
           $text .= $this->translator->translate("combat.log.characterFalls");
         }
         return $text;
-      case CombatLogEntry::ACTION_SKILL_ATTACK:
+      case CombatActions\SkillAttack::ACTION_NAME:
         $message = ($item->result) ? "combat.log.specialAttackHits" : "combat.log.specialAttackFails";
         $text = $this->translator->translate($message, $item->amount, ["character1" => $character1, "character2" => $character2, "name" => $item->name]);
         if($item->result AND $item->character2->hitpoints < 1) {
           $text .= $this->translator->translate("combat.log.characterFalls");
         }
         return $text;
-      case CombatLogEntry::ACTION_SKILL_SPECIAL:
+      case CombatActions\SkillSpecial::ACTION_NAME:
         $message = ($item->result) ? "combat.log.specialSkillSuccess" : "combat.log.specialSKillFailure";
         return $this->translator->translate($message, 0, ["character1" => $character1, "character2" => $character2, "name" => $item->name]);
-      case CombatLogEntry::ACTION_HEALING:
+      case CombatActions\Heal::ACTION_NAME:
         $message = ($item->result) ? "combat.log.healingSuccess" : "combat.log.healingFailure";
         return $this->translator->translate($message, $item->amount, ["character1" => $character1, "character2" => $character2]);
       case CombatLogEntry::ACTION_POISON:

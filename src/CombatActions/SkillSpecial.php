@@ -5,7 +5,6 @@ namespace HeroesofAbenez\Combat\CombatActions;
 
 use HeroesofAbenez\Combat\Character;
 use HeroesofAbenez\Combat\CombatBase;
-use HeroesofAbenez\Combat\CombatLogEntry;
 use HeroesofAbenez\Combat\CharacterSpecialSkill;
 use HeroesofAbenez\Combat\SkillSpecial as Skill;
 use HeroesofAbenez\Combat\NotImplementedException;
@@ -14,8 +13,10 @@ use HeroesofAbenez\Combat\CharacterEffect;
 final class SkillSpecial implements ICombatAction {
   use \Nette\SmartObject;
 
+  public const ACTION_NAME = "skill_special";
+
   public function getName(): string {
-    return CombatLogEntry::ACTION_SKILL_SPECIAL;
+    return static::ACTION_NAME;
   }
 
   public function getPriority(): int {
