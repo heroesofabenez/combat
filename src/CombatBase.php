@@ -14,7 +14,7 @@ use Nexendrie\Utils\Collection;
  * @property-read CombatLogger $log Log from the combat
  * @property-read int $winner Team which won the combat/0 if there is no winner yet
  * @property-read int $round Number of current round
- * @property-read int $roundLimit
+ * @property int $roundLimit
  * @property Team $team1
  * @property Team $team2
  * @property-read int $team1Damage
@@ -103,7 +103,11 @@ class CombatBase {
   public function getRoundLimit(): int {
     return $this->roundLimit;
   }
-  
+
+  public function setRoundLimit(int $roundLimit): void {
+    $this->roundLimit = Numbers::range($roundLimit, 1, PHP_INT_MAX);
+  }
+
   /**
    * Set teams
    */
