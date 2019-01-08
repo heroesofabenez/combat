@@ -39,7 +39,7 @@ final class SkillAttack implements ICombatAction {
     $result["result"] = $combat->successCalculator->hasHit($attacker, $defender, $skill);
     $result["amount"] = 0;
     if($result["result"]) {
-      $amount = (int) ($attacker->damage - $defender->defense / 100 * $skill->damage);
+      $amount = (int) (($attacker->damage - $defender->defense) / 100 * $skill->damage);
       $result["amount"] = Numbers::range($amount, 0, $defender->hitpoints);
     }
     if($result["amount"] > 0) {
