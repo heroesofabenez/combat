@@ -18,7 +18,7 @@ final class Heal implements ICombatAction {
   }
 
   public function getPriority(): int {
-    return 1000;
+    return 10000;
   }
 
   public function shouldUse(CombatBase $combat, Character $character): bool {
