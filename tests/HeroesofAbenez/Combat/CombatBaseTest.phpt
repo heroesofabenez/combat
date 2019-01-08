@@ -171,27 +171,16 @@ final class CombatBaseTest extends \Tester\TestCase {
   public function testPostCombat() {
     $combat = new CombatBase(clone $this->logger);
     $combat->healers = function(Team $team1, Team $team2): Team {
-      $team = new Team("healers");
-      foreach(array_merge($team1->toArray(), $team2->toArray()) as $character) {
-        $team[] = $character;
-      }
-      return $team;
+      return Team::fromArray(array_merge($team1->toArray(), $team2->toArray()), "healers");
     };
-    $team1 = new Team("Team 1");
-    $team1[] = $this->generateCharacter(1);
-    $team2 = new Team("Team 2");
-    $team2[] = $this->generateCharacter(2);
-    $combat->setTeams($team1, $team2);
+    $character1 = $this->generateCharacter(1);
+    $character2 = $this->generateCharacter(2);
+    $combat->setDuelParticipants($character1, $character2);
     $combat->execute();
-    Assert::type("int", $combat->round);
-    Assert::true(($combat->round <= 31));
-    Assert::type("int", $combat->log->round);
+    Assert::same(31, $combat->round);
     Assert::same(5000, $combat->log->round);
-    $players = array_merge($team1->toArray(), $team2->toArray());
-    /** @var Character $player */
-    foreach($players as $player) {
-      Assert::same(0, $player->initiative);
-    }
+    Assert::count(1, $combat->team1->getItems(["initiative" => 0]));
+    Assert::count(1, $combat->team2->getItems(["initiative" => 0]));
   }
 }
 
