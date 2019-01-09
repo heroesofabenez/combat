@@ -542,7 +542,6 @@ class Character {
    */
   public function recalculateStats(): void {
     $stats = array_merge(static::BASE_STATS, static::SECONDARY_STATS);
-    $stunned = false;
     $debuffs = [];
     foreach($stats as $stat) {
       $$stat = $this->{$stat . "Base"};
@@ -559,8 +558,6 @@ class Character {
         $$stat += $bonus_value;
       } elseif($type == SkillSpecial::TYPE_DEBUFF) {
         $debuffs[$stat] += $bonus_value;
-      } elseif($type == SkillSpecial::TYPE_STUN) {
-        $stunned = true;
       }
       unset($stat, $type, $bonus_value);
     }
@@ -573,7 +570,7 @@ class Character {
       $this->$stat = (int) round($$stat);
     }
     $this->recalculateSecondaryStats();
-    $this->stunned = $stunned;
+    $this->stunned = $this->effects->hasItems(["type" => SkillSpecial::TYPE_STUN]);
   }
   
   /**
