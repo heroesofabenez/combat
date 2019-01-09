@@ -76,9 +76,12 @@ final class SkillAttack implements ICombatAction {
       default:
         throw new NotImplementedException("Target {$skill->skill->target} for attack skills is not implemented.");
     }
+    /** @var Character $target */
     foreach($targets as $target) {
       for($i = 1; $i <= $skill->skill->strikes; $i++) {
-        $this->doSingleAttack($character, $target, $skill, $combat);
+        if($target->hitpoints > 0) {
+          $this->doSingleAttack($character, $target, $skill, $combat);
+        }
       }
     }
   }
