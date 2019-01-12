@@ -34,6 +34,14 @@ final class RandomSuccessCalculatorTest extends \Tester\TestCase {
     $skill = new SkillAttack($skillData);
     $characterSkill = new CharacterAttackSkill($skill, 1);
     Assert::type("bool", $this->calculator->hasHit($character1, $character2, $characterSkill));
+    $character2->effects[] = new CharacterEffect([
+      "id" => "stunEffect", "type" => SkillSpecial::TYPE_STUN, "valueAbsolute" => false,
+      "duration" => CharacterEffect::DURATION_COMBAT,
+    ]);
+    for($i = 1; $i <= 10; $i++) {
+      Assert::true($this->calculator->hasHit($character1, $character2));
+      Assert::true($this->calculator->hasHit($character1, $character2, $characterSkill));
+    }
   }
   
   public function testHasHealed() {
