@@ -595,7 +595,7 @@ class Character {
       $debuffs[$stat] = 0;
     }
     $this->effects->removeByFilter(["duration<" => 1]);
-    foreach($this->effects as $i => $effect) {
+    foreach($this->effects as $effect) {
       $stat = $effect->stat;
       $type = $effect->type;
       if(!in_array($type, SkillSpecial::NO_STAT_TYPES, true)) {
