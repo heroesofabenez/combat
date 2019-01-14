@@ -145,12 +145,12 @@ final class CombatBaseTest extends \Tester\TestCase {
     ]);
     $character1->effects[] = $effect;
     Assert::count(1, $character1->effects);
-    Assert::true($character1->stunned);
+    Assert::true($character1->hasStatus(Character::STATUS_STUNNED));
     $combat->decreaseEffectsDuration($combat);
     Assert::same(0, $effect->duration);
     $character1->recalculateStats();
     Assert::count(0, $character1->effects);
-    Assert::false($character1->stunned);
+    Assert::false($character1->hasStatus(Character::STATUS_STUNNED));
   }
   
   public function testApplyPoison() {
@@ -160,8 +160,9 @@ final class CombatBaseTest extends \Tester\TestCase {
     $combat->setDuelParticipants($character1, $character2);
     $effect = new CharacterEffect([
       "id" => "skillEffect", "type" => SkillSpecial::TYPE_POISON, "valueAbsolute" => false,
-      "value" => 10, "duration" => 1, "stat" => "",
+      "value" => 5, "duration" => 1, "stat" => "",
     ]);
+    $character1->effects[] = $effect;
     $character1->effects[] = $effect;
     Assert::same(50, $character1->hitpoints);
     $combat->applyPoison($combat);

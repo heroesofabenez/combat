@@ -14,7 +14,7 @@ final class RandomSuccessCalculator implements ISuccessCalculator {
   use \Nette\SmartObject;
 
   public function hasHit(Character $character1, Character $character2, ?CharacterAttackSkill $skill = null): bool {
-    if($character2->stunned) {
+    if($character2->hasStatus(Character::STATUS_STUNNED)) {
       return true;
     }
     $hitRate = $character1->hit;

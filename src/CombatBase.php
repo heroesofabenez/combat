@@ -418,18 +418,18 @@ class CombatBase {
    */
   public function applyPoison(self $combat): void {
     /** @var Character[] $characters */
-    $characters = array_merge($combat->team1->aliveMembers, $combat->team2->aliveMembers);
+    $characters = array_merge(
+        $combat->team1->getItems(["hitpoints>" => 0, "poisoned!=" => false,]),
+        $combat->team2->getItems(["hitpoints>" => 0, "poisoned!=" => false,])
+    );
     foreach($characters as $character) {
-      foreach($character->effects as $effect) {
-        if($effect->type === SkillSpecial::TYPE_POISON) {
-          $character->harm($effect->value);
-          $action = [
-            "action" => CombatLogEntry::ACTION_POISON, "result" => true, "amount" => $effect->value,
-            "character1" => $character, "character2" => $character,
-          ];
-          $combat->log->log($action);
-        }
-      }
+      $poisonValue = $character->status["poisoned"];
+      $character->harm($poisonValue);
+      $action = [
+        "action" => CombatLogEntry::ACTION_POISON, "result" => true, "amount" => $poisonValue,
+        "character1" => $character, "character2" => $character,
+      ];
+      $combat->log->log($action);
     }
   }
   

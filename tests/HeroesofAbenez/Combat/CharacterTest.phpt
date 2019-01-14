@@ -121,6 +121,21 @@ final class CharacterTest extends \Tester\TestCase {
     $equipment[1]->worn = false;
     Assert::same(Character::STAT_STRENGTH, $character->damageStat());
   }
+
+  public function testStatus() {
+    $character = $this->generateCharacter(1);
+    Assert::false($character->hasStatus(Character::STATUS_STUNNED));
+    $character->addStatus(Character::STATUS_STUNNED);
+    Assert::true($character->hasStatus(Character::STATUS_STUNNED));
+    $character->removeStatus(Character::STATUS_STUNNED);
+    Assert::false($character->hasStatus(Character::STATUS_STUNNED));
+    $character->addStatus(Character::STATUS_POISONED, 5);
+    Assert::true($character->hasStatus(Character::STATUS_POISONED));
+    $character->addStatus(Character::STATUS_POISONED, 0);
+    Assert::false($character->hasStatus(Character::STATUS_POISONED));
+    $character->removeStatus(Character::STATUS_POISONED);
+    Assert::false($character->hasStatus(Character::STATUS_POISONED));
+  }
 }
 
 $test = new CharacterTest();

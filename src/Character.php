@@ -49,10 +49,12 @@ use Nexendrie\Utils\Collection;
  * @property CharacterEffect[]|CharacterEffectsCollection $effects
  * @property ICharacterEffectsProvider[]|Collection $effectProviders
  * @property-read bool $stunned
+ * @property-read bool $poisoned
  * @property-read BaseCharacterSkill[] $usableSkills
  * @property IInitiativeFormulaParser $initiativeFormulaParser
  * @property int $positionRow
  * @property int $positionColumn
+ * @property-read array $status
  */
 class Character {
   use \Nette\SmartObject;
@@ -75,6 +77,8 @@ class Character {
   public const SECONDARY_STATS = [
     self::STAT_MAX_HITPOINTS, self::STAT_DAMAGE, self::STAT_DEFENSE, self::STAT_HIT, self::STAT_DODGE, self::STAT_INITIATIVE,
   ];
+  public const STATUS_STUNNED = "stunned";
+  public const STATUS_POISONED = "poisoned";
   
   /** @var int|string */
   protected $id;
@@ -152,12 +156,12 @@ class Character {
   protected $effects;
   /** @var ICharacterEffectsProvider[]|Collection */
   protected $effectProviders;
-  /** @var bool */
-  protected $stunned = false;
   /** @var int */
   protected $positionRow = 0;
   /** @var int */
   protected $positionColumn = 0;
+  /** @var array */
+  protected $status = [];
   
   /**
    *
@@ -395,7 +399,11 @@ class Character {
   }
   
   public function isStunned(): bool {
-    return $this->stunned;
+    return $this->hasStatus(static::STATUS_STUNNED);
+  }
+
+  public function isPoisoned(): bool {
+    return $this->hasStatus(static::STATUS_POISONED);
   }
   
   public function getSpecialization(): string {
@@ -436,6 +444,25 @@ class Character {
   
   public function setPositionColumn(int $positionColumn): void {
     $this->positionColumn = Numbers::range($positionColumn, 1, PHP_INT_MAX);
+  }
+
+  public function getStatus(): array {
+    return $this->status;
+  }
+
+  /**
+   * @param mixed $value
+   */
+  public function addStatus(string $status, $value = true): void {
+    $this->status[$status] = $value;
+  }
+
+  public function removeStatus(string $status): void {
+    $this->status[$status] = false;
+  }
+
+  public function hasStatus(string $status): bool {
+    return (array_key_exists($status, $this->status) AND $this->status[$status]);
   }
   
   /**
@@ -536,6 +563,26 @@ class Character {
       $this->$secondary = $base + $gain;
     }
   }
+
+  /**
+   * Update character's default statuses
+   */
+  public function updateStatus(): void {
+    $this->removeStatus(static::STATUS_STUNNED);
+    $this->removeStatus(static::STATUS_POISONED);
+    if($this->effects->hasItems(["type" => SkillSpecial::TYPE_STUN])) {
+      $this->addStatus(static::STATUS_STUNNED);
+    }
+    $poisons = $this->effects->getItems(["type" => SkillSpecial::TYPE_POISON]);
+    $poisonValue = 0;
+    /** @var CharacterEffect $poison */
+    foreach($poisons as $poison) {
+      $poisonValue += $poison->value;
+    }
+    if($poisonValue > 0) {
+      $this->addStatus(static::STATUS_POISONED, $poisonValue);
+    }
+  }
   
   /**
    * Recalculates stats of the character (mostly used during combat)
@@ -570,7 +617,7 @@ class Character {
       $this->$stat = (int) round($$stat);
     }
     $this->recalculateSecondaryStats();
-    $this->stunned = $this->effects->hasItems(["type" => SkillSpecial::TYPE_STUN]);
+    $this->updateStatus();
   }
   
   /**
