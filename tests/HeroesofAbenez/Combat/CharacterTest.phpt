@@ -124,16 +124,27 @@ final class CharacterTest extends \Tester\TestCase {
 
   public function testStatus() {
     $character = $this->generateCharacter(1);
+    Assert::false($character->hasStatus("abc"));
+    Assert::null($character->getStatus("abc"));
     Assert::false($character->hasStatus(Character::STATUS_STUNNED));
-    $character->addStatus(Character::STATUS_STUNNED);
+    $character->effects[] = new CharacterEffect([
+      "id" => "stunEffect",
+      "type" => SkillSpecial::TYPE_STUN,
+      "duration" => CharacterEffect::DURATION_COMBAT,
+      "valueAbsolute" => false,
+    ]);
     Assert::true($character->hasStatus(Character::STATUS_STUNNED));
-    $character->removeStatus(Character::STATUS_STUNNED);
+    $character->effects->removeByFilter(["id" => "stunEffect"]);
     Assert::false($character->hasStatus(Character::STATUS_STUNNED));
-    $character->addStatus(Character::STATUS_POISONED, 5);
+    $character->effects[] = new CharacterEffect([
+      "id" => "poisonEffect",
+      "type" => SkillSpecial::TYPE_POISON,
+      "duration" => CharacterEffect::DURATION_COMBAT,
+      "value" => 5,
+      "valueAbsolute" => false,
+    ]);
     Assert::true($character->hasStatus(Character::STATUS_POISONED));
-    $character->addStatus(Character::STATUS_POISONED, 0);
-    Assert::false($character->hasStatus(Character::STATUS_POISONED));
-    $character->removeStatus(Character::STATUS_POISONED);
+    $character->effects->removeByFilter(["id" => "poisonEffect"]);
     Assert::false($character->hasStatus(Character::STATUS_POISONED));
   }
 }

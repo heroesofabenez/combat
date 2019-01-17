@@ -54,7 +54,6 @@ use Nexendrie\Utils\Collection;
  * @property IInitiativeFormulaParser $initiativeFormulaParser
  * @property int $positionRow
  * @property int $positionColumn
- * @property-read array $status
  */
 class Character {
   use \Nette\SmartObject;
@@ -160,8 +159,8 @@ class Character {
   protected $positionRow = 0;
   /** @var int */
   protected $positionColumn = 0;
-  /** @var array */
-  protected $status = [];
+  /** @var callable[] */
+  protected $statuses = [];
   
   /**
    *
@@ -202,6 +201,18 @@ class Character {
     $this->skills->lock();
     $this->setStats($stats);
     $this->effects = new CharacterEffectsCollection($this);
+    $this->registerStatus(static::STATUS_STUNNED, function(Character $character) {
+      return $character->effects->hasItems(["type" => SkillSpecial::TYPE_STUN]);
+    });
+    $this->registerStatus(static::STATUS_POISONED, function(Character $character) {
+      $poisons = $character->effects->getItems(["type" => SkillSpecial::TYPE_POISON]);
+      $poisonValue = 0;
+      /** @var CharacterEffect $poison */
+      foreach($poisons as $poison) {
+        $poisonValue += $poison->value;
+      }
+      return $poisonValue;
+    });
   }
   
   protected function setStats(array $stats): void {
@@ -446,23 +457,31 @@ class Character {
     $this->positionColumn = Numbers::range($positionColumn, 1, PHP_INT_MAX);
   }
 
-  public function getStatus(): array {
-    return $this->status;
+  /**
+   * Register a new possible character status
+   *
+   * @param string $name
+   * @param callable $callback Used to determine whether the status is active/what value does it have. Is called with Character instance as parameter
+   */
+  public function registerStatus(string $name, callable $callback): void {
+    $this->statuses[$name] = $callback;
   }
 
   /**
-   * @param mixed $value
+   * @return mixed
    */
-  public function addStatus(string $status, $value = true): void {
-    $this->status[$status] = $value;
-  }
-
-  public function removeStatus(string $status): void {
-    $this->status[$status] = false;
+  public function getStatus(string $name) {
+    if(!array_key_exists($name, $this->statuses)) {
+      return null;
+    }
+    return (call_user_func($this->statuses[$name], $this));
   }
 
   public function hasStatus(string $status): bool {
-    return (array_key_exists($status, $this->status) AND $this->status[$status]);
+    if(!array_key_exists($status, $this->statuses)) {
+      return false;
+    }
+    return (bool) (call_user_func($this->statuses[$status], $this));
   }
   
   /**
@@ -563,26 +582,6 @@ class Character {
       $this->$secondary = $base + $gain;
     }
   }
-
-  /**
-   * Update character's default statuses
-   */
-  public function updateStatus(): void {
-    $this->removeStatus(static::STATUS_STUNNED);
-    $this->removeStatus(static::STATUS_POISONED);
-    if($this->effects->hasItems(["type" => SkillSpecial::TYPE_STUN])) {
-      $this->addStatus(static::STATUS_STUNNED);
-    }
-    $poisons = $this->effects->getItems(["type" => SkillSpecial::TYPE_POISON]);
-    $poisonValue = 0;
-    /** @var CharacterEffect $poison */
-    foreach($poisons as $poison) {
-      $poisonValue += $poison->value;
-    }
-    if($poisonValue > 0) {
-      $this->addStatus(static::STATUS_POISONED, $poisonValue);
-    }
-  }
   
   /**
    * Recalculates stats of the character (mostly used during combat)
@@ -617,7 +616,6 @@ class Character {
       $this->$stat = (int) round($$stat);
     }
     $this->recalculateSecondaryStats();
-    $this->updateStatus();
   }
   
   /**

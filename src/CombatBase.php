@@ -423,7 +423,7 @@ class CombatBase {
         $combat->team2->getItems(["hitpoints>" => 0, "poisoned!=" => false,])
     );
     foreach($characters as $character) {
-      $poisonValue = $character->status["poisoned"];
+      $poisonValue = $character->getStatus(Character::STATUS_POISONED);
       $character->harm($poisonValue);
       $action = [
         "action" => CombatLogEntry::ACTION_POISON, "result" => true, "amount" => $poisonValue,
