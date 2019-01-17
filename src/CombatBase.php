@@ -307,11 +307,7 @@ class CombatBase {
       "team1name" => $combat->team1->name, "team1damage" => $combat->damage[1],
       "team2name" => $combat->team2->name, "team2damage" => $combat->damage[2],
     ];
-    if($combat->winner === 1) {
-      $params["winner"] = $combat->team1->name;
-    } else {
-      $params["winner"] = $combat->team2->name;
-    }
+    $params["winner"] = ($combat->winner === 1) ? $combat->team1->name : $combat->team2->name;
     $combat->log->logText("combat.log.combatEnd", $params);
   }
   
