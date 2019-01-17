@@ -68,6 +68,21 @@ class CombatBase {
   
   public function __construct(CombatLogger $logger, ?ISuccessCalculator $successCalculator = null, ?ICombatActionSelector $actionSelector = null) {
     $this->log = $logger;
+    $this->victoryCondition = [VictoryConditions::class, "moreDamage"];
+    $this->successCalculator = $successCalculator ?? new RandomSuccessCalculator();
+    $this->actionSelector = $actionSelector ?? new CombatActionSelector();
+    $this->healers = function(): Team {
+      return new Team("healers");
+    };
+    $this->combatActions = new class extends Collection {
+      /** @var string */
+      protected $class = ICombatAction::class;
+    };
+    $this->registerDefaultHandlers();
+    $this->registerDefaultCombatActions();
+  }
+
+  protected function registerDefaultHandlers(): void {
     $this->onCombatStart[] = [$this, "assignPositions"];
     $this->onCombatEnd[] = [$this, "removeCombatEffects"];
     $this->onCombatEnd[] = [$this, "logCombatResult"];
@@ -80,16 +95,9 @@ class CombatBase {
     $this->onRound[] = [$this, "mainStage"];
     $this->onRoundEnd[] = [$this, "decreaseSkillsCooldowns"];
     $this->onRoundEnd[] = [$this, "resetInitiative"];
-    $this->victoryCondition = [VictoryConditions::class, "moreDamage"];
-    $this->successCalculator = $successCalculator ?? new RandomSuccessCalculator();
-    $this->actionSelector = $actionSelector ?? new CombatActionSelector();
-    $this->healers = function(): Team {
-      return new Team("healers");
-    };
-    $this->combatActions = new class extends Collection {
-      /** @var string */
-      protected $class = ICombatAction::class;
-    };
+  }
+
+  protected function registerDefaultCombatActions(): void {
     $this->combatActions[] = new CombatActions\Attack();
     $this->combatActions[] = new CombatActions\Heal();
     $this->combatActions[] = new CombatActions\SkillAttack();

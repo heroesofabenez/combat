@@ -201,6 +201,10 @@ class Character {
     $this->skills->lock();
     $this->setStats($stats);
     $this->effects = new CharacterEffectsCollection($this);
+    $this->registerDefaultStatuses();
+  }
+
+  protected function registerDefaultStatuses(): void {
     $this->registerStatus(static::STATUS_STUNNED, function(Character $character) {
       return $character->effects->hasItems(["type" => SkillSpecial::TYPE_STUN]);
     });
