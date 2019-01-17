@@ -31,37 +31,6 @@ final class CharacterTest extends \Tester\TestCase {
     Assert::same(1, $character->activePet);
   }
   
-  public function testGetItem() {
-    $stats = [
-      "id" => 1, "name" => "Player 1", "level" => 1, "initiativeFormula" => "1d2+DEX/4", "strength" => 10,
-      "dexterity" => 10, "constitution" => 10, "intelligence" => 10, "charisma" => 10
-    ];
-    $equipment = new Equipment([
-      "id" => 1, "name" => "Novice Helmet", "slot" => Equipment::SLOT_HELMET,
-      "strength" => 1, "worn" => true
-    ]);
-    $character = new Character($stats, [$equipment]);
-    Assert::type(Equipment::class, $character->getItem(1));
-    Assert::exception(function() use($character) {
-      $character->getItem(0);
-    }, \OutOfBoundsException::class);
-  }
-  
-  public function testGetPet() {
-    $stats = [
-      "id" => 1, "name" => "Player 1", "level" => 1, "initiativeFormula" => "1d2+DEX/4", "strength" => 10,
-      "dexterity" => 10, "constitution" => 10, "intelligence" => 10, "charisma" => 10
-    ];
-    $pet = new Pet([
-      "id" => 1, "deployed" => true, "bonusStat" => Character::STAT_STRENGTH, "bonusValue" => 10,
-    ]);
-    $character = new Character($stats, [], [$pet]);
-    Assert::type(Pet::class, $character->getPet(1));
-    Assert::exception(function() use($character) {
-      $character->getPet(0);
-    }, \OutOfBoundsException::class);
-  }
-  
   public function testAddAndRemoveEffect() {
     $character = $this->generateCharacter(1);
     Assert::count(0, $character->effects);

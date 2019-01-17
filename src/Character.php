@@ -388,7 +388,7 @@ class Character {
   public function getSkills(): Collection {
     return $this->skills;
   }
-  
+
   public function getActivePet(): ?int {
     /** @var Pet|null $pet */
     $pet = $this->pets->getItem(["deployed" => true]);
@@ -495,34 +495,6 @@ class Character {
         $this->effects[] = $effect;
       });
     }
-  }
-  
-  /**
-   * Get specified equipment of the character
-   *
-   * @throws \OutOfBoundsException
-   */
-  public function getItem(int $itemId): Equipment {
-    /** @var Equipment|null $equipment */
-    $equipment = $this->equipment->getItem(["id" => $itemId]);
-    if(is_null($equipment)) {
-      throw new \OutOfBoundsException("Item was not found.");
-    }
-    return $equipment;
-  }
-  
-  /**
-   * Get specified pet
-   *
-   * @throws \OutOfBoundsException
-   */
-  public function getPet(int $petId): Pet {
-    /** @var Pet|null $pet */
-    $pet = $this->pets->getItem(["id" => $petId]);
-    if(is_null($pet)) {
-      throw new \OutOfBoundsException("Pet was not found.");
-    }
-    return $pet;
   }
   
   /**
