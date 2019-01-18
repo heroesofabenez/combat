@@ -55,6 +55,10 @@ class CharacterEffect {
     $this->value = $effect["value"];
     $this->valueAbsolute = $effect["valueAbsolute"];
     $this->duration = $effect["duration"];
+    $this->registerDefaultHandlers();
+  }
+
+  protected function registerDefaultHandlers(): void {
     $this->onApply[] = function(Character $character, self $effect) {
       $character->recalculateStats();
       if($effect->stat === Character::STAT_MAX_HITPOINTS) {
