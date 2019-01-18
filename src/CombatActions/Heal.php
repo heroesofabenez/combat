@@ -5,6 +5,7 @@ namespace HeroesofAbenez\Combat\CombatActions;
 
 use HeroesofAbenez\Combat\Character;
 use HeroesofAbenez\Combat\CombatBase;
+use HeroesofAbenez\Combat\ICombatAction;
 use Nexendrie\Utils\Numbers;
 use HeroesofAbenez\Combat\Team;
 

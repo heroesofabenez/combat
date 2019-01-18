@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace HeroesofAbenez\Combat;
 
 use Nexendrie\Utils\Numbers;
-use HeroesofAbenez\Combat\CombatActions\ICombatAction;
 use Nexendrie\Utils\Collection;
 
 /**

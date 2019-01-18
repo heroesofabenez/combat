@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-use HeroesofAbenez\Combat\CombatActions\ICombatAction;
-
 /**
  * CombatActionSelector
  *

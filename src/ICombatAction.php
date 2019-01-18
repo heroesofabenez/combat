@@ -1,10 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace HeroesofAbenez\Combat\CombatActions;
-
-use HeroesofAbenez\Combat\CombatBase;
-use HeroesofAbenez\Combat\Character;
+namespace HeroesofAbenez\Combat;
 
 interface ICombatAction {
   public function getName(): string;

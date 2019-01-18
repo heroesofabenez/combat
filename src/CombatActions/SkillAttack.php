@@ -6,6 +6,7 @@ namespace HeroesofAbenez\Combat\CombatActions;
 use HeroesofAbenez\Combat\Character;
 use HeroesofAbenez\Combat\CombatBase;
 use HeroesofAbenez\Combat\CharacterAttackSkill;
+use HeroesofAbenez\Combat\ICombatAction;
 use HeroesofAbenez\Combat\SkillAttack as Skill;
 use HeroesofAbenez\Combat\NotImplementedException;
 use Nexendrie\Utils\Numbers;
