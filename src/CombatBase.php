@@ -380,12 +380,11 @@ class CombatBase {
       if(is_null($action)) {
         break;
       }
-      /** @var ICombatAction $combatAction */
-      foreach($this->combatActions as $combatAction) {
-        if($combatAction->getName() === $action) {
-          $combatAction->do($combat, $character);
-          continue 2;
-        }
+      /** @var ICombatAction|null $combatAction */
+      $combatAction = $this->combatActions->getItem(["getName()" => $action]);
+      if(!is_null($combatAction)) {
+        $combatAction->do($combat, $character);
+        continue;
       }
       throw new NotImplementedException("Action $action is not implemented.");
     }
