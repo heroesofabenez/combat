@@ -20,17 +20,16 @@
     },
     "require": {
         "php": ">=7.2.0",
-        "latte/latte": "^2.4",
-        "nette/utils": "^2.4",
-        "nexendrie/translation": "^1.1.1",
-        "nexendrie/utils": "^1.6",
+        "latte/latte": "^2.4 || ^3.0",
+        "nette/utils": "^2.4 || ^3.0",
+        "nexendrie/translation": "^1.1.1 || ^2.0.1",
+        "nexendrie/utils": "^1.6.1",
         "symfony/options-resolver": "^4.0"
     },
     "require-dev": {
         "nexendrie/code-quality": "dev-master",
         "nexendrie/site-generator": "1.0.x-dev",
-        "phpstan/phpstan-nette": "^0.11",
-        "nette/security": "^2.4"
+        "phpstan/phpstan-nette": "^0.11"
     },
     "autoload": {
         "psr-4": {

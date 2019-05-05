@@ -32,16 +32,16 @@ final class EquipmentTest extends \Tester\TestCase {
     Assert::same($equipment->maxDurability, $equipment->durability);
     Assert::same($equipment->rawStrength, $equipment->strength);
     Assert::same($equipment->rawStrength, $equipment->getCombatEffects()[0]->value);
-    $equipment->durability = $equipment->maxDurability * 0.7 - 1;
+    $equipment->durability = (int) ($equipment->maxDurability * 0.7 - 1);
     Assert::same((int) ($equipment->rawStrength * 0.75), $equipment->strength);
     Assert::same((int) ($equipment->rawStrength * 0.75), $equipment->getCombatEffects()[0]->value);
-    $equipment->durability = $equipment->maxDurability / 2 - 1;
+    $equipment->durability = (int) ($equipment->maxDurability / 2 - 1);
     Assert::same($equipment->rawStrength / 2, $equipment->strength);
     Assert::same($equipment->rawStrength / 2, $equipment->getCombatEffects()[0]->value);
-    $equipment->durability = $equipment->maxDurability / 4 - 1;
+    $equipment->durability = (int) ($equipment->maxDurability / 4 - 1);
     Assert::same($equipment->rawStrength / 4, $equipment->strength);
     Assert::same($equipment->rawStrength / 4, $equipment->getCombatEffects()[0]->value);
-    $equipment->durability = $equipment->maxDurability / 10 - 1;
+    $equipment->durability = (int) ($equipment->maxDurability / 10 - 1);
     Assert::same(0, $equipment->strength);
     Assert::same(0, $equipment->getCombatEffects()[0]->value);
   }
