@@ -9,6 +9,6 @@ namespace HeroesofAbenez\Combat;
  * @author Jakub Konečný
  */
 interface ICombatActionSelector {
-  public function chooseAction(CombatBase $combat, Character $character): ?string;
+  public function chooseAction(CombatBase $combat, Character $character): ?ICombatAction;
 }
 ?>

@@ -376,17 +376,12 @@ class CombatBase {
       return -1 * strcmp((string) $a->initiative, (string) $b->initiative);
     });
     foreach($characters as $character) {
-      $action = $combat->actionSelector->chooseAction($combat, $character);
-      if(is_null($action)) {
+      /** @var ICombatAction|null $combatAction */
+      $combatAction = $combat->actionSelector->chooseAction($combat, $character);
+      if(is_null($combatAction)) {
         break;
       }
-      /** @var ICombatAction|null $combatAction */
-      $combatAction = $this->combatActions->getItem(["getName()" => $action]);
-      if(!is_null($combatAction)) {
-        $combatAction->do($combat, $character);
-        continue;
-      }
-      throw new NotImplementedException("Action $action is not implemented.");
+      $combatAction->do($combat, $character);
     }
   }
   
