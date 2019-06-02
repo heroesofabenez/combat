@@ -5,7 +5,6 @@ includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon
 parameters:
     ignoreErrors:
-        - '#Variable \$[a-zA-Z0-9_]+ might not be defined#'
         - '#Variable property access on \$this\(HeroesofAbenez\\Combat\\Character\)#'
         - '#Variable variables are not allowed#'
         - '#Parameter \#[0-9] (\$index|\$item) \((int|int\|null|HeroesofAbenez\\Combat\\CharacterEffect)\) of method HeroesofAbenez\\Combat\\CharacterEffectsCollection::offset(Get|Set|Unset|Exists)\(\) should be contravariant with parameter (\$offset|\$value|\$item) \(mixed|object\) of method (Nexendrie\\Utils\\Collection|ArrayAccess)::offset(Get|Set|Unset|Exists)\(\)#'

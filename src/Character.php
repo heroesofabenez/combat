@@ -573,6 +573,7 @@ class Character {
     foreach($this->effects as $effect) {
       $stat = $effect->stat;
       $type = $effect->type;
+      $bonus_value = 0;
       if(!in_array($type, SkillSpecial::NO_STAT_TYPES, true)) {
         $bonus_value = ($effect->valueAbsolute) ? $effect->value : $$stat / 100 * $effect->value;
       }
