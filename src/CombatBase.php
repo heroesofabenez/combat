@@ -353,7 +353,7 @@ class CombatBase {
         return null;
       }
       /** @var Team $enemies */
-      $enemies = Team::fromArray($enemyTeam->getItems(["positionRow" => $rowToAttack, "hitpoints>" => 0,]), $enemyTeam->name);
+      $enemies = Team::fromArray($enemyTeam->getItems(["positionRow" => $rowToAttack, "hitpoints>" => 0, "hidden" => false,]), $enemyTeam->name);
     } else {
       $enemies = $enemyTeam;
     }

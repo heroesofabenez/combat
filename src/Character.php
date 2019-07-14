@@ -50,6 +50,7 @@ use Nexendrie\Utils\Collection;
  * @property ICharacterEffectsProvider[]|Collection $effectProviders
  * @property-read bool $stunned
  * @property-read bool $poisoned
+ * @property-read bool $hidden
  * @property-read BaseCharacterSkill[] $usableSkills
  * @property IInitiativeFormulaParser $initiativeFormulaParser
  * @property int $positionRow
@@ -78,6 +79,7 @@ class Character {
   ];
   public const STATUS_STUNNED = "stunned";
   public const STATUS_POISONED = "poisoned";
+  public const STATUS_HIDDEN = "hidden";
   
   /** @var int|string */
   protected $id;
@@ -216,6 +218,9 @@ class Character {
         $poisonValue += $poison->value;
       }
       return $poisonValue;
+    });
+    $this->registerStatus(static::STATUS_HIDDEN, function(Character $character) {
+      return $character->effects->hasItems(["type" => SkillSpecial::TYPE_HIDE]);
     });
   }
   
@@ -419,6 +424,10 @@ class Character {
 
   public function isPoisoned(): bool {
     return $this->hasStatus(static::STATUS_POISONED);
+  }
+
+  public function isHidden(): bool {
+    return $this->hasStatus(static::STATUS_HIDDEN);
   }
   
   public function getSpecialization(): string {
