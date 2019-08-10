@@ -33,7 +33,7 @@ final class Attack implements ICombatAction {
   public function do(CombatBase $combat, Character $character): void {
     $result = [];
     $defender = $combat->selectAttackTarget($character);
-    if(is_null($defender)) {
+    if($defender === null) {
       return;
     }
     $result["result"] = $combat->successCalculator->hasHit($character, $defender);

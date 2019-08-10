@@ -26,7 +26,7 @@ final class SkillSpecial implements ICombatAction {
 
   public function shouldUse(CombatBase $combat, Character $character): bool {
     $attackTarget = $combat->selectAttackTarget($character);
-    if(is_null($attackTarget)) {
+    if($attackTarget === null) {
       return false;
     }
     if(count($character->usableSkills) < 1) {

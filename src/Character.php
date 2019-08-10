@@ -401,7 +401,7 @@ class Character {
   public function getActivePet(): ?int {
     /** @var Pet|null $pet */
     $pet = $this->pets->getItem(["deployed" => true]);
-    if(is_null($pet)) {
+    if($pet === null) {
       return null;
     }
     return $pet->id;
@@ -537,7 +537,7 @@ class Character {
   public function damageStat(): string {
     /** @var Weapon|null $item */
     $item = $this->equipment->getItem(["%class%" => Weapon::class, "worn" => true, ]);
-    if(is_null($item)) {
+    if($item === null) {
       return static::STAT_STRENGTH;
     }
     return $item->damageStat;

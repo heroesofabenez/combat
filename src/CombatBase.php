@@ -349,7 +349,7 @@ class CombatBase {
     $rangedWeapon = ($attacker->equipment->hasItems(["%class%" => Weapon::class, "worn" => true, "ranged" => true,]));
     if(!$rangedWeapon) {
       $rowToAttack = $enemyTeam->rowToAttack;
-      if(is_null($rowToAttack)) {
+      if($rowToAttack === null) {
         return null;
       }
       /** @var Team $enemies */
@@ -358,7 +358,7 @@ class CombatBase {
       $enemies = $enemyTeam;
     }
     $target = $enemies->getLowestHpCharacter();
-    if(!is_null($target)) {
+    if($target !== null) {
       return $target;
     }
     return $enemies->getRandomCharacter();
@@ -378,7 +378,7 @@ class CombatBase {
     foreach($characters as $character) {
       /** @var ICombatAction|null $combatAction */
       $combatAction = $combat->actionSelector->chooseAction($combat, $character);
-      if(is_null($combatAction)) {
+      if($combatAction === null) {
         break;
       }
       $combatAction->do($combat, $character);
