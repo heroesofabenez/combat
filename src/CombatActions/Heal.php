@@ -23,7 +23,7 @@ final class Heal implements ICombatAction {
   }
 
   public function shouldUse(CombatBase $combat, Character $character): bool {
-    return (in_array($character, $this->findHealers($combat)->toArray(), true) AND $this->selectHealingTarget($character, $combat) !== null);
+    return (in_array($character, $this->findHealers($combat)->toArray(), true) && $this->selectHealingTarget($character, $combat) !== null);
   }
 
   public function do(CombatBase $combat, Character $character): void {

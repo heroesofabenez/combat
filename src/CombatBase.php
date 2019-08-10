@@ -239,7 +239,7 @@ class CombatBase {
       foreach($team as $character) {
         try {
           $column++;
-          if($character->positionRow > 0 AND $character->positionColumn > 0) {
+          if($character->positionRow > 0 && $character->positionColumn > 0) {
             continue;
           }
           setPosition:

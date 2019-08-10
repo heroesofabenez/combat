@@ -65,7 +65,7 @@ final class SkillSpecial extends BaseSkill {
     });
     $resolver->setAllowedTypes("stat", ["string", "null"]);
     $resolver->setAllowedValues("stat", function(?string $value) {
-      return $value === null OR in_array($value, $this->getAllowedStats(), true);
+      return $value === null || in_array($value, $this->getAllowedStats(), true);
     });
     $resolver->setAllowedTypes("value", "integer");
     $resolver->setAllowedValues("value", function(int $value) {

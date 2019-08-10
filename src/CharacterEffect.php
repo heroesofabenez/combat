@@ -46,7 +46,7 @@ class CharacterEffect {
     $resolver = new OptionsResolver();
     $this->configureOptions($resolver);
     $effect = $resolver->resolve($effect);
-    if(!in_array($effect["type"], SkillSpecial::NO_STAT_TYPES, true) AND $effect["stat"] === "") {
+    if(!in_array($effect["type"], SkillSpecial::NO_STAT_TYPES, true) && $effect["stat"] === "") {
       throw new \InvalidArgumentException("The option stat with value '' is invalid.");
     }
     $this->id = $effect["id"];
@@ -84,14 +84,14 @@ class CharacterEffect {
     $resolver->setAllowedTypes("stat", "string");
     $resolver->setDefault("stat", "");
     $resolver->setAllowedValues("stat", function(string $value) {
-      return $value === "" OR in_array($value, $this->getAllowedStats(), true);
+      return $value === "" || in_array($value, $this->getAllowedStats(), true);
     });
     $resolver->setAllowedTypes("value", "integer");
     $resolver->setAllowedTypes("valueAbsolute", "bool");
     $resolver->setDefault("value", 0);
     $resolver->setAllowedTypes("duration", ["string", "integer"]);
     $resolver->setAllowedValues("duration", function($value) {
-      return (in_array($value, $this->getDurations(), true)) OR ($value > 0);
+      return (in_array($value, $this->getDurations(), true)) || ($value > 0);
     });
   }
   
@@ -145,7 +145,7 @@ class CharacterEffect {
    * @throws \InvalidArgumentException
    */
   public function setDuration($value): void {
-    if(!is_int($value) AND !in_array($value, $this->getDurations(), true)) {
+    if(!is_int($value) && !in_array($value, $this->getDurations(), true)) {
       throw new \InvalidArgumentException("Invalid value set to CharacterEffect::\$duration. Expected string or integer.");
     }
     $this->duration = $value;

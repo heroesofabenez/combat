@@ -55,14 +55,14 @@ final class TextCombatLogRender implements ICombatLogRender {
       case CombatActions\Attack::ACTION_NAME:
         $message = ($item->result) ? "combat.log.attackHits" : "combat.log.attackFails";
         $text = $this->translator->translate($message, $item->amount, ["character1" => $character1, "character2" => $character2]);
-        if($item->result AND $item->character2->hitpoints < 1) {
+        if($item->result && $item->character2->hitpoints < 1) {
           $text .= $this->translator->translate("combat.log.characterFalls");
         }
         return $text;
       case CombatActions\SkillAttack::ACTION_NAME:
         $message = ($item->result) ? "combat.log.specialAttackHits" : "combat.log.specialAttackFails";
         $text = $this->translator->translate($message, $item->amount, ["character1" => $character1, "character2" => $character2, "name" => $item->name]);
-        if($item->result AND $item->character2->hitpoints < 1) {
+        if($item->result && $item->character2->hitpoints < 1) {
           $text .= $this->translator->translate("combat.log.characterFalls");
         }
         return $text;

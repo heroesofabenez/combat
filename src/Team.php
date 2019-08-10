@@ -110,7 +110,7 @@ final class Team extends Collection {
       return null;
     }
     foreach($this->aliveMembers as $index => $member) {
-      if($member->hitpoints <= $member->maxHitpoints * $threshold AND $member->hitpoints < $lowestHp) {
+      if($member->hitpoints <= $member->maxHitpoints * $threshold && $member->hitpoints < $lowestHp) {
         $lowestHp = $member->hitpoints;
         $lowestIndex = $index;
       }
