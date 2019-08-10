@@ -64,7 +64,7 @@ class Equipment implements ICharacterEffectsProvider {
   }
   
   protected function configureOptions(OptionsResolver $resolver): void {
-    $allStats = ["id", "name", "slot", "type", "strength", "worn",];
+    $allStats = ["id", "name", "slot", "type", "strength", "worn", ];
     $resolver->setRequired($allStats);
     $resolver->setAllowedTypes("id", "integer");
     $resolver->setAllowedTypes("name", "string");

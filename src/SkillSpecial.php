@@ -27,7 +27,7 @@ final class SkillSpecial extends BaseSkill {
   public const TARGET_PARTY = "party";
   public const TARGET_ENEMY_PARTY = "enemy_party";
   /** @var string[] */
-  public const NO_STAT_TYPES = [self::TYPE_STUN, self::TYPE_POISON, self::TYPE_HIDE,];
+  public const NO_STAT_TYPES = [self::TYPE_STUN, self::TYPE_POISON, self::TYPE_HIDE, ];
   
   /** @var string */
   protected $type;
@@ -57,7 +57,7 @@ final class SkillSpecial extends BaseSkill {
   
   protected function configureOptions(OptionsResolver $resolver): void {
     parent::configureOptions($resolver);
-    $allStats = ["type", "stat", "value", "valueGrowth", "duration",];
+    $allStats = ["type", "stat", "value", "valueGrowth", "duration", ];
     $resolver->setRequired($allStats);
     $resolver->setAllowedTypes("type", "string");
     $resolver->setAllowedValues("type", function(string $value) {

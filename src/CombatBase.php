@@ -88,7 +88,7 @@ class CombatBase {
     $this->onCombatEnd[] = [$this, "resetInitiative"];
     $this->onRoundStart[] = [$this, "applyEffectProviders"];
     $this->onRoundStart[] = [$this, "decreaseEffectsDuration"];
-    $this->onRoundStart[] = [$this ,"recalculateStats"];
+    $this->onRoundStart[] = [$this, "recalculateStats"];
     $this->onRoundStart[] = [$this, "logRoundNumber"];
     $this->onRoundStart[] = [$this, "applyPoison"];
     $this->onRound[] = [$this, "mainStage"];
@@ -346,14 +346,14 @@ class CombatBase {
    */
   public function selectAttackTarget(Character $attacker): ?Character {
     $enemyTeam = $this->getEnemyTeam($attacker);
-    $rangedWeapon = ($attacker->equipment->hasItems(["%class%" => Weapon::class, "worn" => true, "ranged" => true,]));
+    $rangedWeapon = ($attacker->equipment->hasItems(["%class%" => Weapon::class, "worn" => true, "ranged" => true, ]));
     if(!$rangedWeapon) {
       $rowToAttack = $enemyTeam->rowToAttack;
       if($rowToAttack === null) {
         return null;
       }
       /** @var Team $enemies */
-      $enemies = Team::fromArray($enemyTeam->getItems(["positionRow" => $rowToAttack, "hitpoints>" => 0, "hidden" => false,]), $enemyTeam->name);
+      $enemies = Team::fromArray($enemyTeam->getItems(["positionRow" => $rowToAttack, "hitpoints>" => 0, "hidden" => false, ]), $enemyTeam->name);
     } else {
       $enemies = $enemyTeam;
     }
@@ -416,8 +416,8 @@ class CombatBase {
   public function applyPoison(self $combat): void {
     /** @var Character[] $characters */
     $characters = array_merge(
-        $combat->team1->getItems(["hitpoints>" => 0, "poisoned!=" => false,]),
-        $combat->team2->getItems(["hitpoints>" => 0, "poisoned!=" => false,])
+        $combat->team1->getItems(["hitpoints>" => 0, "poisoned!=" => false, ]),
+        $combat->team2->getItems(["hitpoints>" => 0, "poisoned!=" => false, ])
     );
     foreach($characters as $character) {
       $poisonValue = $character->getStatus(Character::STATUS_POISONED);

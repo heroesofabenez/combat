@@ -48,8 +48,8 @@ final class CombatLogEntry {
   }
 
   protected function configureOptions(OptionsResolver $resolver): void {
-    $requiredStats = ["action", "result", "character1", "character2",];
-    $resolver->setDefined(["amount", "name",]);
+    $requiredStats = ["action", "result", "character1", "character2", ];
+    $resolver->setDefined(["amount", "name", ]);
     $resolver->setRequired($requiredStats);
     $resolver->setAllowedTypes("action", "string");
     $resolver->setAllowedTypes("result", "bool");

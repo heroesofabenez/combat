@@ -225,13 +225,13 @@ class Character {
   }
   
   protected function setStats(array $stats): void {
-    $requiredStats = array_merge(["id", "name", "level", "initiativeFormula",], static::BASE_STATS);
-    $allStats = array_merge($requiredStats, ["occupation", "race", "specialization", "gender",]);
+    $requiredStats = array_merge(["id", "name", "level", "initiativeFormula", ], static::BASE_STATS);
+    $allStats = array_merge($requiredStats, ["occupation", "race", "specialization", "gender", ]);
     $numberStats = static::BASE_STATS;
-    $textStats = ["name", "race", "occupation", "specialization", "initiativeFormula",];
+    $textStats = ["name", "race", "occupation", "specialization", "initiativeFormula", ];
     $resolver = new OptionsResolver();
     $resolver->setDefined($allStats);
-    $resolver->setAllowedTypes("id", ["integer", "string"]);
+    $resolver->setAllowedTypes("id", ["integer", "string", ]);
     foreach($numberStats as $stat) {
       $resolver->setAllowedTypes($stat, ["integer", "float"]);
       $resolver->setNormalizer($stat, function(OptionsResolver $resolver, $value) {

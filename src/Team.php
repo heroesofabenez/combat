@@ -51,7 +51,7 @@ final class Team extends Collection {
    * @return Character[]
    */
   public function getAliveMembers(): array {
-    return $this->getItems(["hitpoints>" => 0,]);
+    return $this->getItems(["hitpoints>" => 0, ]);
   }
   
   /**
@@ -126,7 +126,7 @@ final class Team extends Collection {
       return null;
     }
     for($i = 1; $i <= PHP_INT_MAX; $i++) {
-      if($this->hasItems(["positionRow" => $i, "hitpoints>" => 0,])) {
+      if($this->hasItems(["positionRow" => $i, "hitpoints>" => 0, ])) {
         return $i;
       }
     }

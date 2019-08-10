@@ -29,7 +29,7 @@ abstract class BaseSkill {
   protected $levels;
   
   protected function configureOptions(OptionsResolver $resolver): void {
-    $resolver->setRequired(["id", "name", "target", "levels",]);
+    $resolver->setRequired(["id", "name", "target", "levels", ]);
     $resolver->setAllowedTypes("id", "int");
     $resolver->setAllowedTypes("name", "string");
     $resolver->setAllowedTypes("target", "string");

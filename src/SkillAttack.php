@@ -44,7 +44,7 @@ final class SkillAttack extends BaseSkill {
   
   protected function configureOptions(OptionsResolver $resolver): void {
     parent::configureOptions($resolver);
-    $allStats = ["baseDamage", "damageGrowth", "strikes", "hitRate",];
+    $allStats = ["baseDamage", "damageGrowth", "strikes", "hitRate", ];
     $resolver->setRequired($allStats);
     $resolver->setAllowedTypes("baseDamage", "string");
     $resolver->setAllowedTypes("damageGrowth", "string");

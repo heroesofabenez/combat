@@ -74,7 +74,7 @@ class CharacterEffect {
   }
 
   protected function configureOptions(OptionsResolver $resolver): void {
-    $allStats = ["id", "type", "value", "valueAbsolute", "duration", "stat",];
+    $allStats = ["id", "type", "value", "valueAbsolute", "duration", "stat", ];
     $resolver->setRequired($allStats);
     $resolver->setAllowedTypes("id", "string");
     $resolver->setAllowedTypes("type", "string");

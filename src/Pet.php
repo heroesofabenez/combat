@@ -37,7 +37,7 @@ final class Pet implements ICharacterEffectsProvider {
   }
 
   protected function configureOptions(OptionsResolver $resolver): void {
-    $allStats = ["id", "deployed", "bonusStat", "bonusValue",];
+    $allStats = ["id", "deployed", "bonusStat", "bonusValue", ];
     $resolver->setRequired($allStats);
     $resolver->setAllowedTypes("id", "integer");
     $resolver->setAllowedTypes("deployed", "boolean");
