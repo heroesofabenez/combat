@@ -13,6 +13,9 @@ use Nexendrie\Utils\Numbers;
 final class RandomSuccessCalculator implements ISuccessCalculator {
   use \Nette\SmartObject;
 
+  public const MAX_HIT_CHANCE = 100;
+  public const MIN_HIT_CHANCE = 15;
+
   public function hasHit(Character $character1, Character $character2, ?CharacterAttackSkill $skill = null): bool {
     if($character2->hasStatus(Character::STATUS_STUNNED)) {
       return true;
@@ -22,7 +25,7 @@ final class RandomSuccessCalculator implements ISuccessCalculator {
     if($skill !== null) {
       $hitRate = $hitRate / 100 * $skill->hitRate;
     }
-    $hitChance = Numbers::range((int) ($hitRate - $dodgeRate), 15, static::MAX_HIT_CHANCE);
+    $hitChance = Numbers::range((int) ($hitRate - $dodgeRate), static::MIN_HIT_CHANCE, static::MAX_HIT_CHANCE);
     $roll = rand(0, 100);
     return ($roll <= $hitChance);
   }
