@@ -610,5 +610,21 @@ class Character {
   public function resetInitiative(): void {
     $this->initiative = $this->initiativeBase = 0;
   }
+
+  public function canAct(): bool {
+    if($this->hasStatus(static::STATUS_STUNNED)) {
+      return false;
+    } elseif($this->hitpoints < 1) {
+      return false;
+    }
+    return true;
+  }
+
+  public function canDefend(): bool {
+    if($this->hasStatus(static::STATUS_STUNNED)) {
+      return false;
+    }
+    return true;
+  }
 }
 ?>

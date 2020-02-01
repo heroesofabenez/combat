@@ -116,6 +116,40 @@ final class CharacterTest extends \Tester\TestCase {
     $character->effects->removeByFilter(["id" => "poisonEffect"]);
     Assert::false($character->hasStatus(Character::STATUS_POISONED));
   }
+
+  public function testCanAct() {
+    $character = $this->generateCharacter(1);
+    Assert::true($character->canAct());
+    $character->effects[] = new CharacterEffect([
+      "id" => "stunEffect",
+      "type" => SkillSpecial::TYPE_STUN,
+      "duration" => CharacterEffect::DURATION_COMBAT,
+      "valueAbsolute" => false,
+    ]);
+    Assert::false($character->canAct());
+    $character->effects->removeByFilter(["id" => "stunEffect"]);
+    Assert::true($character->canAct());
+    $character->harm($character->hitpoints / 2);
+    Assert::true($character->canAct());
+    $character->harm($character->hitpoints);
+    Assert::false($character->canAct());
+    $character->heal(1);
+    Assert::true($character->canAct());
+  }
+
+  public function testCanDefend() {
+    $character = $this->generateCharacter(1);
+    Assert::true($character->canDefend());
+    $character->effects[] = new CharacterEffect([
+      "id" => "stunEffect",
+      "type" => SkillSpecial::TYPE_STUN,
+      "duration" => CharacterEffect::DURATION_COMBAT,
+      "valueAbsolute" => false,
+    ]);
+    Assert::false($character->canDefend());
+    $character->effects->removeByFilter(["id" => "stunEffect"]);
+    Assert::true($character->canDefend());
+  }
 }
 
 $test = new CharacterTest();

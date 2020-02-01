@@ -17,7 +17,7 @@ final class RandomSuccessCalculator implements ISuccessCalculator {
   public const MIN_HIT_CHANCE = 15;
 
   public function hasHit(Character $character1, Character $character2, ?CharacterAttackSkill $skill = null): bool {
-    if($character2->hasStatus(Character::STATUS_STUNNED)) {
+    if(!$character2->canDefend()) {
       return true;
     }
     $hitRate = $character1->hit;

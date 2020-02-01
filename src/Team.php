@@ -60,9 +60,7 @@ final class Team extends Collection {
    * @return Character[]
    */
   public function getUsableMembers(): array {
-    return $this->getItems([
-      "stunned" => false, "hitpoints>" => 0,
-    ]);
+    return $this->getItems(["canAct()" => true]);
   }
   
   /**
