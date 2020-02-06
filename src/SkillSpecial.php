@@ -60,23 +60,23 @@ final class SkillSpecial extends BaseSkill {
     $allStats = ["type", "stat", "value", "valueGrowth", "duration", ];
     $resolver->setRequired($allStats);
     $resolver->setAllowedTypes("type", "string");
-    $resolver->setAllowedValues("type", function(string $value) {
+    $resolver->setAllowedValues("type", function(string $value): bool {
       return in_array($value, $this->getAllowedTypes(), true);
     });
     $resolver->setAllowedTypes("stat", ["string", "null"]);
-    $resolver->setAllowedValues("stat", function(?string $value) {
+    $resolver->setAllowedValues("stat", function(?string $value): bool {
       return $value === null || in_array($value, $this->getAllowedStats(), true);
     });
     $resolver->setAllowedTypes("value", "integer");
-    $resolver->setAllowedValues("value", function(int $value) {
+    $resolver->setAllowedValues("value", function(int $value): bool {
       return ($value >= 0);
     });
     $resolver->setAllowedTypes("valueGrowth", "integer");
-    $resolver->setAllowedValues("valueGrowth", function(int $value) {
+    $resolver->setAllowedValues("valueGrowth", function(int $value): bool {
       return ($value >= 0);
     });
     $resolver->setAllowedTypes("duration", "integer");
-    $resolver->setAllowedValues("duration", function(int $value) {
+    $resolver->setAllowedValues("duration", function(int $value): bool {
       return ($value >= 0);
     });
   }

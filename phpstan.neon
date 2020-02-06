@@ -8,6 +8,10 @@ parameters:
         - '#Variable property access on \$this\(HeroesofAbenez\\Combat\\Character\)#'
         - '#Variable variables are not allowed#'
         - '#Parameter \#[0-9] (\$index|\$item) \((int|int\|null|HeroesofAbenez\\Combat\\CharacterEffect)\) of method HeroesofAbenez\\Combat\\CharacterEffectsCollection::offset(Get|Set|Unset|Exists)\(\) should be contravariant with parameter (\$offset|\$value|\$item) \(mixed|object\) of method (Nexendrie\\Utils\\Collection|ArrayAccess)::offset(Get|Set|Unset|Exists)\(\)#'
+        - '#Parameter \#2 \$cmp_function of function usort expects callable\(mixed, mixed\): int, Closure\(HeroesofAbenez\\Combat\\ICombatAction, HeroesofAbenez\\Combat\\ICombatAction\): bool given#'
+        - '#Method HeroesofAbenez\\Combat\\Team::getRowToAttack\(\) should return int\|null but return statement is missing#'
         # next 2 lines are needed for Nette 2.4
         - '#Method Nette\\Localization\\ITranslator::translate\(\) invoked with 3 parameters, 1-2 required#'
     reportUnmatchedIgnoredErrors: false
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false

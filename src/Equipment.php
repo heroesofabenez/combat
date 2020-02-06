@@ -69,19 +69,19 @@ class Equipment implements ICharacterEffectsProvider {
     $resolver->setAllowedTypes("id", "integer");
     $resolver->setAllowedTypes("name", "string");
     $resolver->setAllowedTypes("slot", "string");
-    $resolver->setAllowedValues("slot", function(string $value) {
+    $resolver->setAllowedValues("slot", function(string $value) : bool{
       return in_array($value, $this->getAllowedSlots(), true);
     });
     $resolver->setAllowedTypes("type", "null");
     $resolver->setDefault("type", null);
     $resolver->setAllowedTypes("strength", "integer");
-    $resolver->setAllowedValues("strength", function(int $value) {
+    $resolver->setAllowedValues("strength", function(int $value): bool {
       return ($value >= 0);
     });
     $resolver->setAllowedTypes("worn", "boolean");
     $resolver->setDefault("maxDurability", 0);
     $resolver->setAllowedTypes("maxDurability", "integer");
-    $resolver->setAllowedValues("maxDurability", function(int $value) {
+    $resolver->setAllowedValues("maxDurability", function(int $value): bool {
       return ($value >= 0);
     });
     $resolver->setDefault("durability", function(Options $options) {

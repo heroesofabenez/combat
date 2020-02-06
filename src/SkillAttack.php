@@ -49,7 +49,7 @@ final class SkillAttack extends BaseSkill {
     $resolver->setAllowedTypes("baseDamage", "string");
     $resolver->setAllowedTypes("damageGrowth", "string");
     $resolver->setAllowedTypes("strikes", "integer");
-    $resolver->setAllowedValues("strikes", function(int $value) {
+    $resolver->setAllowedValues("strikes", function(int $value): bool {
       return ($value > 0);
     });
     $resolver->setAllowedTypes("hitRate", ["string", "null"]);

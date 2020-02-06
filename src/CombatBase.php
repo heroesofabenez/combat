@@ -232,7 +232,7 @@ class CombatBase {
   }
 
   public function assignPositions(self $combat): void {
-    $assignPositions = function(Team $team) {
+    $assignPositions = function(Team $team): void {
       $row = 1;
       $column = 0;
       /** @var Character $character */
@@ -372,7 +372,7 @@ class CombatBase {
   public function mainStage(self $combat): void {
     /** @var Character[] $characters */
     $characters = array_merge($combat->team1->usableMembers, $combat->team2->usableMembers);
-    usort($characters, function(Character $a, Character $b) {
+    usort($characters, function(Character $a, Character $b): int {
       return -1 * strcmp((string) $a->initiative, (string) $b->initiative);
     });
     foreach($characters as $character) {

@@ -33,11 +33,11 @@ abstract class BaseSkill {
     $resolver->setAllowedTypes("id", "int");
     $resolver->setAllowedTypes("name", "string");
     $resolver->setAllowedTypes("target", "string");
-    $resolver->setAllowedValues("target", function(string $value) {
+    $resolver->setAllowedValues("target", function(string $value): bool {
       return in_array($value, $this->getAllowedTargets(), true);
     });
     $resolver->setAllowedTypes("levels", "integer");
-    $resolver->setAllowedValues("levels", function(int $value) {
+    $resolver->setAllowedValues("levels", function(int $value): bool {
       return ($value > 0);
     });
   }

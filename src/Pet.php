@@ -42,11 +42,11 @@ final class Pet implements ICharacterEffectsProvider {
     $resolver->setAllowedTypes("id", "integer");
     $resolver->setAllowedTypes("deployed", "boolean");
     $resolver->setAllowedTypes("bonusStat", "string");
-    $resolver->setAllowedValues("bonusStat", function(string $value) {
+    $resolver->setAllowedValues("bonusStat", function(string $value): bool {
       return in_array($value, $this->getAllowedStats(), true);
     });
     $resolver->setAllowedTypes("bonusValue", "integer");
-    $resolver->setAllowedValues("bonusValue", function(int $value) {
+    $resolver->setAllowedValues("bonusValue", function(int $value): bool {
       return ($value >= 0);
     });
   }

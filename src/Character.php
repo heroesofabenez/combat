@@ -207,10 +207,10 @@ class Character {
   }
 
   protected function registerDefaultStatuses(): void {
-    $this->registerStatus(static::STATUS_STUNNED, function(Character $character) {
+    $this->registerStatus(static::STATUS_STUNNED, function(Character $character): bool {
       return $character->effects->hasItems(["type" => SkillSpecial::TYPE_STUN]);
     });
-    $this->registerStatus(static::STATUS_POISONED, function(Character $character) {
+    $this->registerStatus(static::STATUS_POISONED, function(Character $character): int {
       $poisons = $character->effects->getItems(["type" => SkillSpecial::TYPE_POISON]);
       $poisonValue = 0;
       /** @var CharacterEffect $poison */
@@ -219,7 +219,7 @@ class Character {
       }
       return $poisonValue;
     });
-    $this->registerStatus(static::STATUS_HIDDEN, function(Character $character) {
+    $this->registerStatus(static::STATUS_HIDDEN, function(Character $character): bool {
       return $character->effects->hasItems(["type" => SkillSpecial::TYPE_HIDE]);
     });
   }
@@ -234,17 +234,17 @@ class Character {
     $resolver->setAllowedTypes("id", ["integer", "string", ]);
     foreach($numberStats as $stat) {
       $resolver->setAllowedTypes($stat, ["integer", "float"]);
-      $resolver->setNormalizer($stat, function(OptionsResolver $resolver, $value) {
+      $resolver->setNormalizer($stat, function(OptionsResolver $resolver, $value): int {
         return (int) $value;
       });
     }
     foreach($textStats as $stat) {
-      $resolver->setNormalizer($stat, function(OptionsResolver $resolver, $value) {
+      $resolver->setNormalizer($stat, function(OptionsResolver $resolver, $value): string {
         return (string) $value;
       });
     }
     $resolver->setRequired($requiredStats);
-    $stats = array_filter($stats, function($key) use($allStats) {
+    $stats = array_filter($stats, function($key) use($allStats): bool {
       return in_array($key, $allStats, true);
     }, ARRAY_FILTER_USE_KEY);
     $stats = $resolver->resolve($stats);
@@ -503,7 +503,7 @@ class Character {
   public function applyEffectProviders(): void {
     foreach($this->effectProviders as $item) {
       $effects = $item->getCombatEffects();
-      array_walk($effects, function(CharacterEffect $effect) {
+      array_walk($effects, function(CharacterEffect $effect): void {
         $this->effects->removeByFilter(["id" => $effect->id]);
         $this->effects[] = $effect;
       });

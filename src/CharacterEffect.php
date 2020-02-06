@@ -59,13 +59,13 @@ class CharacterEffect {
   }
 
   protected function registerDefaultHandlers(): void {
-    $this->onApply[] = function(Character $character, self $effect) {
+    $this->onApply[] = function(Character $character, self $effect): void {
       $character->recalculateStats();
       if($effect->stat === Character::STAT_MAX_HITPOINTS) {
         $character->heal($effect->value);
       }
     };
-    $this->onRemove[] = function(Character $character, self $effect) {
+    $this->onRemove[] = function(Character $character, self $effect): void {
       $character->recalculateStats();
       if($effect->stat === Character::STAT_MAX_HITPOINTS) {
         $character->harm($effect->value);
@@ -78,19 +78,19 @@ class CharacterEffect {
     $resolver->setRequired($allStats);
     $resolver->setAllowedTypes("id", "string");
     $resolver->setAllowedTypes("type", "string");
-    $resolver->setAllowedValues("type", function(string $value) {
+    $resolver->setAllowedValues("type", function(string $value): bool {
       return in_array($value, $this->getAllowedTypes(), true);
     });
     $resolver->setAllowedTypes("stat", "string");
     $resolver->setDefault("stat", "");
-    $resolver->setAllowedValues("stat", function(string $value) {
+    $resolver->setAllowedValues("stat", function(string $value): bool {
       return $value === "" || in_array($value, $this->getAllowedStats(), true);
     });
     $resolver->setAllowedTypes("value", "integer");
     $resolver->setAllowedTypes("valueAbsolute", "bool");
     $resolver->setDefault("value", 0);
     $resolver->setAllowedTypes("duration", ["string", "integer"]);
-    $resolver->setAllowedValues("duration", function($value) {
+    $resolver->setAllowedValues("duration", function($value): bool {
       return (in_array($value, $this->getDurations(), true)) || ($value > 0);
     });
   }
