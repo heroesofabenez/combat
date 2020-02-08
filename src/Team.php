@@ -33,15 +33,15 @@ final class Team extends Collection {
     $this->name = $name;
   }
   
-  public function getName(): string {
+  protected function getName(): string {
     return $this->name;
   }
   
-  public function getMaxRowSize(): int {
+  protected function getMaxRowSize(): int {
     return $this->maxRowSize;
   }
   
-  public function setMaxRowSize(int $maxRowSize): void {
+  protected function setMaxRowSize(int $maxRowSize): void {
     $this->maxRowSize = Numbers::range($maxRowSize, 1, PHP_INT_MAX);
   }
   
@@ -50,7 +50,7 @@ final class Team extends Collection {
    * 
    * @return Character[]
    */
-  public function getAliveMembers(): array {
+  protected function getAliveMembers(): array {
     return $this->getItems(["hitpoints>" => 0, ]);
   }
   
@@ -59,7 +59,7 @@ final class Team extends Collection {
    * 
    * @return Character[]
    */
-  public function getUsableMembers(): array {
+  protected function getUsableMembers(): array {
     return $this->getItems(["canAct()" => true]);
   }
   
@@ -119,7 +119,7 @@ final class Team extends Collection {
     return $this->aliveMembers[$lowestIndex];
   }
   
-  public function getRowToAttack(): ?int {
+  protected function getRowToAttack(): ?int {
     if(count($this->aliveMembers) === 0) {
       return null;
     }

@@ -108,16 +108,16 @@ final class TeamTest extends \Tester\TestCase {
   
   public function testGetRowToAttack() {
     $team = new Team("");
-    Assert::null($team->getRowToAttack());
+    Assert::null($team->rowToAttack);
     $team[] = $character1 = $this->generateCharacter(1);
     $character1->positionRow = 1;
     $team[] = $character2 = $this->generateCharacter(2);
     $character2->positionRow = 2;
-    Assert::same(1, $team->getRowToAttack());
+    Assert::same(1, $team->rowToAttack);
     $character1->harm($character1->maxHitpoints);
-    Assert::same(2, $team->getRowToAttack());
+    Assert::same(2, $team->rowToAttack);
     $character2->harm($character2->maxHitpoints);
-    Assert::null($team->getRowToAttack());
+    Assert::null($team->rowToAttack);
   }
 }
 

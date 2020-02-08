@@ -265,140 +265,140 @@ class Character {
   /**
    * @return int|string
    */
-  public function getId() {
+  protected function getId() {
     return $this->id;
   }
-  
-  public function getName(): string {
+
+  protected function getName(): string {
     return $this->name;
   }
   
-  public function getGender(): string {
+  protected function getGender(): string {
     return $this->gender;
   }
   
-  public function getRace(): string {
+  protected function getRace(): string {
     return $this->race;
   }
   
-  public function getOccupation(): string {
+  protected function getOccupation(): string {
     return $this->occupation;
   }
   
-  public function getLevel(): int {
+  protected function getLevel(): int {
     return $this->level;
   }
   
-  public function getStrength(): int {
+  protected function getStrength(): int {
     return $this->strength;
   }
   
-  public function getStrengthBase(): int {
+  protected function getStrengthBase(): int {
     return $this->strengthBase;
   }
   
-  public function getDexterity(): int {
+  protected function getDexterity(): int {
     return $this->dexterity;
   }
   
-  public function getDexterityBase(): int {
+  protected function getDexterityBase(): int {
     return $this->dexterityBase;
   }
   
-  public function getConstitution(): int {
+  protected function getConstitution(): int {
     return $this->constitution;
   }
   
-  public function getConstitutionBase(): int {
+  protected function getConstitutionBase(): int {
     return $this->constitutionBase;
   }
   
-  public function getCharisma(): int {
+  protected function getCharisma(): int {
     return $this->charisma;
   }
   
-  public function getCharismaBase(): int {
+  protected function getCharismaBase(): int {
     return $this->charismaBase;
   }
   
-  public function getMaxHitpoints(): int {
+  protected function getMaxHitpoints(): int {
     return $this->maxHitpoints;
   }
   
-  public function getMaxHitpointsBase(): int {
+  protected function getMaxHitpointsBase(): int {
     return $this->maxHitpointsBase;
   }
   
-  public function getHitpoints(): int {
+  protected function getHitpoints(): int {
     return $this->hitpoints;
   }
   
-  public function getDamage(): int {
+  protected function getDamage(): int {
     return $this->damage;
   }
   
-  public function getDamageBase(): int {
+  protected function getDamageBase(): int {
     return $this->damageBase;
   }
   
-  public function getHit(): int {
+  protected function getHit(): int {
     return $this->hit;
   }
   
-  public function getHitBase(): int {
+  protected function getHitBase(): int {
     return $this->hitBase;
   }
   
-  public function getDodge(): int {
+  protected function getDodge(): int {
     return $this->dodge;
   }
   
-  public function getDodgeBase(): int {
+  protected function getDodgeBase(): int {
     return $this->dodgeBase;
   }
   
-  public function getInitiative(): int {
+  protected function getInitiative(): int {
     return $this->initiative;
   }
   
-  public function getInitiativeBase(): int {
+  protected function getInitiativeBase(): int {
     return $this->initiativeBase;
   }
   
-  public function getInitiativeFormula(): string {
+  protected function getInitiativeFormula(): string {
     return $this->initiativeFormula;
   }
   
-  public function getDefense(): int {
+  protected function getDefense(): int {
     return (int) $this->defense;
   }
   
-  public function getDefenseBase(): int {
+  protected function getDefenseBase(): int {
     return (int) $this->defenseBase;
   }
   
   /**
    * @return Equipment[]|Collection
    */
-  public function getEquipment(): Collection {
+  protected function getEquipment(): Collection {
     return $this->equipment;
   }
   
   /**
    * @return Pet[]|Collection
    */
-  public function getPets(): Collection {
+  protected function getPets(): Collection {
     return $this->pets;
   }
   
   /**
    * @return BaseCharacterSkill[]|Collection
    */
-  public function getSkills(): Collection {
+  protected function getSkills(): Collection {
     return $this->skills;
   }
 
-  public function getActivePet(): ?int {
+  protected function getActivePet(): ?int {
     /** @var Pet|null $pet */
     $pet = $this->pets->getItem(["deployed" => true]);
     if($pet === null) {
@@ -407,46 +407,46 @@ class Character {
     return $pet->id;
   }
 
-  public function getEffects(): CharacterEffectsCollection {
+  protected function getEffects(): CharacterEffectsCollection {
     return $this->effects;
   }
   
   /**
    * @return ICharacterEffectsProvider[]|Collection
    */
-  public function getEffectProviders(): Collection {
+  protected function getEffectProviders(): Collection {
     return $this->effectProviders;
   }
   
-  public function isStunned(): bool {
+  protected function isStunned(): bool {
     return $this->hasStatus(static::STATUS_STUNNED);
   }
 
-  public function isPoisoned(): bool {
+  protected function isPoisoned(): bool {
     return $this->hasStatus(static::STATUS_POISONED);
   }
 
-  public function isHidden(): bool {
+  protected function isHidden(): bool {
     return $this->hasStatus(static::STATUS_HIDDEN);
   }
   
-  public function getSpecialization(): string {
+  protected function getSpecialization(): string {
     return $this->specialization;
   }
   
-  public function getIntelligence(): int {
+  protected function getIntelligence(): int {
     return $this->intelligence;
   }
   
-  public function getIntelligenceBase(): int {
+  protected function getIntelligenceBase(): int {
     return $this->intelligenceBase;
   }
   
-  public function getInitiativeFormulaParser(): IInitiativeFormulaParser {
+  protected function getInitiativeFormulaParser(): IInitiativeFormulaParser {
     return $this->initiativeFormulaParser;
   }
   
-  public function setInitiativeFormulaParser(IInitiativeFormulaParser $initiativeFormulaParser): void {
+  protected function setInitiativeFormulaParser(IInitiativeFormulaParser $initiativeFormulaParser): void {
     $oldParser = $this->initiativeFormulaParser;
     $this->initiativeFormulaParser = $initiativeFormulaParser;
     if($oldParser !== $initiativeFormulaParser) {
@@ -454,19 +454,19 @@ class Character {
     }
   }
   
-  public function getPositionRow(): int {
+  protected function getPositionRow(): int {
     return $this->positionRow;
   }
   
-  public function setPositionRow(int $positionRow): void {
+  protected function setPositionRow(int $positionRow): void {
     $this->positionRow = Numbers::range($positionRow, 1, PHP_INT_MAX);
   }
   
-  public function getPositionColumn(): int {
+  protected function getPositionColumn(): int {
     return $this->positionColumn;
   }
   
-  public function setPositionColumn(int $positionColumn): void {
+  protected function setPositionColumn(int $positionColumn): void {
     $this->positionColumn = Numbers::range($positionColumn, 1, PHP_INT_MAX);
   }
 
@@ -513,7 +513,7 @@ class Character {
   /**
    * @return BaseCharacterSkill[]
    */
-  public function getUsableSkills(): array {
+  protected function getUsableSkills(): array {
     return $this->skills->getItems(["usable" => true]);
   }
   

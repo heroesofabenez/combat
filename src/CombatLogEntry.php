@@ -61,27 +61,27 @@ final class CombatLogEntry {
     $resolver->setAllowedTypes("character2", Character::class);
   }
 
-  public function getCharacter1(): Character {
+  protected function getCharacter1(): Character {
     return $this->character1;
   }
   
-  public function getCharacter2(): Character {
+  protected function getCharacter2(): Character {
     return $this->character2;
   }
   
-  public function getAction(): string {
+  protected function getAction(): string {
     return $this->action;
   }
   
-  public function getName(): string {
+  protected function getName(): string {
     return $this->name;
   }
   
-  public function isResult(): bool {
+  protected function isResult(): bool {
     return $this->result;
   }
   
-  public function getAmount(): int {
+  protected function getAmount(): int {
     return $this->amount;
   }
 }

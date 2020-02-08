@@ -89,27 +89,27 @@ final class SkillSpecial extends BaseSkill {
     return Character::SECONDARY_STATS;
   }
   
-  public function getCooldown(): int {
+  protected function getCooldown(): int {
     return 5;
   }
   
-  public function getType(): string {
+  protected function getType(): string {
     return $this->type;
   }
   
-  public function getStat(): ?string {
+  protected function getStat(): ?string {
     return $this->stat;
   }
   
-  public function getValue(): int {
+  protected function getValue(): int {
     return $this->value;
   }
   
-  public function getValueGrowth(): int {
+  protected function getValueGrowth(): int {
     return $this->valueGrowth;
   }
   
-  public function getDuration(): int {
+  protected function getDuration(): int {
     return $this->duration;
   }
 }

@@ -31,21 +31,21 @@ abstract class BaseCharacterSkill {
     $this->resetCooldown();
   }
 
-  abstract public function getSkillType(): string;
+  abstract protected function getSkillType(): string;
   
-  public function getLevel(): int {
+  protected function getLevel(): int {
     return $this->level;
   }
   
-  public function getCooldown(): int {
+  protected function getCooldown(): int {
     return $this->cooldown;
   }
   
-  public function setLevel(int $level): void {
+  protected function setLevel(int $level): void {
     $this->level = Numbers::range($level, 0, $this->skill->levels);
   }
   
-  public function isUsable(): bool {
+  protected function isUsable(): bool {
     return ($this->cooldown < 1);
   }
   

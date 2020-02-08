@@ -46,21 +46,21 @@ abstract class BaseSkill {
     return Constants::getConstantsValues(static::class, "TARGET_");
   }
   
-  abstract public function getCooldown(): int;
+  abstract protected function getCooldown(): int;
   
-  public function getId(): int {
+  protected function getId(): int {
     return $this->id;
   }
   
-  public function getName(): string {
+  protected function getName(): string {
     return $this->name;
   }
   
-  public function getTarget(): string {
+  protected function getTarget(): string {
     return $this->target;
   }
   
-  public function getLevels(): int {
+  protected function getLevels(): int {
     return $this->levels;
   }
 }

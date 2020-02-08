@@ -31,11 +31,11 @@ class Weapon extends Equipment {
     self::TYPE_STAFF, self::TYPE_BOW, self::TYPE_CROSSBOW, self::TYPE_THROWING_KNIFE, self::TYPE_INSTRUMENT,
   ];
   
-  public function isRanged(): bool {
+  protected function isRanged(): bool {
     return in_array($this->type, static::RANGED_TYPES, true);
   }
 
-  public function getDamageStat(): string {
+  protected function getDamageStat(): string {
     switch($this->type) {
       case static::TYPE_STAFF:
         return Character::STAT_INTELLIGENCE;

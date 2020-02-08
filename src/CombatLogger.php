@@ -46,19 +46,19 @@ final class CombatLogger implements \Countable, \IteratorAggregate {
     $this->team2 = $team2;
   }
   
-  public function getRound(): int {
+  protected function getRound(): int {
     return $this->round;
   }
   
-  public function setRound(int $round): void {
+  protected function setRound(int $round): void {
     $this->round = $round;
   }
   
-  public function getTitle(): string {
+  protected function getTitle(): string {
     return $this->title;
   }
   
-  public function setTitle(string $title): void {
+  protected function setTitle(string $title): void {
     $this->title = $title;
   }
 

@@ -10,7 +10,7 @@ use HeroesofAbenez\Combat\CombatActions;
 /**
  * TextCombatLogRender
  *
- * @property string $template
+ * @property-write string $template
  */
 final class TextCombatLogRender implements ICombatLogRender {
   use \Nette\SmartObject;
@@ -30,7 +30,7 @@ final class TextCombatLogRender implements ICombatLogRender {
   /**
    * @throws \RuntimeException
    */
-  public function setTemplate(string $template): void {
+  protected function setTemplate(string $template): void {
     if(!is_file($template)) {
       throw new \RuntimeException("File $template does not exist.");
     }

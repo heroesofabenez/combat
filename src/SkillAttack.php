@@ -55,23 +55,23 @@ final class SkillAttack extends BaseSkill {
     $resolver->setAllowedTypes("hitRate", ["string", "null"]);
   }
   
-  public function getCooldown(): int {
+  protected function getCooldown(): int {
     return 3;
   }
   
-  public function getBaseDamage(): string {
+  protected function getBaseDamage(): string {
     return $this->baseDamage;
   }
   
-  public function getDamageGrowth(): string {
+  protected function getDamageGrowth(): string {
     return $this->damageGrowth;
   }
   
-  public function getStrikes(): int {
+  protected function getStrikes(): int {
     return $this->strikes;
   }
   
-  public function getHitRate(): ?string {
+  protected function getHitRate(): ?string {
     return $this->hitRate;
   }
 }

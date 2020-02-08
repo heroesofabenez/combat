@@ -94,27 +94,27 @@ class Equipment implements ICharacterEffectsProvider {
     return Constants::getConstantsValues(static::class, "SLOT_");
   }
   
-  public function getId(): int {
+  protected function getId(): int {
     return $this->id;
   }
   
-  public function getName(): string {
+  protected function getName(): string {
     return $this->name;
   }
   
-  public function getSlot(): string {
+  protected function getSlot(): string {
     return $this->slot;
   }
   
-  public function getType(): ?string {
+  protected function getType(): ?string {
     return $this->type;
   }
 
-  public function getRawStrength(): int {
+  protected function getRawStrength(): int {
     return $this->rawStrength;
   }
 
-  public function getStrength(): int {
+  protected function getStrength(): int {
     if($this->durability >= $this->maxDurability * 0.7) {
       return $this->rawStrength;
     } elseif($this->durability >= $this->maxDurability / 2) {
@@ -127,23 +127,23 @@ class Equipment implements ICharacterEffectsProvider {
     return 0;
   }
   
-  public function isWorn(): bool {
+  protected function isWorn(): bool {
     return $this->worn;
   }
   
-  public function setWorn(bool $worn): void {
+  protected function setWorn(bool $worn): void {
     $this->worn = $worn;
   }
 
-  public function getMaxDurability(): int {
+  protected function getMaxDurability(): int {
     return $this->maxDurability;
   }
 
-  public function getDurability(): int {
+  protected function getDurability(): int {
     return $this->durability;
   }
 
-  public function setDurability(int $durability): void {
+  protected function setDurability(int $durability): void {
     $this->durability = Numbers::range($durability, 0, $this->maxDurability);
   }
 

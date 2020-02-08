@@ -55,23 +55,23 @@ final class Pet implements ICharacterEffectsProvider {
     return Character::BASE_STATS;
   }
   
-  public function getId(): int {
+  protected function getId(): int {
     return $this->id;
   }
   
-  public function isDeployed(): bool {
+  protected function isDeployed(): bool {
     return $this->deployed;
   }
   
-  public function setDeployed(bool $deployed): void {
+  protected function setDeployed(bool $deployed): void {
     $this->deployed = $deployed;
   }
   
-  public function getBonusStat(): string {
+  protected function getBonusStat(): string {
     return $this->bonusStat;
   }
   
-  public function getBonusValue(): int {
+  protected function getBonusValue(): int {
     return $this->bonusValue;
   }
   

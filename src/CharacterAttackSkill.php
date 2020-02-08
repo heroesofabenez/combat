@@ -19,18 +19,18 @@ final class CharacterAttackSkill extends BaseCharacterSkill {
     parent::__construct($skill, $level);
   }
 
-  public function getSkillType(): string {
+  protected function getSkillType(): string {
     return "attack";
   }
 
   /**
    * @return SkillAttack
    */
-  public function getSkill(): SkillAttack {
+  protected function getSkill(): SkillAttack {
     return $this->skill;
   }
   
-  public function getDamage(): int {
+  protected function getDamage(): int {
     $damage = 0;
     if(substr($this->skill->baseDamage, -1) === "%") {
       $damage += (int) $this->skill->baseDamage;
@@ -41,7 +41,7 @@ final class CharacterAttackSkill extends BaseCharacterSkill {
     return $damage;
   }
   
-  public function getHitRate(): int {
+  protected function getHitRate(): int {
     if(is_string($this->skill->hitRate) && substr($this->skill->hitRate, -1) === "%") {
       return (int) $this->skill->hitRate;
     }

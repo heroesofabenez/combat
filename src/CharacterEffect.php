@@ -113,30 +113,30 @@ class CharacterEffect {
     return Constants::getConstantsValues(static::class, "DURATION_");
   }
   
-  public function getId(): string {
+  protected function getId(): string {
     return $this->id;
   }
   
-  public function getType(): string {
+  protected function getType(): string {
     return $this->type;
   }
   
-  public function getStat(): string {
+  protected function getStat(): string {
     return $this->stat;
   }
   
-  public function getValue(): int {
+  protected function getValue(): int {
     return $this->value;
   }
 
-  public function isValueAbsolute(): bool {
+  protected function isValueAbsolute(): bool {
     return $this->valueAbsolute;
   }
 
   /**
    * @return int|string
    */
-  public function getDuration() {
+  protected function getDuration() {
     return $this->duration;
   }
   
@@ -144,7 +144,7 @@ class CharacterEffect {
    * @param string|int $value
    * @throws \InvalidArgumentException
    */
-  public function setDuration($value): void {
+  protected function setDuration($value): void {
     if(!is_int($value) && !in_array($value, $this->getDurations(), true)) {
       throw new \InvalidArgumentException("Invalid value set to CharacterEffect::\$duration. Expected string or integer.");
     }
