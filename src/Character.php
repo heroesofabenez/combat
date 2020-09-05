@@ -5,7 +5,6 @@ namespace HeroesofAbenez\Combat;
 
 use Nexendrie\Utils\Numbers;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Nexendrie\Utils\Collection;
 
 /**
  * Structure for single character
@@ -42,12 +41,7 @@ use Nexendrie\Utils\Collection;
  * @property-read string $initiativeFormula
  * @property-read int $defense
  * @property-read int $defenseBase
- * @property-read Equipment[]|Collection $equipment
- * @property-read Pet[]|Collection $pets
- * @property-read BaseCharacterSkill[]|Collection $skills
  * @property-read int|null $activePet
- * @property CharacterEffect[]|CharacterEffectsCollection $effects
- * @property ICharacterEffectsProvider[]|Collection $effectProviders
  * @property-read bool $stunned
  * @property-read bool $poisoned
  * @property-read bool $hidden
@@ -114,17 +108,17 @@ class Character {
   protected IInitiativeFormulaParser $initiativeFormulaParser;
   protected float $defense = 0;
   protected float $defenseBase = 0;
-  /** @var Equipment[]|Collection Character's equipment */
-  protected Collection $equipment;
-  /** @var Pet[]|Collection Character's pets */
-  protected Collection $pets;
-  /** @var BaseCharacterSkill[]|Collection Character's skills */
-  protected Collection $skills;
+  /** @var Equipment[]|EquipmentCollection Character's equipment */
+  public EquipmentCollection $equipment;
+  /** @var Pet[]|PetsCollection Character's pets */
+  public PetsCollection $pets;
+  /** @var BaseCharacterSkill[]|CharacterSkillsCollection Character's skills */
+  public CharacterSkillsCollection $skills;
   protected ?int $activePet = null;
   /** @var CharacterEffect[]|CharacterEffectsCollection Active effects */
-  protected CharacterEffectsCollection $effects;
-  /** @var ICharacterEffectsProvider[]|Collection */
-  protected Collection $effectProviders;
+  public CharacterEffectsCollection $effects;
+  /** @var ICharacterEffectsProvider[]|CharacterEffectsProvidersCollection */
+  public CharacterEffectsProvidersCollection $effectProviders;
   protected int $positionRow = 0;
   protected int $positionColumn = 0;
   /** @var callable[] */
@@ -139,27 +133,10 @@ class Character {
    */
   public function __construct(array $stats, array $equipment = [], array $pets = [], array $skills = [], IInitiativeFormulaParser $initiativeFormulaParser = null) {
     $this->initiativeFormulaParser = $initiativeFormulaParser ?? new InitiativeFormulaParser();
-    $this->effectProviders = new class extends  Collection {
-      protected string $class = ICharacterEffectsProvider::class;
-    };
-    $this->equipment = new class extends Collection {
-      protected string $class = Equipment::class;
-    };
-    foreach($equipment as $eq) {
-      $this->equipment[] = $this->effectProviders[] = $eq;
-    }
-    $this->pets = new class extends Collection {
-      protected string $class = Pet::class;
-    };
-    foreach($pets as $pet) {
-      $this->pets[] = $this->effectProviders[] = $pet;
-    }
-    $this->skills = new class extends Collection {
-      protected string $class = BaseCharacterSkill::class;
-    };
-    foreach($skills as $skill) {
-      $this->skills[] = $skill;
-    }
+    $this->equipment = EquipmentCollection::fromArray($equipment);
+    $this->pets = PetsCollection::fromArray($pets);
+    $this->effectProviders = CharacterEffectsProvidersCollection::fromArray(array_merge($equipment, $pets));
+    $this->skills = CharacterSkillsCollection::fromArray($skills);
     $this->equipment->lock();
     $this->pets->lock();
     $this->skills->lock();
@@ -338,27 +315,6 @@ class Character {
   protected function getDefenseBase(): int {
     return (int) $this->defenseBase;
   }
-  
-  /**
-   * @return Equipment[]|Collection
-   */
-  protected function getEquipment(): Collection {
-    return $this->equipment;
-  }
-  
-  /**
-   * @return Pet[]|Collection
-   */
-  protected function getPets(): Collection {
-    return $this->pets;
-  }
-  
-  /**
-   * @return BaseCharacterSkill[]|Collection
-   */
-  protected function getSkills(): Collection {
-    return $this->skills;
-  }
 
   protected function getActivePet(): ?int {
     /** @var Pet|null $pet */
@@ -367,17 +323,6 @@ class Character {
       return null;
     }
     return $pet->id;
-  }
-
-  protected function getEffects(): CharacterEffectsCollection {
-    return $this->effects;
-  }
-  
-  /**
-   * @return ICharacterEffectsProvider[]|Collection
-   */
-  protected function getEffectProviders(): Collection {
-    return $this->effectProviders;
   }
   
   protected function isStunned(): bool {
