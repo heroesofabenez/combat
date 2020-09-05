@@ -24,23 +24,18 @@ class CharacterEffect {
 
   public const DURATION_COMBAT = "combat";
   public const DURATION_FOREVER = "forever";
-  
-  /** @var string */
-  protected $id;
-  /** @var string */
-  protected $type;
-  /** @var string */
-  protected $stat = "";
-  /** @var int */
-  protected $value = 0;
-  /** @var bool */
-  protected $valueAbsolute;
+
+  protected string $id;
+  protected string $type;
+  protected string $stat = "";
+  protected int $value = 0;
+  protected bool $valueAbsolute;
   /** @var int|string */
   protected $duration;
   /** @var callable[] */
-  public $onApply = [];
+  public array $onApply = [];
   /** @var callable[] */
-  public $onRemove = [];
+  public array $onRemove = [];
   
   public function __construct(array $effect) {
     $resolver = new OptionsResolver();

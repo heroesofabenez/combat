@@ -28,17 +28,12 @@ final class SkillSpecial extends BaseSkill {
   public const TARGET_ENEMY_PARTY = "enemy_party";
   /** @var string[] */
   public const NO_STAT_TYPES = [self::TYPE_STUN, self::TYPE_POISON, self::TYPE_HIDE, ];
-  
-  /** @var string */
-  protected $type;
-  /** @var string|null */
-  protected $stat;
-  /** @var int */
-  protected $value;
-  /** @var int */
-  protected $valueGrowth;
-  /** @var int */
-  protected $duration;
+
+  protected string $type;
+  protected ?string $stat;
+  protected int $value;
+  protected int $valueGrowth;
+  protected int $duration;
   
   public function __construct(array $data) {
     $resolver = new OptionsResolver();

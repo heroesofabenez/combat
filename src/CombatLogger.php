@@ -9,26 +9,17 @@ use Nette\Localization\ITranslator;
  * Combat log
  * 
  * @author Jakub Konečný
- * @property int $round Current round
- * @property string $title
  */
 final class CombatLogger implements \Countable, \IteratorAggregate {
   use \Nette\SmartObject;
 
-  /** @var ICombatLogRender */
-  protected $render;
-  /** @var ITranslator */
-  protected $translator;
-  /** @var Team First team */
-  protected $team1;
-  /** @var Team Second team */
-  protected $team2;
-  /** @var array */
-  protected $actions = [];
-  /** @var int */
-  protected $round;
-  /** @var string */
-  protected $title = "";
+  protected ICombatLogRender $render;
+  protected ITranslator $translator;
+  protected Team $team1;
+  protected Team $team2;
+  protected array $actions = [];
+  public int $round = 0;
+  public string $title = "";
   
   public function __construct(ICombatLogRender $render, ITranslator $translator) {
     $this->render = $render;
@@ -44,22 +35,6 @@ final class CombatLogger implements \Countable, \IteratorAggregate {
     }
     $this->team1 = $team1;
     $this->team2 = $team2;
-  }
-  
-  protected function getRound(): int {
-    return $this->round;
-  }
-  
-  protected function setRound(int $round): void {
-    $this->round = $round;
-  }
-  
-  protected function getTitle(): string {
-    return $this->title;
-  }
-  
-  protected function setTitle(string $title): void {
-    $this->title = $title;
   }
 
   /**

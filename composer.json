@@ -23,7 +23,7 @@
         "latte/latte": "^2.8 || ^3.0",
         "nette/utils": "^3.1",
         "nexendrie/translation": "^2.2",
-        "nexendrie/utils": "^1.7",
+        "nexendrie/utils": "^1.8",
         "symfony/options-resolver": "^4.0 || ^5.0"
     },
     "require-dev": {

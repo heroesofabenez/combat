@@ -13,8 +13,7 @@ use HeroesofAbenez\Combat\CombatLogEntry;
 require __DIR__ . "/../../../bootstrap.php";
 
 final class AttackTest extends \Tester\TestCase {
-  /** @var CombatLogger */
-  protected $logger;
+  protected CombatLogger $logger;
 
   use \Testbench\TCompiledContainer;
 

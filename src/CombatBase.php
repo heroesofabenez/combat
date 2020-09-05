@@ -18,8 +18,6 @@ use Nexendrie\Utils\Collection;
  * @property Team $team2
  * @property-read int $team1Damage
  * @property-read int $team2Damage
- * @property ISuccessCalculator $successCalculator
- * @property ICombatActionSelector $actionSelector
  * @property Collection|ICombatAction[] $combatActions
  * @property callable $victoryCondition To evaluate the winner of combat. Gets combat as parameter, should return winning team (1/2) or 0 if there is not winner (yet)
  * @property callable $healers To determine characters that are supposed to heal their team. Gets team1 and team2 as parameters, should return Team
@@ -31,39 +29,32 @@ use Nexendrie\Utils\Collection;
  */
 class CombatBase {
   use \Nette\SmartObject;
-  
-  /** @var Team First team */
-  protected $team1;
-  /** @var Team Second team */
-  protected $team2;
-  /** @var CombatLogger */
-  protected $log;
-  /** @var int Number of current round */
-  protected $round = 0;
-  /** @var int Round limit */
-  protected $roundLimit = 30;
-  /** @var array Dealt damage by team */
-  protected $damage = [1 => 0, 2 => 0];
+
+  protected Team $team1;
+  protected Team $team2;
+  protected CombatLogger $log;
+  protected int $round = 0;
+  protected int $roundLimit = 30;
+  /** @var int[] Dealt damage by team */
+  protected array $damage = [1 => 0, 2 => 0];
   /** @var callable[] */
-  public $onCombatStart = [];
+  public array $onCombatStart = [];
   /** @var callable[] */
-  public $onCombatEnd = [];
+  public array $onCombatEnd = [];
   /** @var callable[] */
-  public $onRoundStart = [];
+  public array $onRoundStart = [];
   /** @var callable[] */
-  public $onRound = [];
+  public array $onRound = [];
   /** @var callable[] */
-  public $onRoundEnd = [];
+  public array $onRoundEnd = [];
   /** @var callable */
   protected $victoryCondition;
   /** @var callable */
   protected $healers;
-  /** @var ISuccessCalculator */
-  protected $successCalculator;
-  /** @var ICombatActionSelector */
-  protected $actionSelector;
+  public ISuccessCalculator $successCalculator;
+  public ICombatActionSelector $actionSelector;
   /** @var Collection|ICombatAction[] */
-  protected $combatActions;
+  protected Collection $combatActions;
   
   public function __construct(CombatLogger $logger, ?ISuccessCalculator $successCalculator = null, ?ICombatActionSelector $actionSelector = null) {
     $this->log = $logger;
@@ -74,8 +65,7 @@ class CombatBase {
       return new Team("healers");
     };
     $this->combatActions = new class extends Collection {
-      /** @var string */
-      protected $class = ICombatAction::class;
+      protected string $class = ICombatAction::class;
     };
     $this->registerDefaultHandlers();
     $this->registerDefaultCombatActions();
@@ -122,8 +112,8 @@ class CombatBase {
     if(isset($this->team1)) {
       throw new ImmutableException("Teams has already been set.");
     }
-    $this->team1 = & $team1;
-    $this->team2 = & $team2;
+    $this->team1 = $team1;
+    $this->team2 = $team2;
     $this->log->setTeams($team1, $team2);
   }
   
@@ -169,22 +159,6 @@ class CombatBase {
   
   public function getTeam2Damage(): int {
     return $this->damage[2];
-  }
-  
-  public function getSuccessCalculator(): ISuccessCalculator {
-    return $this->successCalculator;
-  }
-  
-  public function setSuccessCalculator(ISuccessCalculator $successCalculator): void {
-    $this->successCalculator = $successCalculator;
-  }
-  
-  public function getActionSelector(): ICombatActionSelector {
-    return $this->actionSelector;
-  }
-  
-  public function setActionSelector(ICombatActionSelector $actionSelector): void {
-    $this->actionSelector = $actionSelector;
   }
 
   /**
@@ -352,7 +326,6 @@ class CombatBase {
       if($rowToAttack === null) {
         return null;
       }
-      /** @var Team $enemies */
       $enemies = Team::fromArray($enemyTeam->getItems(["positionRow" => $rowToAttack, "hitpoints>" => 0, "hidden" => false, ]), $enemyTeam->name);
     } else {
       $enemies = $enemyTeam;

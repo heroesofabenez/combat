@@ -8,8 +8,7 @@ use Tester\Assert;
 require __DIR__ . "/../../bootstrap.php";
 
 final class CombatBaseTest extends \Tester\TestCase {
-  /** @var CombatLogger */
-  protected $logger;
+  protected CombatLogger $logger;
   
   use \Testbench\TCompiledContainer;
   

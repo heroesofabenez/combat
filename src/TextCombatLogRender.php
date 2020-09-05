@@ -15,12 +15,9 @@ use HeroesofAbenez\Combat\CombatActions;
 final class TextCombatLogRender implements ICombatLogRender {
   use \Nette\SmartObject;
 
-  /** @var \Latte\Engine */
-  protected $latte;
-  /** @var ITranslator */
-  protected $translator;
-  /** @var string */
-  protected $template = __DIR__ . "/CombatLog.latte";
+  protected \Latte\Engine $latte;
+  protected ITranslator $translator;
+  protected string $template = __DIR__ . "/CombatLog.latte";
 
   public function __construct(ILatteFactory $latteFactory, ITranslator $translator) {
     $this->latte = $latteFactory->create();

@@ -19,12 +19,9 @@ use Nexendrie\Utils\Numbers;
 final class Team extends Collection {
   protected const LOWEST_HP_THRESHOLD = 0.5;
 
-  /** @var string */
-  protected $class = Character::class;
-  /** @var string Name of the team */
-  protected $name;
-  /** @var int */
-  protected $maxRowSize = 5;
+  protected string $class = Character::class;
+  protected string $name;
+  protected int $maxRowSize = 5;
   
   use \Nette\SmartObject;
   

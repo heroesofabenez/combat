@@ -15,8 +15,7 @@ use HeroesofAbenez\Combat\CharacterSpecialSkill as CharacterSkill;
 require __DIR__ . "/../../../bootstrap.php";
 
 final class SkillSpecialTest extends \Tester\TestCase {
-  /** @var CombatLogger */
-  protected $logger;
+  protected CombatLogger $logger;
 
   use \Testbench\TCompiledContainer;
 

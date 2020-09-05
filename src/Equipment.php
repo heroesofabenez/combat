@@ -18,7 +18,6 @@ use Nexendrie\Utils\Numbers;
  * @property-read string|null $type
  * @property-read int $rawStrength
  * @property-read int $strength
- * @property bool $worn Is the item worn?
  * @property-read int $maxDurability
  * @property int $durability
  */
@@ -31,23 +30,15 @@ class Equipment implements ICharacterEffectsProvider {
   public const SLOT_AMULET = "amulet";
   public const SLOT_HELMET = "helmet";
   public const SLOT_RING = "ring";
-  
-  /** @var int */
-  protected $id;
-  /** @var string */
-  protected $name;
-  /** @var string */
-  protected $slot;
-  /** @var string|null */
-  protected $type;
-  /** @var int */
-  protected $rawStrength;
-  /** @var bool */
-  protected $worn;
-  /** @var int */
-  protected $durability;
-  /** @var int */
-  protected $maxDurability;
+
+  protected int $id;
+  protected string $name;
+  protected string $slot;
+  protected ?string $type;
+  protected int $rawStrength;
+  public bool $worn;
+  protected int $durability;
+  protected int $maxDurability;
   
   public function __construct(array $data) {
     $resolver = new OptionsResolver();
@@ -125,14 +116,6 @@ class Equipment implements ICharacterEffectsProvider {
       return (int) ($this->rawStrength / 4);
     }
     return 0;
-  }
-  
-  protected function isWorn(): bool {
-    return $this->worn;
-  }
-  
-  protected function setWorn(bool $worn): void {
-    $this->worn = $worn;
   }
 
   protected function getMaxDurability(): int {

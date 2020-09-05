@@ -18,15 +18,11 @@ use Nexendrie\Utils\Constants;
  */
 abstract class BaseSkill {
   use \Nette\SmartObject;
-  
-  /** @var int */
-  protected $id;
-  /** @var string */
-  protected $name;
-  /** @var string */
-  protected $target;
-  /** @var int */
-  protected $levels;
+
+  protected int $id;
+  protected string $name;
+  protected string $target;
+  protected int $levels;
   
   protected function configureOptions(OptionsResolver $resolver): void {
     $resolver->setRequired(["id", "name", "target", "levels", ]);

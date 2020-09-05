@@ -10,10 +10,8 @@ use Nette\Utils\Arrays;
  * @internal
  */
 final class CharacterEffectsCollection extends \Nexendrie\Utils\Collection {
-  /** @var string */
-  protected $class = CharacterEffect::class;
-  /** @var Character */
-  protected $character;
+  protected string $class = CharacterEffect::class;
+  protected Character $character;
 
   public function __construct(Character $character) {
     parent::__construct();

@@ -8,8 +8,7 @@ require __DIR__ . "/../../bootstrap.php";
 use Tester\Assert;
 
 final class RandomSuccessCalculatorTest extends \Tester\TestCase {
-  /** @var RandomSuccessCalculator */
-  protected $calculator;
+  protected RandomSuccessCalculator $calculator;
   
   protected function setUp() {
     $this->calculator = new RandomSuccessCalculator();

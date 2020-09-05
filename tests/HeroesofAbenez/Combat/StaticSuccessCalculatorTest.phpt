@@ -8,8 +8,7 @@ require __DIR__ . "/../../bootstrap.php";
 use Tester\Assert;
 
 final class StaticSuccessCalculatorTest extends \Tester\TestCase {
-  /** @var StaticSuccessCalculator */
-  protected $calculator;
+  protected StaticSuccessCalculator $calculator;
   
   protected function setUp() {
     $this->calculator = new StaticSuccessCalculator();

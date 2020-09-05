@@ -83,86 +83,52 @@ class Character {
   
   /** @var int|string */
   protected $id;
-  /** @var string */
-  protected $name;
-  /** @var string */
-  protected $gender = "male";
-  /** @var string */
-  protected $race;
-  /** @var string */
-  protected $occupation;
-  /** @var string */
-  protected $specialization;
-  /** @var int */
-  protected $level;
-  /** @var int */
-  protected $strength;
-  /** @var int */
-  protected $strengthBase;
-  /** @var int */
-  protected $dexterity;
-  /** @var int */
-  protected $dexterityBase;
-  /** @var int */
-  protected $constitution;
-  /** @var int */
-  protected $constitutionBase;
-  /** @var int */
-  protected $intelligence;
-  /** @var int */
-  protected $intelligenceBase;
-  /** @var int */
-  protected $charisma;
-  /** @var int */
-  protected $charismaBase;
-  /** @var int */
-  protected $maxHitpoints;
-  /** @var int */
-  protected $maxHitpointsBase;
-  /** @var int */
-  protected $hitpoints;
-  /** @var int */
-  protected $damage = 0;
-  /** @var int */
-  protected $damageBase = 0;
-  /** @var int */
-  protected $hit = 0;
-  /** @var int */
-  protected $hitBase = 0;
-  /** @var int */
-  protected $dodge = 0;
-  /** @var int */
-  protected $dodgeBase = 0;
-  /** @var int */
-  protected $initiative = 0;
-  /** @var int */
-  protected $initiativeBase = 0;
-  /** @var string */
-  protected $initiativeFormula;
-  /** @var IInitiativeFormulaParser */
-  protected $initiativeFormulaParser;
-  /** @var float */
-  protected $defense = 0;
-  /** @var float */
-  protected $defenseBase = 0;
+  protected string $name;
+  protected string $gender = "male";
+  protected string $race;
+  protected string $occupation;
+  protected string $specialization;
+  protected int $level;
+  protected int $strength;
+  protected int $strengthBase;
+  protected int $dexterity;
+  protected int $dexterityBase;
+  protected int $constitution;
+  protected int $constitutionBase;
+  protected int $intelligence;
+  protected int $intelligenceBase;
+  protected int $charisma;
+  protected int $charismaBase;
+  protected int $maxHitpoints;
+  protected int $maxHitpointsBase;
+  protected int $hitpoints;
+  protected int $damage = 0;
+  protected int $damageBase = 0;
+  protected int $hit = 0;
+  protected int $hitBase = 0;
+  protected int $dodge = 0;
+  protected int $dodgeBase = 0;
+  protected int $initiative = 0;
+  protected int $initiativeBase = 0;
+  protected string $initiativeFormula;
+  protected IInitiativeFormulaParser $initiativeFormulaParser;
+  protected float $defense = 0;
+  protected float $defenseBase = 0;
   /** @var Equipment[]|Collection Character's equipment */
-  protected $equipment;
+  protected Collection $equipment;
   /** @var Pet[]|Collection Character's pets */
-  protected $pets;
+  protected Collection $pets;
   /** @var BaseCharacterSkill[]|Collection Character's skills */
-  protected $skills;
-  /** @var int|null */
-  protected $activePet = null;
+  protected Collection $skills;
+  protected ?int $activePet = null;
   /** @var CharacterEffect[]|CharacterEffectsCollection Active effects */
-  protected $effects;
+  protected CharacterEffectsCollection $effects;
   /** @var ICharacterEffectsProvider[]|Collection */
-  protected $effectProviders;
-  /** @var int */
-  protected $positionRow = 0;
-  /** @var int */
-  protected $positionColumn = 0;
+  protected Collection $effectProviders;
+  protected int $positionRow = 0;
+  protected int $positionColumn = 0;
   /** @var callable[] */
-  protected $statuses = [];
+  protected array $statuses = [];
   
   /**
    *
@@ -174,26 +140,22 @@ class Character {
   public function __construct(array $stats, array $equipment = [], array $pets = [], array $skills = [], IInitiativeFormulaParser $initiativeFormulaParser = null) {
     $this->initiativeFormulaParser = $initiativeFormulaParser ?? new InitiativeFormulaParser();
     $this->effectProviders = new class extends  Collection {
-      /** @var string */
-      protected $class = ICharacterEffectsProvider::class;
+      protected string $class = ICharacterEffectsProvider::class;
     };
     $this->equipment = new class extends Collection {
-      /** @var string */
-      protected $class = Equipment::class;
+      protected string $class = Equipment::class;
     };
     foreach($equipment as $eq) {
       $this->equipment[] = $this->effectProviders[] = $eq;
     }
     $this->pets = new class extends Collection {
-      /** @var string */
-      protected $class = Pet::class;
+      protected string $class = Pet::class;
     };
     foreach($pets as $pet) {
       $this->pets[] = $this->effectProviders[] = $pet;
     }
     $this->skills = new class extends Collection {
-      /** @var string */
-      protected $class = BaseCharacterSkill::class;
+      protected string $class = BaseCharacterSkill::class;
     };
     foreach($skills as $skill) {
       $this->skills[] = $skill;

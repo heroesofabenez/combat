@@ -17,13 +17,11 @@ use Nexendrie\Utils\Numbers;
  */
 abstract class BaseCharacterSkill {
   use \Nette\SmartObject;
-  
+
   /** @var BaseSkill */
   protected $skill;
-  /** @var int */
-  protected $level;
-  /** @var int */
-  protected $cooldown = 0;
+  protected int $level;
+  protected int $cooldown = 0;
   
   public function __construct(BaseSkill $skill, int $level) {
     $this->skill = $skill;
