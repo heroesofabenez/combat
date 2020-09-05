@@ -8,6 +8,10 @@ require __DIR__ . "/../../bootstrap.php";
 use Tester\Assert;
 use HeroesofAbenez\Combat\CombatActions;
 
+/**
+ * @author Jakub Konečný
+ * @testCase
+ */
 final class TextCombatLogRenderTest extends \Tester\TestCase {
   use \Testbench\TCompiledContainer;
 

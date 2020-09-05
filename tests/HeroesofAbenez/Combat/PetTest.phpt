@@ -7,6 +7,10 @@ require __DIR__ . "/../../bootstrap.php";
 
 use Tester\Assert;
 
+/**
+ * @author Jakub Konečný
+ * @testCase
+ */
 final class PetTest extends \Tester\TestCase {
   public function testGetCombatEffects() {
     $pet = new Pet([

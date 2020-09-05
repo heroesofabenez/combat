@@ -7,6 +7,10 @@ require __DIR__ . "/../../bootstrap.php";
 
 use Tester\Assert;
 
+/**
+ * @author Jakub Konečný
+ * @testCase
+ */
 final class RandomSuccessCalculatorTest extends \Tester\TestCase {
   protected RandomSuccessCalculator $calculator;
   

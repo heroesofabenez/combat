@@ -14,6 +14,10 @@ use HeroesofAbenez\Combat\CharacterAttackSkill as CharacterSkill;
 
 require __DIR__ . "/../../../bootstrap.php";
 
+/**
+ * @author Jakub Konečný
+ * @testCase
+ */
 final class SkillAttackTest extends \Tester\TestCase {
   protected CombatLogger $logger;
 

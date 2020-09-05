@@ -7,6 +7,10 @@ use Tester\Assert;
 
 require __DIR__ . "/../../bootstrap.php";
 
+/**
+ * @author Jakub Konečný
+ * @testCase
+ */
 final class WeaponTest extends \Tester\TestCase {
   public function testIsRanged() {
     $weaponStats = [

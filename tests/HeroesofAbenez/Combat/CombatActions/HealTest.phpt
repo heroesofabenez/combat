@@ -13,6 +13,10 @@ use HeroesofAbenez\Combat\CombatLogEntry;
 
 require __DIR__ . "/../../../bootstrap.php";
 
+/**
+ * @author Jakub Konečný
+ * @testCase
+ */
 final class HealTest extends \Tester\TestCase {
   protected CombatLogger $logger;
 
