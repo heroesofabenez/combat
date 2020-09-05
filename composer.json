@@ -22,8 +22,8 @@
         "php": ">=7.3.0",
         "latte/latte": "^2.8 || ^3.0",
         "nette/utils": "^3.1",
-        "nexendrie/translation": "^2.1",
-        "nexendrie/utils": "^1.6.1",
+        "nexendrie/translation": "^2.2",
+        "nexendrie/utils": "^1.7",
         "symfony/options-resolver": "^4.0 || ^5.0"
     },
     "require-dev": {
