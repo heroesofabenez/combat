@@ -10,7 +10,7 @@ use Nette\Localization\ITranslator;
  * 
  * @author Jakub Konečný
  */
-final class CombatLogger implements \Countable, \IteratorAggregate {
+final class CombatLogger implements \Countable, \IteratorAggregate, \Stringable {
   use \Nette\SmartObject;
 
   protected ICombatLogRender $render;
