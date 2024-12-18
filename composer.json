@@ -15,7 +15,7 @@
     ],
     "support": {
         "source": "https://gitlab.com/heroesofabenez/combat/",
-        "issues": "https://gitlab.com/heroesofabenez/combat/issues",
+        "issues": "https://gitlab.com/heroesofabenez/combat/-/issues",
         "docs": "https://heroesofabenez.gitlab.io/combat"
     },
     "require": {
