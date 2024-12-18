@@ -19,20 +19,9 @@ before_script:
 test:php7.4:
   <<: *test_job
 
-test:php7.4:lowest-deps:
-  <<: *test_job
-  before_script:
-    - composer update --prefer-lowest --prefer-dist --no-progress --no-suggest --no-interaction
-
 test:php8.0:
   <<: *test_job
   image: nexendrie/php:8.0
-
-test:php8.0:lowest-deps:
-  <<: *test_job
-  image: nexendrie/php:8.0
-  before_script:
-    - composer update --prefer-lowest --prefer-dist --no-progress --no-suggest --no-interaction
 
 test:cc:
   <<: *test_job
