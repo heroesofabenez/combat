@@ -117,14 +117,12 @@ final class Team extends Collection {
   }
   
   protected function getRowToAttack(): ?int {
-    if(count($this->aliveMembers) === 0) {
-      return null;
-    }
-    for($i = 1; $i <= PHP_INT_MAX; $i++) {
+    for($i = 1; $i <= $this->maxRowSize; $i++) {
       if($this->hasItems(["positionRow" => $i, "hitpoints>" => 0, ])) {
         return $i;
       }
     }
+    return null;
   }
 }
 ?>

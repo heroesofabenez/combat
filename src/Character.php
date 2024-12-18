@@ -493,9 +493,9 @@ class Character {
       if(!in_array($type, SkillSpecial::NO_STAT_TYPES, true)) {
         $bonus_value = ($effect->valueAbsolute) ? $effect->value : $$stat / 100 * $effect->value;
       }
-      if($type == SkillSpecial::TYPE_BUFF) {
+      if($type === SkillSpecial::TYPE_BUFF) {
         $$stat += $bonus_value;
-      } elseif($type == SkillSpecial::TYPE_DEBUFF) {
+      } elseif($type === SkillSpecial::TYPE_DEBUFF) {
         $debuffs[$stat] += $bonus_value;
       }
       unset($stat, $type, $bonus_value);
