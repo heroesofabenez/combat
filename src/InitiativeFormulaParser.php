@@ -21,12 +21,10 @@ final class InitiativeFormulaParser implements IInitiativeFormulaParser {
     ];
     $formula = str_replace(array_keys($stats), array_values($stats), $formula);
     preg_match("/^([1-9]+)d([1-9]+)/", $formula, $dices);
-    /** @var array{1: numeric-string, 2: numeric-string} $dices */
     for($i = 1; $i <= (int) $dices[1]; $i++) {
       $result += rand(1, (int) $dices[2]);
     }
     preg_match("/\+([0-9]+)\/([0-9]+)/", $formula, $ammendum);
-    /** @var array{1: numeric-string, 2: numeric-string} $ammendum */
     $result += (int) $ammendum[1] / (int) $ammendum[2];
     return (int) $result;
   }  
