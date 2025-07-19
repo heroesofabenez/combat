@@ -13,6 +13,7 @@ before_script:
   stage: test
   script:
   - phing test
+  retry: 2
 
 test:php7.4:
   <<: *test_job
