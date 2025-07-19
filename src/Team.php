@@ -10,7 +10,6 @@ use Nexendrie\Utils\Numbers;
  * Structure for a team in combat
  * 
  * @author Jakub Konečný
- * @property-read string $name
  * @property-read Character[] $aliveMembers
  * @property-read Character[] $usableMembers
  * @property int $maxRowSize
@@ -24,14 +23,10 @@ final class Team extends Collection {
   
   use \Nette\SmartObject;
   
-  public function __construct(private string $name) {
+  public function __construct(public readonly string $name) {
     parent::__construct();
   }
-  
-  protected function getName(): string {
-    return $this->name;
-  }
-  
+
   protected function getMaxRowSize(): int {
     return $this->maxRowSize;
   }

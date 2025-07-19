@@ -10,11 +10,6 @@ use Nexendrie\Utils\Constants;
  * Skill special
  *
  * @author Jakub Konečný
- * @property-read string $type
- * @property-read string|null $stat
- * @property-read int $value
- * @property-read int $valueGrowth
- * @property-read int $duration
  */
 final class SkillSpecial extends BaseSkill {
   public const TYPE_BUFF = "buff";
@@ -29,11 +24,11 @@ final class SkillSpecial extends BaseSkill {
   /** @var string[] */
   public const NO_STAT_TYPES = [self::TYPE_STUN, self::TYPE_POISON, self::TYPE_HIDE, ];
 
-  private string $type;
-  private ?string $stat;
-  private int $value;
-  private int $valueGrowth;
-  private int $duration;
+  public readonly string $type;
+  public readonly ?string $stat;
+  public readonly int $value;
+  public readonly int $valueGrowth;
+  public readonly int $duration;
   
   public function __construct(array $data) {
     $resolver = new OptionsResolver();
@@ -86,26 +81,6 @@ final class SkillSpecial extends BaseSkill {
   
   protected function getCooldown(): int {
     return 5;
-  }
-  
-  protected function getType(): string {
-    return $this->type;
-  }
-  
-  protected function getStat(): ?string {
-    return $this->stat;
-  }
-  
-  protected function getValue(): int {
-    return $this->value;
-  }
-  
-  protected function getValueGrowth(): int {
-    return $this->valueGrowth;
-  }
-  
-  protected function getDuration(): int {
-    return $this->duration;
   }
 }
 ?>

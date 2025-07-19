@@ -9,12 +9,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Data structure for combat action
  *
  * @author Jakub Konečný
- * @property-read Character $character1
- * @property-read Character $character2
- * @property-read string $action
- * @property-read string $name
- * @property-read bool $result
- * @property-read int $amount
  */
 final class CombatLogEntry {
   use \Nette\SmartObject;
@@ -22,12 +16,12 @@ final class CombatLogEntry {
   /** @internal */
   public const ACTION_POISON = "poison";
 
-  private Character $character1;
-  private Character $character2;
-  private string $action;
-  private string $name;
-  private bool $result;
-  private int $amount;
+  public readonly Character $character1;
+  public readonly Character $character2;
+  public readonly string $action;
+  public readonly string $name;
+  public readonly bool $result;
+  public readonly int $amount;
   
   public function __construct(array $action) {
     $resolver = new OptionsResolver();
@@ -53,30 +47,6 @@ final class CombatLogEntry {
     $resolver->setDefault("name", "");
     $resolver->setAllowedTypes("character1", Character::class);
     $resolver->setAllowedTypes("character2", Character::class);
-  }
-
-  protected function getCharacter1(): Character {
-    return $this->character1;
-  }
-  
-  protected function getCharacter2(): Character {
-    return $this->character2;
-  }
-  
-  protected function getAction(): string {
-    return $this->action;
-  }
-  
-  protected function getName(): string {
-    return $this->name;
-  }
-  
-  protected function isResult(): bool {
-    return $this->result;
-  }
-  
-  protected function getAmount(): int {
-    return $this->amount;
   }
 }
 ?>

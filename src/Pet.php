@@ -9,17 +9,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Pet
  *
  * @author Jakub Konečný
- * @property-read int $id
- * @property-read string $bonusStat
- * @property-read int $bonusValue
  */
 final class Pet implements ICharacterEffectsProvider {
   use \Nette\SmartObject;
 
-  private int $id;
+  public readonly int $id;
   public bool $deployed;
-  private string $bonusStat;
-  private int $bonusValue;
+  public readonly string $bonusStat;
+  public readonly int $bonusValue;
   
   public function __construct(array $data) {
     $resolver = new OptionsResolver();
@@ -48,18 +45,6 @@ final class Pet implements ICharacterEffectsProvider {
   
   protected function getAllowedStats(): array {
     return Character::BASE_STATS;
-  }
-  
-  protected function getId(): int {
-    return $this->id;
-  }
-  
-  protected function getBonusStat(): string {
-    return $this->bonusStat;
-  }
-  
-  protected function getBonusValue(): int {
-    return $this->bonusValue;
   }
   
   protected function getDeployParams(): array {
