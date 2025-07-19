@@ -12,7 +12,7 @@ use Tester\Assert;
  * @testCase
  */
 final class CharacterAttackSkillTest extends \Tester\TestCase {
-  public function testGetSkillType() {
+  public function testGetSkillType(): void {
     $skillData = [
       "id" => 1, "name" => "Skill Attack", "baseDamage" => "120%", "damageGrowth" => "2%", "levels" => 5,
       "target" => SkillAttack::TARGET_SINGLE, "strikes" => 1, "hitRate" => "100%",
@@ -22,7 +22,7 @@ final class CharacterAttackSkillTest extends \Tester\TestCase {
     Assert::same("attack", $characterSkill->skillType);
   }
   
-  public function testGetLevel() {
+  public function testGetLevel(): void {
     $skillData = [
       "id" => 1, "name" => "Skill Attack", "baseDamage" => "120%", "damageGrowth" => "2%", "levels" => 5,
       "target" => SkillAttack::TARGET_SINGLE, "strikes" => 1, "hitRate" => "100%",
@@ -32,7 +32,7 @@ final class CharacterAttackSkillTest extends \Tester\TestCase {
     Assert::same(1, $characterSkill->level);
   }
   
-  public function testGetDamage() {
+  public function testGetDamage(): void {
     $skillData = [
       "id" => 1, "name" => "Skill Attack", "baseDamage" => "120%", "damageGrowth" => "2%", "levels" => 5,
       "target" => SkillAttack::TARGET_SINGLE, "strikes" => 1, "hitRate" => "100%",
@@ -44,7 +44,7 @@ final class CharacterAttackSkillTest extends \Tester\TestCase {
     Assert::same(128, $characterSkill->damage);
   }
   
-  public function testGetHitRate() {
+  public function testGetHitRate(): void {
     $skillData = [
       "id" => 1, "name" => "Skill Attack", "baseDamage" => "120%", "damageGrowth" => "2%", "levels" => 5,
       "target" => SkillAttack::TARGET_SINGLE, "strikes" => 1, "hitRate" => null,

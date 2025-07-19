@@ -20,7 +20,7 @@ final class CharacterTest extends \Tester\TestCase {
     return new Character($stats);
   }
   
-  public function testGetActivePet() {
+  public function testGetActivePet(): void {
     $stats = [
       "id" => 1, "name" => "Player 1", "level" => 1, "initiativeFormula" => "1d2+DEX/4", "strength" => 10,
       "dexterity" => 10, "constitution" => 10, "intelligence" => 10, "charisma" => 10
@@ -35,7 +35,7 @@ final class CharacterTest extends \Tester\TestCase {
     Assert::same(1, $character->activePet);
   }
   
-  public function testAddAndRemoveEffect() {
+  public function testAddAndRemoveEffect(): void {
     $character = $this->generateCharacter(1);
     Assert::count(0, $character->effects);
     Assert::same(5, $character->damage);
@@ -54,7 +54,7 @@ final class CharacterTest extends \Tester\TestCase {
     Assert::same(5, $character->damage);
   }
   
-  public function testInitiativeFormulaParser() {
+  public function testInitiativeFormulaParser(): void {
     $character = $this->generateCharacter(1);
     Assert::type(InitiativeFormulaParser::class, $character->initiativeFormulaParser);
     Assert::notEqual(0, $character->initiative);
@@ -62,7 +62,7 @@ final class CharacterTest extends \Tester\TestCase {
     Assert::equal(0, $character->initiative);
   }
   
-  public function testDebuffsCap() {
+  public function testDebuffsCap(): void {
     $character = $this->generateCharacter(1);
     $effect = new CharacterEffect([
       "id" => "skillEffect", "type" => SkillSpecial::TYPE_DEBUFF, "valueAbsolute" => false,
@@ -72,7 +72,7 @@ final class CharacterTest extends \Tester\TestCase {
     Assert::same(2, $character->constitution);
   }
 
-  public function testDamageStat() {
+  public function testDamageStat(): void {
     $stats = [
       "id" => 1, "name" => "Player 1", "level" => 1, "initiativeFormula" => "1d2+DEX/4", "strength" => 10,
       "dexterity" => 10, "constitution" => 10, "intelligence" => 10, "charisma" => 10
@@ -95,7 +95,7 @@ final class CharacterTest extends \Tester\TestCase {
     Assert::same(Character::STAT_STRENGTH, $character->damageStat());
   }
 
-  public function testStatus() {
+  public function testStatus(): void {
     $character = $this->generateCharacter(1);
     Assert::false($character->hasStatus("abc"));
     Assert::null($character->getStatus("abc"));
@@ -121,7 +121,7 @@ final class CharacterTest extends \Tester\TestCase {
     Assert::false($character->hasStatus(Character::STATUS_POISONED));
   }
 
-  public function testCanAct() {
+  public function testCanAct(): void {
     $character = $this->generateCharacter(1);
     Assert::true($character->canAct());
     $character->effects[] = new CharacterEffect([
@@ -141,7 +141,7 @@ final class CharacterTest extends \Tester\TestCase {
     Assert::true($character->canAct());
   }
 
-  public function testCanDefend() {
+  public function testCanDefend(): void {
     $character = $this->generateCharacter(1);
     Assert::true($character->canDefend());
     $character->effects[] = new CharacterEffect([

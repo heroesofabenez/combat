@@ -20,19 +20,19 @@ final class TeamTest extends \Tester\TestCase {
     return new Character($stats);
   }
   
-  public function testGetName() {
+  public function testGetName(): void {
     $name = "Team 1";
     $team = new Team($name);
     Assert::same($name, $team->name);
   }
   
-  public function testMaxRowSize() {
+  public function testMaxRowSize(): void {
     $team = new Team("");
     $team->maxRowSize = 1;
     Assert::same(1, $team->maxRowSize);
   }
   
-  public function testGetAliveMembers() {
+  public function testGetAliveMembers(): void {
     $team = new Team("");
     Assert::count(0, $team->aliveMembers);
     $team[] = $this->generateCharacter(1);
@@ -43,7 +43,7 @@ final class TeamTest extends \Tester\TestCase {
     Assert::count(1, $team->aliveMembers);
   }
   
-  public function testGetUsableMembers() {
+  public function testGetUsableMembers(): void {
     $team = new Team("");
     Assert::count(0, $team->usableMembers);
     $team[] = $this->generateCharacter(1);
@@ -61,7 +61,7 @@ final class TeamTest extends \Tester\TestCase {
     Assert::count(0, $team->usableMembers);
   }
   
-  public function testHasAliveMembers() {
+  public function testHasAliveMembers(): void {
     $team = new Team("");
     Assert::false($team->hasAliveMembers());
     $team[] = $this->generateCharacter(1);
@@ -70,7 +70,7 @@ final class TeamTest extends \Tester\TestCase {
     Assert::false($team->hasAliveMembers());
   }
   
-  public function testSetCharacterPosition() {
+  public function testSetCharacterPosition(): void {
     $team = new Team("");
     $team[] = $this->generateCharacter(1);
     $team->setCharacterPosition(1, 1, 1);
@@ -89,7 +89,7 @@ final class TeamTest extends \Tester\TestCase {
     }, InvalidCharacterPositionException::class, null, InvalidCharacterPositionException::ROW_FULL);
   }
   
-  public function testGetRandomCharacter() {
+  public function testGetRandomCharacter(): void {
     $team = new Team("");
     Assert::null($team->getRandomCharacter());
     $team[] = $this->generateCharacter(1);
@@ -98,7 +98,7 @@ final class TeamTest extends \Tester\TestCase {
     Assert::type(Character::class, $team->getRandomCharacter());
   }
   
-  public function testGetLowestHpCharacter() {
+  public function testGetLowestHpCharacter(): void {
     $team = new Team("");
     Assert::null($team->getLowestHpCharacter());
     $team[] = $this->generateCharacter(1);
@@ -110,7 +110,7 @@ final class TeamTest extends \Tester\TestCase {
     Assert::same($team[0], $team->getLowestHpCharacter());
   }
   
-  public function testGetRowToAttack() {
+  public function testGetRowToAttack(): void {
     $team = new Team("");
     Assert::null($team->rowToAttack);
     $team[] = $character1 = $this->generateCharacter(1);

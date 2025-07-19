@@ -17,7 +17,7 @@ final class CombatBaseTest extends \Tester\TestCase {
   use \Testbench\TCompiledContainer;
   
   public function setUp() {
-    $this->logger = $this->getService(CombatLogger::class);
+    $this->logger = $this->getService(CombatLogger::class); // @phpstan-ignore assign.propertyType
   }
   
   protected function generateCharacter(int $id): Character {
@@ -48,7 +48,7 @@ final class CombatBaseTest extends \Tester\TestCase {
     return new Character($stats, [new Weapon($weaponStats)], [new Pet($petStats)], $skills);
   }
   
-  public function testInvalidStates() {
+  public function testInvalidStates(): void {
     $combat = new CombatBase(clone $this->logger);
     Assert::exception(function() use($combat) {
       $combat->execute();
@@ -59,14 +59,14 @@ final class CombatBaseTest extends \Tester\TestCase {
     }, ImmutableException::class);
   }
   
-  public function testVictoryConditions() {
+  public function testVictoryConditions(): void {
     $combat = new CombatBase(clone $this->logger);
     Assert::same([VictoryConditions::class, "moreDamage"], $combat->victoryCondition);
     $combat->victoryCondition = [VictoryConditions::class, "eliminateSecondTeam"];
     Assert::same([VictoryConditions::class, "eliminateSecondTeam"], $combat->victoryCondition);
   }
   
-  public function testEffectProviders() {
+  public function testEffectProviders(): void {
     $character1 = $this->generateCharacter(1);
     $character2 = $this->generateCharacter(2);
     $provider = new EffectsProvider();
@@ -91,21 +91,21 @@ final class CombatBaseTest extends \Tester\TestCase {
     Assert::same(50, $character1->hitpoints);
   }
   
-  public function testSuccessCalculator() {
+  public function testSuccessCalculator(): void {
     $combat = new CombatBase(clone $this->logger);
     Assert::type(RandomSuccessCalculator::class, $combat->successCalculator);
     $combat->successCalculator = new StaticSuccessCalculator();
     Assert::type(StaticSuccessCalculator::class, $combat->successCalculator);
   }
   
-  public function testActionSelector() {
+  public function testActionSelector(): void {
     $combat = new CombatBase(clone $this->logger);
     Assert::type(CombatActionSelector::class, $combat->actionSelector);
     $combat->actionSelector = new ActionSelector();
     Assert::type(ActionSelector::class, $combat->actionSelector);
   }
   
-  public function testAssignPositions() {
+  public function testAssignPositions(): void {
     $combat = new CombatBase(clone $this->logger);
     $team1 = new Team("");
     $team1->maxRowSize = 2;
@@ -136,7 +136,7 @@ final class CombatBaseTest extends \Tester\TestCase {
     Assert::count(0, $team2->getItems(["positionColumn" => 3]));
   }
   
-  public function testDecreaseEffectsDuration() {
+  public function testDecreaseEffectsDuration(): void {
     $combat = new CombatBase(clone $this->logger);
     $character1 = $this->generateCharacter(1);
     $character2 = $this->generateCharacter(2);
@@ -156,7 +156,7 @@ final class CombatBaseTest extends \Tester\TestCase {
     Assert::false($character1->hasStatus(Character::STATUS_STUNNED));
   }
   
-  public function testApplyPoison() {
+  public function testApplyPoison(): void {
     $combat = new CombatBase(clone $this->logger);
     $character1 = $this->generateCharacter(1);
     $character2 = $this->generateCharacter(2);
@@ -172,7 +172,7 @@ final class CombatBaseTest extends \Tester\TestCase {
     Assert::same(40, $character1->hitpoints);
   }
   
-  public function testPostCombat() {
+  public function testPostCombat(): void {
     $combat = new CombatBase(clone $this->logger);
     $combat->healers = function(Team $team1, Team $team2): Team {
       return Team::fromArray(array_merge($team1->toArray(), $team2->toArray()), "healers");

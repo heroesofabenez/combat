@@ -18,7 +18,7 @@ final class CombatLoggerTest extends \Tester\TestCase {
     $this->refreshContainer();
   }
   
-  public function testInvalidStates() {
+  public function testInvalidStates(): void {
     /** @var CombatLogger $logger */
     $logger = $this->getService(CombatLogger::class);
     $logger->setTeams(new Team("Team1"), new Team("Team 2"));
@@ -27,7 +27,7 @@ final class CombatLoggerTest extends \Tester\TestCase {
     }, ImmutableException::class);
   }
   
-  public function testTitle() {
+  public function testTitle(): void {
     $title = "ABC";
     /** @var CombatLogger $logger */
     $logger = $this->getService(CombatLogger::class);
@@ -38,7 +38,7 @@ final class CombatLoggerTest extends \Tester\TestCase {
     Assert::contains("<title>$title Combat</title>", $log);
   }
   
-  public function testCount() {
+  public function testCount(): void {
     /** @var CombatLogger $logger */
     $logger = $this->getService(CombatLogger::class);
     Assert::count(0, $logger);
@@ -54,7 +54,7 @@ final class CombatLoggerTest extends \Tester\TestCase {
     return new Character($stats);
   }
   
-  public function testRendering() {
+  public function testRendering(): void {
     /** @var CombatLogger $logger */
     $logger = $this->getService(CombatLogger::class);
     $team1 = new Team("Team 1");
@@ -71,7 +71,7 @@ final class CombatLoggerTest extends \Tester\TestCase {
     Assert::type("string", (string) $logger);
   }
   
-  public function testGetIterator() {
+  public function testGetIterator(): void {
     /** @var CombatLogger $logger */
     $logger = $this->getService(CombatLogger::class);
     $logger->round = 1;

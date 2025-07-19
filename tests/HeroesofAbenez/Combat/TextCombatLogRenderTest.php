@@ -23,8 +23,8 @@ final class TextCombatLogRenderTest extends \Tester\TestCase {
     return new Character($stats);
   }
 
-  public function testRendering() {
-    /** @var TextCombatLogRender $logger */
+  public function testRendering(): void {
+    /** @var TextCombatLogRender $render */
     $render = $this->getService(TextCombatLogRender::class);
     /** @var CombatLogger $logger */
     $logger = $this->getService(CombatLogger::class);

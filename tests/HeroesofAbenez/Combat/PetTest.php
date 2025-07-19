@@ -12,7 +12,7 @@ use Tester\Assert;
  * @testCase
  */
 final class PetTest extends \Tester\TestCase {
-  public function testGetCombatEffects() {
+  public function testGetCombatEffects(): void {
     $pet = new Pet([
       "id" => 1, "deployed" => false, "bonusStat" => Character::STAT_STRENGTH, "bonusValue" => 10,
     ]);

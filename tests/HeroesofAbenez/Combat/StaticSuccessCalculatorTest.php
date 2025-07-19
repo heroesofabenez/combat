@@ -26,7 +26,7 @@ final class StaticSuccessCalculatorTest extends \Tester\TestCase {
     return new Character($stats);
   }
   
-  public function testHasHit() {
+  public function testHasHit(): void {
     $character1 = $this->generateCharacter(1);
     $character2 = $this->generateCharacter(2);
     for($i = 1; $i <= 10; $i++) {
@@ -34,7 +34,7 @@ final class StaticSuccessCalculatorTest extends \Tester\TestCase {
     }
   }
   
-  public function testHasHealed() {
+  public function testHasHealed(): void {
     $character1 = $this->generateCharacter(1);
     for($i = 1; $i <= 10; $i++) {
       Assert::true($this->calculator->hasHealed($character1));

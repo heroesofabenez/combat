@@ -12,7 +12,7 @@ use Tester\Assert;
  * @testCase
  */
 final class CharacterSpecialSkillTest extends \Tester\TestCase {
-  public function testGetSkillType() {
+  public function testGetSkillType(): void {
     $skillData = [
       "id" => 1, "name" => "Skill Special", "levels" => 5, "type" => SkillSpecial::TYPE_BUFF, "duration" => 3,
       "target" => SkillSpecial::TARGET_SELF, "stat" => Character::STAT_DAMAGE, "value" => 10, "valueGrowth" => 2,
@@ -22,7 +22,7 @@ final class CharacterSpecialSkillTest extends \Tester\TestCase {
     Assert::same("special", $characterSkill->skillType);
   }
   
-  public function testGetLevel() {
+  public function testGetLevel(): void {
     $skillData = [
       "id" => 1, "name" => "Skill Special", "levels" => 5, "type" => SkillSpecial::TYPE_BUFF, "duration" => 3,
       "target" => SkillSpecial::TARGET_SELF, "stat" => Character::STAT_DAMAGE, "value" => 10, "valueGrowth" => 2,
@@ -32,7 +32,7 @@ final class CharacterSpecialSkillTest extends \Tester\TestCase {
     Assert::same(1, $characterSkill->level);
   }
   
-  public function testGetValues() {
+  public function testGetValues(): void {
     $skillData = [
       "id" => 1, "name" => "Skill Special", "levels" => 5, "type" => SkillSpecial::TYPE_BUFF, "duration" => 3,
       "target" => SkillSpecial::TARGET_SELF, "stat" => Character::STAT_DAMAGE, "value" => 10, "valueGrowth" => 2,

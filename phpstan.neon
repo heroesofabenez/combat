@@ -12,3 +12,9 @@ parameters:
             identifier: missingType.generics
         -
             identifier: method.childParameterType
+        -
+            identifier: property.notFound
+            path: tests/**
+        -
+            identifier: method.notFound
+            path: tests/**

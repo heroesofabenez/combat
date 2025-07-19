@@ -26,7 +26,7 @@ final class RandomSuccessCalculatorTest extends \Tester\TestCase {
     return new Character($stats);
   }
   
-  public function testHasHit() {
+  public function testHasHit(): void {
     $character1 = $this->generateCharacter(1);
     $character2 = $this->generateCharacter(2);
     Assert::type("bool", $this->calculator->hasHit($character1, $character2));
@@ -47,7 +47,7 @@ final class RandomSuccessCalculatorTest extends \Tester\TestCase {
     }
   }
   
-  public function testHasHealed() {
+  public function testHasHealed(): void {
     $character1 = $this->generateCharacter(1);
     Assert::type("bool", $this->calculator->hasHealed($character1));
   }

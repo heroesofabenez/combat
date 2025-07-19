@@ -12,7 +12,7 @@ use Tester\Assert;
  * @testCase
  */
 final class EquipmentTest extends \Tester\TestCase {
-  public function testGetCombatEffects() {
+  public function testGetCombatEffects(): void {
     $equipment = new Equipment([
       "id" => 1, "name" => "Novice Helmet", "slot" => Equipment::SLOT_HELMET,
       "strength" => 1, "worn" => false,
@@ -22,7 +22,7 @@ final class EquipmentTest extends \Tester\TestCase {
     Assert::count(1, $equipment->getCombatEffects());
   }
 
-  public function testDurability() {
+  public function testDurability(): void {
     $data = [
       "id" => 1, "name" => "Novice Helmet", "slot" => Equipment::SLOT_HELMET,
       "strength" => 20, "worn" => true, "maxDurability" => 10,

@@ -20,7 +20,7 @@ final class InitiativeFormulaParserTest extends \Tester\TestCase {
     return new Character($stats);
   }
   
-  public function testCalculateInitiative() {
+  public function testCalculateInitiative(): void {
     $character = $this->generateCharacter(1);
     $parser = new InitiativeFormulaParser();
     for($i = 1; $i <= 10; $i++) {

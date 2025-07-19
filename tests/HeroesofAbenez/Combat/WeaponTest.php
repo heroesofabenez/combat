@@ -12,7 +12,7 @@ require __DIR__ . "/../../bootstrap.php";
  * @testCase
  */
 final class WeaponTest extends \Tester\TestCase {
-  public function testIsRanged() {
+  public function testIsRanged(): void {
     $weaponStats = [
       "id" => 1, "name" => "Weapon", "slot" => Equipment::SLOT_WEAPON, "strength" => 1, "worn" => true,
     ];

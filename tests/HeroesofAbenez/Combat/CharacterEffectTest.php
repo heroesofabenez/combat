@@ -20,7 +20,7 @@ final class CharacterEffectTest extends \Tester\TestCase {
     return new Character($stats);
   }
   
-  public function testInitiativeEffect() {
+  public function testInitiativeEffect(): void {
     $character = $this->generateCharacter(1);
     $character->initiativeFormulaParser = new ConstantInitiativeFormulaParser(1);
     Assert::same(1, $character->initiative);
@@ -41,7 +41,7 @@ final class CharacterEffectTest extends \Tester\TestCase {
     Assert::same(1, $character->initiativeBase);
   }
   
-  public function testHitpointsEffect() {
+  public function testHitpointsEffect(): void {
     $character = $this->generateCharacter(1);
     $baseHitpoints = $character->constitution * Character::HITPOINTS_PER_CONSTITUTION;
     Assert::same($baseHitpoints, $character->maxHitpointsBase);
