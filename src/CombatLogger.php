@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 
 /**
  * Combat log
@@ -14,14 +14,14 @@ final class CombatLogger implements \Countable, \IteratorAggregate, \Stringable 
   use \Nette\SmartObject;
 
   protected ICombatLogRender $render;
-  protected ITranslator $translator;
+  protected Translator $translator;
   protected Team $team1;
   protected Team $team2;
   protected array $actions = [];
   public int $round = 0;
   public string $title = "";
   
-  public function __construct(ICombatLogRender $render, ITranslator $translator) {
+  public function __construct(ICombatLogRender $render, Translator $translator) {
     $this->render = $render;
     $this->translator = $translator;
   }

@@ -3,9 +3,8 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-use Nette\Bridges\ApplicationLatte\ILatteFactory;
-use Nette\Localization\ITranslator;
-use HeroesofAbenez\Combat\CombatActions;
+use Nette\Bridges\ApplicationLatte\LatteFactory;
+use Nette\Localization\Translator;
 
 /**
  * TextCombatLogRender
@@ -16,10 +15,10 @@ final class TextCombatLogRender implements ICombatLogRender {
   use \Nette\SmartObject;
 
   protected \Latte\Engine $latte;
-  protected ITranslator $translator;
+  protected Translator $translator;
   protected string $template = __DIR__ . "/CombatLog.latte";
 
-  public function __construct(ILatteFactory $latteFactory, ITranslator $translator) {
+  public function __construct(LatteFactory $latteFactory, Translator $translator) {
     $this->latte = $latteFactory->create();
     $this->translator = $translator;
   }
