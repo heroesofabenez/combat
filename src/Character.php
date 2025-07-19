@@ -387,10 +387,7 @@ class Character {
     $this->statuses[$name] = $callback;
   }
 
-  /**
-   * @return mixed
-   */
-  public function getStatus(string $name) {
+  public function getStatus(string $name): mixed {
     if(!array_key_exists($name, $this->statuses)) {
       return null;
     }
