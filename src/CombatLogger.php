@@ -13,17 +13,13 @@ use Nette\Localization\Translator;
 final class CombatLogger implements \Countable, \IteratorAggregate, \Stringable {
   use \Nette\SmartObject;
 
-  private ICombatLogRender $render;
-  private Translator $translator;
   private Team $team1;
   private Team $team2;
   private array $actions = [];
   public int $round = 0;
   public string $title = "";
   
-  public function __construct(ICombatLogRender $render, Translator $translator) {
-    $this->render = $render;
-    $this->translator = $translator;
+  public function __construct(private ICombatLogRender $render, private Translator $translator) {
   }
   
   /**

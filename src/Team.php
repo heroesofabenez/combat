@@ -20,14 +20,12 @@ final class Team extends Collection {
   private const LOWEST_HP_THRESHOLD = 0.5;
 
   protected string $class = Character::class;
-  private string $name;
   private int $maxRowSize = 5;
   
   use \Nette\SmartObject;
   
-  public function __construct(string $name) {
+  public function __construct(private string $name) {
     parent::__construct();
-    $this->name = $name;
   }
   
   protected function getName(): string {

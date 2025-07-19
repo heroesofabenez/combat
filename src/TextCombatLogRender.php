@@ -15,12 +15,10 @@ final class TextCombatLogRender implements ICombatLogRender {
   use \Nette\SmartObject;
 
   private \Latte\Engine $latte;
-  private Translator $translator;
   private string $template = __DIR__ . "/CombatLog.latte";
 
-  public function __construct(LatteFactory $latteFactory, Translator $translator) {
+  public function __construct(LatteFactory $latteFactory, private Translator $translator) {
     $this->latte = $latteFactory->create();
-    $this->translator = $translator;
   }
 
   /**

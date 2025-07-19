@@ -11,9 +11,6 @@ namespace HeroesofAbenez\Combat;
  * @property-read int $value
  */
 final class CharacterSpecialSkill extends BaseCharacterSkill {
-  /** @var SkillSpecial */
-  protected $skill;
-  
   public function __construct(SkillSpecial $skill, int $level) {
     parent::__construct($skill, $level);
   }

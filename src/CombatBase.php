@@ -32,7 +32,6 @@ class CombatBase {
 
   protected Team $team1;
   protected Team $team2;
-  protected CombatLogger $log;
   protected int $round = 0;
   protected int $roundLimit = 30;
   /** @var int[] Dealt damage by team */
@@ -51,16 +50,11 @@ class CombatBase {
   protected $victoryCondition;
   /** @var callable */
   protected $healers;
-  public ISuccessCalculator $successCalculator;
-  public ICombatActionSelector $actionSelector;
   /** @var Collection|ICombatAction[] */
   protected Collection $combatActions;
   
-  public function __construct(CombatLogger $logger, ?ISuccessCalculator $successCalculator = null, ?ICombatActionSelector $actionSelector = null) {
-    $this->log = $logger;
+  public function __construct(protected CombatLogger $log, public ISuccessCalculator $successCalculator = new RandomSuccessCalculator(), public ICombatActionSelector $actionSelector = new CombatActionSelector()) {
     $this->victoryCondition = [VictoryConditions::class, "moreDamage"];
-    $this->successCalculator = $successCalculator ?? new RandomSuccessCalculator();
-    $this->actionSelector = $actionSelector ?? new CombatActionSelector();
     $this->healers = function(): Team {
       return new Team("healers");
     };
