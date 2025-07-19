@@ -53,8 +53,8 @@ pages:
   artifacts:
       paths:
       - public
-  only:
-  - tags@heroesofabenez/combat
+  rules:
+    - if: $CI_COMMIT_TAG
   cache:
     paths:
       - vendor/
