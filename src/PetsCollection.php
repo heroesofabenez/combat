@@ -7,7 +7,7 @@ namespace HeroesofAbenez\Combat;
  * @author Jakub Konečný
  * @internal
  */
-class PetsCollection extends \Nexendrie\Utils\Collection {
+final class PetsCollection extends \Nexendrie\Utils\Collection {
   protected string $class = Pet::class;
 }
 ?>
