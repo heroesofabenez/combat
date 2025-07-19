@@ -2,20 +2,18 @@ stages:
   - test
   - deploy
 
-cache:
-  paths:
-  - vendor/
-
-before_script:
-  - composer update --prefer-dist --no-progress --no-interaction
-
 .job_template: &test_job
   stage: test
+  before_script:
+    - composer update --prefer-dist --no-progress --no-interaction
   script:
   - phing test
   retry: 2
   rules:
     - if: $CI_COMMIT_BRANCH
+  cache:
+    paths:
+      - vendor/
 
 test:php7.4:
   <<: *test_job
@@ -48,6 +46,8 @@ pages:
     name: documentation
     url: https://heroesofabenez.gitlab.io/combat
   image: nexendrie/php:7.4
+  before_script:
+    - composer update --prefer-dist --no-progress --no-interaction
   script:
   - phing documentation
   artifacts:
@@ -55,3 +55,6 @@ pages:
       - public
   only:
   - tags@heroesofabenez/combat
+  cache:
+    paths:
+      - vendor/
