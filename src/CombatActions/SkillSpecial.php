@@ -59,23 +59,13 @@ final class SkillSpecial implements ICombatAction {
   public function do(CombatBase $combat, Character $character): void {
     /** @var CharacterSpecialSkill $skill */
     $skill = $character->usableSkills[0];
-    $targets = [];
-    switch($skill->skill->target) {
-      case Skill::TARGET_ENEMY:
-        $targets[] = $combat->selectAttackTarget($character);
-        break;
-      case Skill::TARGET_SELF:
-        $targets[] = $character;
-        break;
-      case Skill::TARGET_PARTY:
-        $targets = $combat->getTeam($character)->toArray();
-        break;
-      case Skill::TARGET_ENEMY_PARTY:
-        $targets = $combat->getEnemyTeam($character)->toArray();
-        break;
-      default:
-        throw new NotImplementedException("Target {$skill->skill->target} for special skills is not implemented.");
-    }
+    $targets = match($skill->skill->target) {
+      Skill::TARGET_ENEMY => [$combat->selectAttackTarget($character)],
+      Skill::TARGET_SELF => [$character],
+      Skill::TARGET_PARTY => $combat->getTeam($character)->toArray(),
+      Skill::TARGET_ENEMY_PARTY => $combat->getEnemyTeam($character)->toArray(),
+      default => throw new NotImplementedException("Target {$skill->skill->target} for special skills is not implemented."),
+    };
     foreach($targets as $target) {
       $this->doSingleTarget($character, $target, $skill, $combat);
     }

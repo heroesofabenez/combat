@@ -36,19 +36,13 @@ class Weapon extends Equipment {
   }
 
   protected function getDamageStat(): string {
-    switch($this->type) {
-      case static::TYPE_STAFF:
-        return Character::STAT_INTELLIGENCE;
-      case static::TYPE_CLUB:
-        return Character::STAT_CONSTITUTION;
-      case static::TYPE_BOW:
-      case static::TYPE_THROWING_KNIFE:
-        return Character::STAT_DEXTERITY;
-      case static::TYPE_INSTRUMENT:
-        return Character::STAT_CHARISMA;
-      default:
-        return Character::STAT_STRENGTH;
-    }
+    return match($this->type) {
+      static::TYPE_STAFF => Character::STAT_INTELLIGENCE,
+      static::TYPE_CLUB => Character::STAT_CONSTITUTION,
+      static::TYPE_BOW, static::TYPE_THROWING_KNIFE => Character::STAT_DEXTERITY,
+      static::TYPE_INSTRUMENT => Character::STAT_CHARISMA,
+      default => Character::STAT_STRENGTH,
+    };
   }
   
   protected function configureOptions(OptionsResolver $resolver): void {

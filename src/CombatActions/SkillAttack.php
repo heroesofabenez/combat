@@ -61,22 +61,14 @@ final class SkillAttack implements ICombatAction {
   public function do(CombatBase $combat, Character $character): void {
     /** @var CharacterAttackSkill $skill */
     $skill = $character->usableSkills[0];
-    $targets = [];
     /** @var Character $primaryTarget */
     $primaryTarget = $combat->selectAttackTarget($character);
-    switch($skill->skill->target) {
-      case Skill::TARGET_SINGLE:
-        $targets[] = $primaryTarget;
-        break;
-      case Skill::TARGET_ROW:
-        $targets = $combat->getTeam($primaryTarget)->getItems(["positionRow" => $primaryTarget->positionRow]);
-        break;
-      case Skill::TARGET_COLUMN:
-        $targets = $combat->getTeam($primaryTarget)->getItems(["positionColumn" => $primaryTarget->positionColumn]);
-        break;
-      default:
-        throw new NotImplementedException("Target {$skill->skill->target} for attack skills is not implemented.");
-    }
+    $targets = match($skill->skill->target) {
+      Skill::TARGET_SINGLE => [$primaryTarget],
+      Skill::TARGET_ROW => $combat->getTeam($primaryTarget)->getItems(["positionRow" => $primaryTarget->positionRow]),
+      Skill::TARGET_COLUMN => $combat->getTeam($primaryTarget)->getItems(["positionColumn" => $primaryTarget->positionColumn]),
+      default => throw new NotImplementedException("Target {$skill->skill->target} for attack skills is not implemented."),
+    };
     /** @var Character $target */
     foreach($targets as $target) {
       for($i = 1; $i <= $skill->skill->strikes; $i++) {
