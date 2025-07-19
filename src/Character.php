@@ -74,9 +74,8 @@ class Character {
   public const STATUS_STUNNED = "stunned";
   public const STATUS_POISONED = "poisoned";
   public const STATUS_HIDDEN = "hidden";
-  
-  /** @var int|string */
-  protected $id;
+
+  protected int|string $id;
   protected string $name;
   protected string $gender = "male";
   protected string $race;
@@ -200,11 +199,8 @@ class Character {
     $this->hitBase = $this->hit;
     $this->dodgeBase = $this->dodge;
   }
-  
-  /**
-   * @return int|string
-   */
-  protected function getId() {
+
+  protected function getId(): int|string {
     return $this->id;
   }
 

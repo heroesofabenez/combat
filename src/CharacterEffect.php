@@ -30,8 +30,7 @@ class CharacterEffect {
   protected string $stat = "";
   protected int $value = 0;
   protected bool $valueAbsolute;
-  /** @var int|string */
-  protected $duration;
+  protected int|string $duration;
   /** @var callable[] */
   public array $onApply = [];
   /** @var callable[] */
@@ -128,10 +127,7 @@ class CharacterEffect {
     return $this->valueAbsolute;
   }
 
-  /**
-   * @return int|string
-   */
-  protected function getDuration() {
+  protected function getDuration(): int|string {
     return $this->duration;
   }
   
