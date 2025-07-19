@@ -17,11 +17,11 @@ use Nexendrie\Utils\Numbers;
  * @property-read int|null $rowToAttack
  */
 final class Team extends Collection {
-  protected const LOWEST_HP_THRESHOLD = 0.5;
+  private const LOWEST_HP_THRESHOLD = 0.5;
 
   protected string $class = Character::class;
-  protected string $name;
-  protected int $maxRowSize = 5;
+  private string $name;
+  private int $maxRowSize = 5;
   
   use \Nette\SmartObject;
   

@@ -14,9 +14,9 @@ use Nette\Localization\Translator;
 final class TextCombatLogRender implements ICombatLogRender {
   use \Nette\SmartObject;
 
-  protected \Latte\Engine $latte;
-  protected Translator $translator;
-  protected string $template = __DIR__ . "/CombatLog.latte";
+  private \Latte\Engine $latte;
+  private Translator $translator;
+  private string $template = __DIR__ . "/CombatLog.latte";
 
   public function __construct(LatteFactory $latteFactory, Translator $translator) {
     $this->latte = $latteFactory->create();

@@ -11,7 +11,7 @@ namespace HeroesofAbenez\Combat;
 final class ConstantInitiativeFormulaParser implements IInitiativeFormulaParser {
   use \Nette\SmartObject;
 
-  protected int $initiative;
+  private int $initiative;
   
   public function __construct(int $initiative) {
     $this->initiative = $initiative;

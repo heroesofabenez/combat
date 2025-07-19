@@ -29,11 +29,11 @@ final class SkillSpecial extends BaseSkill {
   /** @var string[] */
   public const NO_STAT_TYPES = [self::TYPE_STUN, self::TYPE_POISON, self::TYPE_HIDE, ];
 
-  protected string $type;
-  protected ?string $stat;
-  protected int $value;
-  protected int $valueGrowth;
-  protected int $duration;
+  private string $type;
+  private ?string $stat;
+  private int $value;
+  private int $valueGrowth;
+  private int $duration;
   
   public function __construct(array $data) {
     $resolver = new OptionsResolver();

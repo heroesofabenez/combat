@@ -22,12 +22,12 @@ final class CombatLogEntry {
   /** @internal */
   public const ACTION_POISON = "poison";
 
-  protected Character $character1;
-  protected Character $character2;
-  protected string $action;
-  protected string $name;
-  protected bool $result;
-  protected int $amount;
+  private Character $character1;
+  private Character $character2;
+  private string $action;
+  private string $name;
+  private bool $result;
+  private int $amount;
   
   public function __construct(array $action) {
     $resolver = new OptionsResolver();

@@ -16,10 +16,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final class Pet implements ICharacterEffectsProvider {
   use \Nette\SmartObject;
 
-  protected int $id;
+  private int $id;
   public bool $deployed;
-  protected string $bonusStat;
-  protected int $bonusValue;
+  private string $bonusStat;
+  private int $bonusValue;
   
   public function __construct(array $data) {
     $resolver = new OptionsResolver();

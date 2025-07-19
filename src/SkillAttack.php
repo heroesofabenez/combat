@@ -19,10 +19,10 @@ final class SkillAttack extends BaseSkill {
   public const TARGET_ROW = "row";
   public const TARGET_COLUMN = "column";
 
-  protected string $baseDamage;
-  protected string $damageGrowth;
-  protected int $strikes;
-  protected ?string $hitRate;
+  private string $baseDamage;
+  private string $damageGrowth;
+  private int $strikes;
+  private ?string $hitRate;
   
   public function __construct(array $data) {
     $resolver = new OptionsResolver();

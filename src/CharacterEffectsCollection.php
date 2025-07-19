@@ -11,7 +11,7 @@ use Nette\Utils\Arrays;
  */
 final class CharacterEffectsCollection extends \Nexendrie\Utils\Collection {
   protected string $class = CharacterEffect::class;
-  protected Character $character;
+  private Character $character;
 
   public function __construct(Character $character) {
     parent::__construct();
