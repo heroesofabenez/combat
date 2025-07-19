@@ -5,3 +5,7 @@ phpstan.neon        export-ignore
 .scrutinizer.yml    export-ignore
 build.xml           export-ignore
 /RELEASE_NOTES      export-ignore
+
+*.php               text eol=lf
+*.txt               text eol=lf
+*.xml               text eol=lf
