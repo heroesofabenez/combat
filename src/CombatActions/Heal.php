@@ -10,8 +10,6 @@ use Nexendrie\Utils\Numbers;
 use HeroesofAbenez\Combat\Team;
 
 final class Heal implements ICombatAction {
-  use \Nette\SmartObject;
-
   public const ACTION_NAME = "healing";
 
   public function getName(): string {

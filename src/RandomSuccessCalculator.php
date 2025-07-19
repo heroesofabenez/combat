@@ -11,8 +11,6 @@ use Nexendrie\Utils\Numbers;
  * @author Jakub Konečný
  */
 final class RandomSuccessCalculator implements ISuccessCalculator {
-  use \Nette\SmartObject;
-
   public const MAX_HIT_CHANCE = 100;
   public const MIN_HIT_CHANCE = 15;
 

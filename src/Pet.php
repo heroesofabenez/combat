@@ -11,8 +11,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @author Jakub Konečný
  */
 final class Pet implements ICharacterEffectsProvider {
-  use \Nette\SmartObject;
-
   public readonly int $id;
   public bool $deployed;
   public readonly string $bonusStat;

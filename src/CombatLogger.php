@@ -11,8 +11,6 @@ use Nette\Localization\Translator;
  * @author Jakub Konečný
  */
 final class CombatLogger implements \Countable, \IteratorAggregate, \Stringable {
-  use \Nette\SmartObject;
-
   private Team $team1;
   private Team $team2;
   private array $actions = [];

@@ -9,8 +9,6 @@ namespace HeroesofAbenez\Combat;
  * @author Jakub Konečný
  */
 final class CombatActionSelector implements ICombatActionSelector {
-  use \Nette\SmartObject;
-
   public function chooseAction(CombatBase $combat, Character $character): ?ICombatAction {
     if($character->hitpoints < 1) {
       return null;

@@ -9,8 +9,6 @@ namespace HeroesofAbenez\Combat;
  * @author Jakub Konečný
  */
 final class StaticSuccessCalculator implements ISuccessCalculator {
-  use \Nette\SmartObject;
-
   public function hasHit(Character $character1, Character $character2, ?CharacterAttackSkill $skill = null): bool {
     return true;
   }

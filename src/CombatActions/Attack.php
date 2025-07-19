@@ -9,8 +9,6 @@ use HeroesofAbenez\Combat\ICombatAction;
 use Nexendrie\Utils\Numbers;
 
 final class Attack implements ICombatAction {
-  use \Nette\SmartObject;
-
   public const ACTION_NAME = "attack";
 
   public function getName(): string {

@@ -11,8 +11,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @author Jakub Konečný
  */
 final class CombatLogEntry {
-  use \Nette\SmartObject;
-
   /** @internal */
   public const ACTION_POISON = "poison";
 
