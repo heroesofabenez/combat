@@ -10,11 +10,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Data structure for effect on character
  *
  * @author Jakub Konečný
- * @property-read string $id
- * @property-read string $type
- * @property-read string $stat
- * @property-read int $value
- * @property-read bool $valueAbsolute
  * @property int|string $duration
  * @method void onApply(Character $character, CharacterEffect $effect)
  * @method void onRemove(Character $character, CharacterEffect $effect)
@@ -25,11 +20,11 @@ class CharacterEffect {
   public const DURATION_COMBAT = "combat";
   public const DURATION_FOREVER = "forever";
 
-  protected string $id;
-  protected string $type;
-  protected string $stat = "";
-  protected int $value = 0;
-  protected bool $valueAbsolute;
+  public readonly string $id;
+  public readonly string $type;
+  public readonly string $stat;
+  public readonly int $value;
+  public readonly bool $valueAbsolute;
   protected int|string $duration;
   /** @var callable[] */
   public array $onApply = [];
@@ -105,26 +100,6 @@ class CharacterEffect {
    */
   protected function getDurations(): array {
     return Constants::getConstantsValues(static::class, "DURATION_");
-  }
-  
-  protected function getId(): string {
-    return $this->id;
-  }
-  
-  protected function getType(): string {
-    return $this->type;
-  }
-  
-  protected function getStat(): string {
-    return $this->stat;
-  }
-  
-  protected function getValue(): int {
-    return $this->value;
-  }
-
-  protected function isValueAbsolute(): bool {
-    return $this->valueAbsolute;
   }
 
   protected function getDuration(): int|string {

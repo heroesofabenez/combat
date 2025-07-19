@@ -12,13 +12,7 @@ use Nexendrie\Utils\Numbers;
  * Equipment
  *
  * @author Jakub Konečný
- * @property-read int $id
- * @property-read string $name
- * @property-read string $slot
- * @property-read string|null $type
- * @property-read int $rawStrength
  * @property-read int $strength
- * @property-read int $maxDurability
  * @property int $durability
  */
 class Equipment implements ICharacterEffectsProvider {
@@ -31,14 +25,14 @@ class Equipment implements ICharacterEffectsProvider {
   public const SLOT_HELMET = "helmet";
   public const SLOT_RING = "ring";
 
-  protected int $id;
-  protected string $name;
-  protected string $slot;
-  protected ?string $type;
-  protected int $rawStrength;
+  public readonly int $id;
+  public readonly string $name;
+  public readonly string $slot;
+  public readonly ?string $type;
+  public readonly int $rawStrength;
   public bool $worn;
   protected int $durability;
-  protected int $maxDurability;
+  public readonly int $maxDurability;
   
   public function __construct(array $data) {
     $resolver = new OptionsResolver();
@@ -84,26 +78,6 @@ class Equipment implements ICharacterEffectsProvider {
   protected function getAllowedSlots(): array {
     return Constants::getConstantsValues(static::class, "SLOT_");
   }
-  
-  protected function getId(): int {
-    return $this->id;
-  }
-  
-  protected function getName(): string {
-    return $this->name;
-  }
-  
-  protected function getSlot(): string {
-    return $this->slot;
-  }
-  
-  protected function getType(): ?string {
-    return $this->type;
-  }
-
-  protected function getRawStrength(): int {
-    return $this->rawStrength;
-  }
 
   protected function getStrength(): int {
     if($this->durability >= $this->maxDurability * 0.7) {
@@ -116,10 +90,6 @@ class Equipment implements ICharacterEffectsProvider {
       return (int) ($this->rawStrength / 4);
     }
     return 0;
-  }
-
-  protected function getMaxDurability(): int {
-    return $this->maxDurability;
   }
 
   protected function getDurability(): int {

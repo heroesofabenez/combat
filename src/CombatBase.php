@@ -10,7 +10,6 @@ use Nexendrie\Utils\Collection;
  * Handles combat
  * 
  * @author Jakub Konečný
- * @property-read CombatLogger $log Log from the combat
  * @property-read int $winner Team which won the combat/0 if there is no winner yet
  * @property-read int $round Number of current round
  * @property int $roundLimit
@@ -52,8 +51,11 @@ class CombatBase {
   protected $healers;
   /** @var Collection|ICombatAction[] */
   protected Collection $combatActions;
-  
-  public function __construct(protected CombatLogger $log, public ISuccessCalculator $successCalculator = new RandomSuccessCalculator(), public ICombatActionSelector $actionSelector = new CombatActionSelector()) {
+
+  /**
+   * @param CombatLogger $log Log from the combat
+   */
+  public function __construct(public readonly CombatLogger $log, public ISuccessCalculator $successCalculator = new RandomSuccessCalculator(), public ICombatActionSelector $actionSelector = new CombatActionSelector()) {
     $this->victoryCondition = [VictoryConditions::class, "moreDamage"];
     $this->healers = function(): Team {
       return new Team("healers");
@@ -403,10 +405,6 @@ class CombatBase {
   public function logDamage(Character $attacker, int $amount): void {
     $team = $this->team1->hasItems(["id" => $attacker->id]) ? 1 : 2;
     $this->damage[$team] += $amount;
-  }
-  
-  public function getLog(): CombatLogger {
-    return $this->log;
   }
 }
 ?>
