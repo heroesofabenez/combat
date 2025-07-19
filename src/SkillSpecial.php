@@ -77,7 +77,7 @@ final class SkillSpecial extends BaseSkill {
   }
   
   protected function getAllowedTypes(): array {
-    return Constants::getConstantsValues(static::class, "TYPE_");
+    return Constants::getConstantsValues(self::class, "TYPE_");
   }
   
   protected function getAllowedStats(): array {

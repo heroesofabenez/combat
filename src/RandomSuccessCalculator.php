@@ -25,7 +25,7 @@ final class RandomSuccessCalculator implements ISuccessCalculator {
     if($skill !== null) {
       $hitRate = $hitRate / 100 * $skill->hitRate;
     }
-    $hitChance = Numbers::range((int) ($hitRate - $dodgeRate), static::MIN_HIT_CHANCE, static::MAX_HIT_CHANCE);
+    $hitChance = Numbers::range((int) ($hitRate - $dodgeRate), self::MIN_HIT_CHANCE, self::MAX_HIT_CHANCE);
     $roll = rand(0, 100);
     return ($roll <= $hitChance);
   }

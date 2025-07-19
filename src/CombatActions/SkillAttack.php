@@ -17,7 +17,7 @@ final class SkillAttack implements ICombatAction {
   public const ACTION_NAME = "skill_attack";
 
   public function getName(): string {
-    return static::ACTION_NAME;
+    return self::ACTION_NAME;
   }
 
   public function getPriority(): int {

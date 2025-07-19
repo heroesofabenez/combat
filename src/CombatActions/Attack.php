@@ -14,7 +14,7 @@ final class Attack implements ICombatAction {
   public const ACTION_NAME = "attack";
 
   public function getName(): string {
-    return static::ACTION_NAME;
+    return self::ACTION_NAME;
   }
 
   public function getPriority(): int {
