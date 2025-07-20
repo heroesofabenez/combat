@@ -52,9 +52,6 @@ class CombatBase {
   /** @var Collection|ICombatAction[] */
   protected Collection $combatActions;
 
-  /**
-   * @param CombatLogger $log Log from the combat
-   */
   public function __construct(public readonly CombatLogger $log, public ISuccessCalculator $successCalculator = new RandomSuccessCalculator(), public ICombatActionSelector $actionSelector = new CombatActionSelector()) {
     $this->victoryCondition = [VictoryConditions::class, "moreDamage"];
     $this->healers = function(): Team {
