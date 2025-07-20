@@ -130,8 +130,8 @@ class Character {
    * @param Pet[] $pets Pets owned by the character
    * @param BaseCharacterSkill[] $skills Skills acquired by the character
    */
-  public function __construct(array $stats, array $equipment = [], array $pets = [], array $skills = [], IInitiativeFormulaParser $initiativeFormulaParser = null) {
-    $this->initiativeFormulaParser = $initiativeFormulaParser ?? new InitiativeFormulaParser();
+  public function __construct(array $stats, array $equipment = [], array $pets = [], array $skills = [], IInitiativeFormulaParser $initiativeFormulaParser = new InitiativeFormulaParser()) {
+    $this->initiativeFormulaParser = $initiativeFormulaParser;
     $this->equipment = EquipmentCollection::fromArray($equipment);
     $this->pets = PetsCollection::fromArray($pets);
     $this->effectProviders = CharacterEffectsProvidersCollection::fromArray(array_merge($equipment, $pets));
