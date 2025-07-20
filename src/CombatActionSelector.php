@@ -10,7 +10,7 @@ namespace HeroesofAbenez\Combat;
  */
 final class CombatActionSelector implements ICombatActionSelector {
   public function chooseAction(CombatBase $combat, Character $character): ?ICombatAction {
-    if($character->hitpoints < 1) {
+    if(!$character->canAct()) {
       return null;
     }
     /** @var ICombatAction[] $actions */
