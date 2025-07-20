@@ -187,11 +187,9 @@ class Character {
     }, ARRAY_FILTER_USE_KEY);
     $stats = $resolver->resolve($stats);
     foreach($stats as $key => $value) {
+      $this->$key = $value;
       if(in_array($key, $numberStats, true)) {
-        $this->$key = $value;
         $this->{$key . "Base"} = $value;
-      } else {
-        $this->$key = $value;
       }
     }
     $this->hitpoints = $this->maxHitpoints = $this->maxHitpointsBase = $this->constitution * static::HITPOINTS_PER_CONSTITUTION;
