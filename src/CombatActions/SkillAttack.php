@@ -67,7 +67,6 @@ final class SkillAttack implements ICombatAction {
       Skill::TARGET_COLUMN => $combat->getTeam($primaryTarget)->getItems(["positionColumn" => $primaryTarget->positionColumn]),
       default => throw new NotImplementedException("Target {$skill->skill->target} for attack skills is not implemented."),
     };
-    /** @var Character $target */
     foreach($targets as $target) {
       for($i = 1; $i <= $skill->skill->strikes; $i++) {
         if($target->hitpoints > 0) {
