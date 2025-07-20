@@ -510,19 +510,11 @@ class Character {
   }
 
   public function canAct(): bool {
-    if($this->hasStatus(static::STATUS_STUNNED)) {
-      return false;
-    } elseif($this->hitpoints < 1) {
-      return false;
-    }
-    return true;
+    return !$this->hasStatus(static::STATUS_STUNNED) && $this->hitpoints > 0;
   }
 
   public function canDefend(): bool {
-    if($this->hasStatus(static::STATUS_STUNNED)) {
-      return false;
-    }
-    return true;
+    return !$this->hasStatus(static::STATUS_STUNNED);
   }
 }
 ?>
