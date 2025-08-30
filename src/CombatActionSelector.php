@@ -8,22 +8,23 @@ namespace HeroesofAbenez\Combat;
  *
  * @author Jakub Konečný
  */
-final class CombatActionSelector implements ICombatActionSelector {
-  public function chooseAction(CombatBase $combat, Character $character): ?ICombatAction {
-    if(!$character->canAct()) {
-      return null;
+final class CombatActionSelector implements ICombatActionSelector
+{
+    public function chooseAction(CombatBase $combat, Character $character): ?ICombatAction
+    {
+        if (!$character->canAct()) {
+            return null;
+        }
+        /** @var ICombatAction[] $actions */
+        $actions = $combat->combatActions->toArray();
+        usort($actions, function (ICombatAction $a, ICombatAction $b): int {
+            return $a->getPriority() <=> $b->getPriority();
+        });
+        foreach ($actions as $action) {
+            if ($action->shouldUse($combat, $character)) {
+                return $action;
+            }
+        }
+        return null;
     }
-    /** @var ICombatAction[] $actions */
-    $actions = $combat->combatActions->toArray();
-    usort($actions, function(ICombatAction $a, ICombatAction $b): int {
-      return $a->getPriority() <=> $b->getPriority();
-    });
-    foreach($actions as $action) {
-      if($action->shouldUse($combat, $character)) {
-        return $action;
-      }
-    }
-    return null;
-  }
 }
-?>

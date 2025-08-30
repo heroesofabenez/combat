@@ -8,7 +8,7 @@ namespace HeroesofAbenez\Combat;
  *
  * @author Jakub Konečný
  */
-interface IInitiativeFormulaParser {
-  public function calculateInitiative(Character $character): int;
+interface IInitiativeFormulaParser
+{
+    public function calculateInitiative(Character $character): int;
 }
-?>

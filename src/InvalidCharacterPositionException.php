@@ -8,8 +8,8 @@ namespace HeroesofAbenez\Combat;
  *
  * @author Jakub Konečný
  */
-class InvalidCharacterPositionException extends \RuntimeException {
-  public const ROW_FULL = 1;
-  public const POSITION_OCCUPIED = 2;
+class InvalidCharacterPositionException extends \RuntimeException
+{
+    public const ROW_FULL = 1;
+    public const POSITION_OCCUPIED = 2;
 }
-?>

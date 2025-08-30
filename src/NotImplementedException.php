@@ -8,7 +8,6 @@ namespace HeroesofAbenez\Combat;
  *
  * @author Jakub Konečný
  */
-class NotImplementedException extends \LogicException {
-  
+class NotImplementedException extends \LogicException
+{
 }
-?>

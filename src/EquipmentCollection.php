@@ -7,7 +7,7 @@ namespace HeroesofAbenez\Combat;
  * @author Jakub Konečný
  * @internal
  */
-final class EquipmentCollection extends \Nexendrie\Utils\Collection {
-  protected string $class = Equipment::class;
+final class EquipmentCollection extends \Nexendrie\Utils\Collection
+{
+    protected string $class = Equipment::class;
 }
-?>

@@ -7,7 +7,7 @@ namespace HeroesofAbenez\Combat;
  * @author Jakub Konečný
  * @internal
  */
-class CharacterEffectsProvidersCollection extends \Nexendrie\Utils\Collection {
-  protected string $class = ICharacterEffectsProvider::class;
+class CharacterEffectsProvidersCollection extends \Nexendrie\Utils\Collection
+{
+    protected string $class = ICharacterEffectsProvider::class;
 }
-?>

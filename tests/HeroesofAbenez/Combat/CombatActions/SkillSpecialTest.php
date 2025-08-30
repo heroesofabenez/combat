@@ -18,74 +18,77 @@ require __DIR__ . "/../../../bootstrap.php";
  * @author Jakub Konečný
  * @testCase
  */
-final class SkillSpecialTest extends \Tester\TestCase {
-  protected CombatLogger $logger;
+final class SkillSpecialTest extends \Tester\TestCase
+{
+    use \Testbench\TCompiledContainer;
 
-  use \Testbench\TCompiledContainer;
+    protected CombatLogger $logger;
 
-  public function setUp() {
-    $this->logger = $this->getService(CombatLogger::class); // @phpstan-ignore assign.propertyType
-  }
-
-  protected function generateCharacter(int $id): Character {
-    $stats = [
-      "id" => $id, "name" => "Player $id", "level" => 1, "initiativeFormula" => "1d2+DEX/4", "strength" => 10,
-      "dexterity" => 10, "constitution" => 10, "intelligence" => 10, "charisma" => 10
-    ];
-    $skillData = [
-      "id" => 1, "name" => "Skill Special", "levels" => 5, "type" => Skill::TYPE_BUFF, "duration" => 3,
-      "target" => Skill::TARGET_SELF, "stat" => Character::STAT_DAMAGE, "value" => 10, "valueGrowth" => 2,
-    ];
-    $skill = new Skill($skillData);
-    $characterSkill = new CharacterSkill($skill, 2);
-    return new Character($stats, [], [], [$characterSkill]);
-  }
-
-  /*public function testShouldUse(): void {
-    $character1 = $this->generateCharacter(1);
-    $character2 = $this->generateCharacter(2);
-    $combat = new CombatBase(clone $this->logger, new StaticSuccessCalculator());
-    $combat->setDuelParticipants($character1, $character2);
-    $action = new SkillSpecial();
-    Assert::false($action->shouldUse($combat, $character1));
-    for($i = 1; $i <= $character1->skills[0]->skill->cooldown; $i++) {
-      $character1->skills[0]->decreaseCooldown();
+    public function setUp()
+    {
+        $this->logger = $this->getService(CombatLogger::class); // @phpstan-ignore assign.propertyType
     }
-    Assert::true($action->shouldUse($combat, $character1));
-  }*/
 
-  public function testDo(): void {
-    $character1 = $this->generateCharacter(1);
-    $character2 = $this->generateCharacter(2);
-    $combat = new CombatBase(clone $this->logger, new StaticSuccessCalculator());
-    $combat->setDuelParticipants($character1, $character2);
-    $combat->onCombatStart($combat);
-    $combat->onRoundStart($combat);
-    for($i = 1; $i <= $character1->skills[0]->skill->cooldown; $i++) {
-      $character1->skills[0]->decreaseCooldown();
+    protected function generateCharacter(int $id): Character
+    {
+        $stats = [
+            "id" => $id, "name" => "Player $id", "level" => 1, "initiativeFormula" => "1d2+DEX/4", "strength" => 10,
+            "dexterity" => 10, "constitution" => 10, "intelligence" => 10, "charisma" => 10
+        ];
+        $skillData = [
+            "id" => 1, "name" => "Skill Special", "levels" => 5, "type" => Skill::TYPE_BUFF, "duration" => 3,
+            "target" => Skill::TARGET_SELF, "stat" => Character::STAT_DAMAGE, "value" => 10, "valueGrowth" => 2,
+        ];
+        $skill = new Skill($skillData);
+        $characterSkill = new CharacterSkill($skill, 2);
+        return new Character($stats, [], [], [$characterSkill]);
     }
-    $action = new SkillSpecial();
-    $action->do($combat, $character1);
-    Assert::count(1, $combat->log);
-    Assert::count(1, $combat->log->getIterator()[1]);
-    /** @var CombatLogEntry $record */
-    $record = $combat->log->getIterator()[1][0];
-    Assert::type(CombatLogEntry::class, $record);
-    Assert::same(SkillSpecial::ACTION_NAME, $record->action);
-    Assert::same("Skill Special", $record->name);
-    Assert::true($record->result);
-    Assert::same(0, $record->amount);
-    Assert::same($character1->name, $record->character1->name);
-    Assert::same($character1->name, $record->character2->name);
-    Assert::count(1, $character1->effects);
-    $effect = $character1->effects[0];
-    Assert::same(Skill::TYPE_BUFF, $effect->type);
-    Assert::same(Character::STAT_DAMAGE, $effect->stat);
-    Assert::same(12, $effect->value);
-    Assert::same(3, $effect->duration);
-  }
+
+    /*public function testShouldUse(): void {
+      $character1 = $this->generateCharacter(1);
+      $character2 = $this->generateCharacter(2);
+      $combat = new CombatBase(clone $this->logger, new StaticSuccessCalculator());
+      $combat->setDuelParticipants($character1, $character2);
+      $action = new SkillSpecial();
+      Assert::false($action->shouldUse($combat, $character1));
+      for($i = 1; $i <= $character1->skills[0]->skill->cooldown; $i++) {
+        $character1->skills[0]->decreaseCooldown();
+      }
+      Assert::true($action->shouldUse($combat, $character1));
+    }*/
+
+    public function testDo(): void
+    {
+        $character1 = $this->generateCharacter(1);
+        $character2 = $this->generateCharacter(2);
+        $combat = new CombatBase(clone $this->logger, new StaticSuccessCalculator());
+        $combat->setDuelParticipants($character1, $character2);
+        $combat->onCombatStart($combat);
+        $combat->onRoundStart($combat);
+        for ($i = 1; $i <= $character1->skills[0]->skill->cooldown; $i++) {
+            $character1->skills[0]->decreaseCooldown();
+        }
+        $action = new SkillSpecial();
+        $action->do($combat, $character1);
+        Assert::count(1, $combat->log);
+        Assert::count(1, $combat->log->getIterator()[1]);
+        /** @var CombatLogEntry $record */
+        $record = $combat->log->getIterator()[1][0];
+        Assert::type(CombatLogEntry::class, $record);
+        Assert::same(SkillSpecial::ACTION_NAME, $record->action);
+        Assert::same("Skill Special", $record->name);
+        Assert::true($record->result);
+        Assert::same(0, $record->amount);
+        Assert::same($character1->name, $record->character1->name);
+        Assert::same($character1->name, $record->character2->name);
+        Assert::count(1, $character1->effects);
+        $effect = $character1->effects[0];
+        Assert::same(Skill::TYPE_BUFF, $effect->type);
+        Assert::same(Character::STAT_DAMAGE, $effect->stat);
+        Assert::same(12, $effect->value);
+        Assert::same(3, $effect->duration);
+    }
 }
 
 $test = new SkillSpecialTest();
 $test->run();
-?>

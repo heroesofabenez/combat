@@ -8,7 +8,6 @@ namespace HeroesofAbenez\Combat;
  *
  * @author Jakub Konečný
  */
-class ImmutableException extends InvalidStateException {
-  
+class ImmutableException extends InvalidStateException
+{
 }
-?>

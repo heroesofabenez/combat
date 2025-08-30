@@ -8,8 +8,8 @@ namespace HeroesofAbenez\Combat;
  *
  * @author Jakub Konečný
  */
-interface ICharacterEffectsProvider {
-  /** @return CharacterEffect[] */
-  public function getCombatEffects(): array;
+interface ICharacterEffectsProvider
+{
+    /** @return CharacterEffect[] */
+    public function getCombatEffects(): array;
 }
-?>

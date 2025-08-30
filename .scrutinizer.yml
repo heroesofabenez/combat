@@ -170,7 +170,7 @@ build:
                 override:
                     - php-scrutinizer-run
                     -
-                        command: ./vendor/bin/phpcs . --extensions=php,phpt --report=checkstyle --report-file=codesniffer.cs --standard=vendor/nexendrie/code-quality/ruleset.xml
+                        command: ./vendor/bin/phpcs . --extensions=php,phpt --report=checkstyle --report-file=codesniffer.cs --standard=vendor/nexendrie/code-quality/phpcs.xml
                         analysis:
                             file: codesniffer.cs
                             format: 'general-checkstyle'

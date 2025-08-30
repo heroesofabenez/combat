@@ -8,13 +8,15 @@ namespace HeroesofAbenez\Combat;
  *
  * @author Jakub Konečný
  */
-final class StaticSuccessCalculator implements ISuccessCalculator {
-  public function hasHit(Character $character1, Character $character2, ?CharacterAttackSkill $skill = null): bool {
-    return true;
-  }
-  
-  public function hasHealed(Character $healer): bool {
-    return true;
-  }
+final class StaticSuccessCalculator implements ISuccessCalculator
+{
+    public function hasHit(Character $character1, Character $character2, ?CharacterAttackSkill $skill = null): bool
+    {
+        return true;
+    }
+
+    public function hasHealed(Character $healer): bool
+    {
+        return true;
+    }
 }
-?>
