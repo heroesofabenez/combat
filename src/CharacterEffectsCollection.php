@@ -41,7 +41,7 @@ final class CharacterEffectsCollection extends \Nexendrie\Utils\Collection
         try {
             /** @var CharacterEffect $item */
             $item = Arrays::get($this->items, $index);
-        } catch (\Nette\InvalidArgumentException $e) {
+        } catch (\Nette\InvalidArgumentException) {
             throw new \OutOfRangeException("Offset invalid or out of range.");
         }
         parent::offsetUnset($index);
