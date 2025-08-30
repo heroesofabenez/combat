@@ -40,10 +40,7 @@ final class TextCombatLogRender implements ICombatLogRender
         return $this->latte->renderToString($this->template, $params);
     }
 
-    /**
-     * @param CombatLogEntry|string $item
-     */
-    public function renderItem($item): string
+    public function renderItem(CombatLogEntry|string $item): string
     {
         if (!$item instanceof CombatLogEntry) {
             return $item;
