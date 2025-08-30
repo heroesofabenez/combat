@@ -13,7 +13,7 @@ final class CharacterEffectsCollection extends \Nexendrie\Utils\Collection
 {
     protected string $class = CharacterEffect::class;
 
-    public function __construct(private Character $character)
+    public function __construct(private readonly Character $character)
     {
         parent::__construct();
     }

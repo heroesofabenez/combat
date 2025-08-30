@@ -18,7 +18,7 @@ final class TextCombatLogRender implements ICombatLogRender
     private \Latte\Engine $latte;
     private string $template = __DIR__ . "/CombatLog.latte";
 
-    public function __construct(LatteFactory $latteFactory, private Translator $translator)
+    public function __construct(LatteFactory $latteFactory, private readonly Translator $translator)
     {
         $this->latte = $latteFactory->create();
     }
