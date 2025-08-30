@@ -15,7 +15,7 @@ final class CombatLoggerTest extends \Tester\TestCase
 {
     use \Testbench\TCompiledContainer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->refreshContainer();
     }

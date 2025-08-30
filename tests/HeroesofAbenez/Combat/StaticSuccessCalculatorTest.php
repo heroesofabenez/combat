@@ -15,7 +15,7 @@ final class StaticSuccessCalculatorTest extends \Tester\TestCase
 {
     protected StaticSuccessCalculator $calculator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->calculator = new StaticSuccessCalculator();
     }

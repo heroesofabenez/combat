@@ -24,7 +24,7 @@ final class SkillAttackTest extends \Tester\TestCase
 
     protected CombatLogger $logger;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->logger = $this->getService(CombatLogger::class); // @phpstan-ignore assign.propertyType
     }

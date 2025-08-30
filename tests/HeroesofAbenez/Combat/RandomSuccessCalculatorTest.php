@@ -15,7 +15,7 @@ final class RandomSuccessCalculatorTest extends \Tester\TestCase
 {
     protected RandomSuccessCalculator $calculator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->calculator = new RandomSuccessCalculator();
     }
