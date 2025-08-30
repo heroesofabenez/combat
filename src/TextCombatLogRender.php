@@ -50,24 +50,40 @@ final class TextCombatLogRender implements ICombatLogRender
         switch ($item->action) {
             case CombatActions\Attack::ACTION_NAME:
                 $message = ($item->result) ? "combat.log.attackHits" : "combat.log.attackFails";
-                $text = $this->translator->translate($message, $item->amount, ["character1" => $character1, "character2" => $character2]);
+                $text = $this->translator->translate(
+                    $message,
+                    $item->amount,
+                    ["character1" => $character1, "character2" => $character2,]
+                );
                 if ($item->result && $item->character2->hitpoints < 1) {
                     $text .= $this->translator->translate("combat.log.characterFalls");
                 }
                 return $text;
             case CombatActions\SkillAttack::ACTION_NAME:
                 $message = ($item->result) ? "combat.log.specialAttackHits" : "combat.log.specialAttackFails";
-                $text = $this->translator->translate($message, $item->amount, ["character1" => $character1, "character2" => $character2, "name" => $item->name]);
+                $text = $this->translator->translate(
+                    $message,
+                    $item->amount,
+                    ["character1" => $character1, "character2" => $character2, "name" => $item->name,]
+                );
                 if ($item->result && $item->character2->hitpoints < 1) {
                     $text .= $this->translator->translate("combat.log.characterFalls");
                 }
                 return $text;
             case CombatActions\SkillSpecial::ACTION_NAME:
                 $message = ($item->result) ? "combat.log.specialSkillSuccess" : "combat.log.specialSKillFailure";
-                return $this->translator->translate($message, 0, ["character1" => $character1, "character2" => $character2, "name" => $item->name]);
+                return $this->translator->translate(
+                    $message,
+                    0,
+                    ["character1" => $character1, "character2" => $character2, "name" => $item->name,]
+                );
             case CombatActions\Heal::ACTION_NAME:
                 $message = ($item->result) ? "combat.log.healingSuccess" : "combat.log.healingFailure";
-                return $this->translator->translate($message, $item->amount, ["character1" => $character1, "character2" => $character2]);
+                return $this->translator->translate(
+                    $message,
+                    $item->amount,
+                    ["character1" => $character1, "character2" => $character2,]
+                );
             case CombatLogEntry::ACTION_POISON:
                 return $this->translator->translate("combat.log.poison", $item->amount, ["character1" => $character1]);
         }

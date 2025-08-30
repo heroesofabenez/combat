@@ -67,10 +67,19 @@ class Character
     public const STAT_DODGE = "dodge";
     public const STAT_INITIATIVE = "initiative";
     public const BASE_STATS = [
-        self::STAT_STRENGTH, self::STAT_DEXTERITY, self::STAT_CONSTITUTION, self::STAT_INTELLIGENCE, self::STAT_CHARISMA,
+        self::STAT_STRENGTH,
+        self::STAT_DEXTERITY,
+        self::STAT_CONSTITUTION,
+        self::STAT_INTELLIGENCE,
+        self::STAT_CHARISMA,
     ];
     public const SECONDARY_STATS = [
-        self::STAT_MAX_HITPOINTS, self::STAT_DAMAGE, self::STAT_DEFENSE, self::STAT_HIT, self::STAT_DODGE, self::STAT_INITIATIVE,
+        self::STAT_MAX_HITPOINTS,
+        self::STAT_DAMAGE,
+        self::STAT_DEFENSE,
+        self::STAT_HIT,
+        self::STAT_DODGE,
+        self::STAT_INITIATIVE,
     ];
     public const STATUS_STUNNED = "stunned";
     public const STATUS_POISONED = "poisoned";
@@ -131,8 +140,13 @@ class Character
      * @param Pet[] $pets Pets owned by the character
      * @param BaseCharacterSkill[] $skills Skills acquired by the character
      */
-    public function __construct(array $stats, array $equipment = [], array $pets = [], array $skills = [], IInitiativeFormulaParser $initiativeFormulaParser = new InitiativeFormulaParser())
-    {
+    public function __construct(
+        array $stats,
+        array $equipment = [],
+        array $pets = [],
+        array $skills = [],
+        IInitiativeFormulaParser $initiativeFormulaParser = new InitiativeFormulaParser()
+    ) {
         $this->initiativeFormulaParser = $initiativeFormulaParser;
         $this->equipment = EquipmentCollection::fromArray($equipment);
         $this->pets = PetsCollection::fromArray($pets);

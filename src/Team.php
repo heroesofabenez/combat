@@ -79,9 +79,15 @@ final class Team extends Collection
         if (!$this->hasItems(["id" => $id])) {
             throw new \OutOfBoundsException("Character $id is not in the team");
         } elseif (count($this->getItems(["positionRow" => $row])) >= $this->maxRowSize) {
-            throw new InvalidCharacterPositionException("Row $row is full.", InvalidCharacterPositionException::ROW_FULL);
+            throw new InvalidCharacterPositionException(
+                "Row $row is full.",
+                InvalidCharacterPositionException::ROW_FULL
+            );
         } elseif ($this->hasItems(["positionRow" => $row, "positionColumn" => $column])) {
-            throw new InvalidCharacterPositionException("Row $row column $column is occupied.", InvalidCharacterPositionException::POSITION_OCCUPIED);
+            throw new InvalidCharacterPositionException(
+                "Row $row column $column is occupied.",
+                InvalidCharacterPositionException::POSITION_OCCUPIED
+            );
         }
         $character = $this->getItems(["id" => $id])[0];
         $character->positionRow = $row;

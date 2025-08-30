@@ -53,8 +53,11 @@ class CombatBase
     /** @var Collection|ICombatAction[] */
     protected Collection $combatActions;
 
-    public function __construct(public readonly CombatLogger $log, public ISuccessCalculator $successCalculator = new RandomSuccessCalculator(), public ICombatActionSelector $actionSelector = new CombatActionSelector())
-    {
+    public function __construct(
+        public readonly CombatLogger $log,
+        public ISuccessCalculator $successCalculator = new RandomSuccessCalculator(),
+        public ICombatActionSelector $actionSelector = new CombatActionSelector()
+    ) {
         $this->victoryCondition = [VictoryConditions::class, "moreDamage"];
         $this->healers = function (): Team {
             return new Team("healers");
@@ -350,7 +353,10 @@ class CombatBase
             if ($rowToAttack === null) {
                 return null;
             }
-            $enemies = Team::fromArray($enemyTeam->getItems(["positionRow" => $rowToAttack, "hitpoints>" => 0, "hidden" => false,]), $enemyTeam->name);
+            $enemies = Team::fromArray(
+                $enemyTeam->getItems(["positionRow" => $rowToAttack, "hitpoints>" => 0, "hidden" => false,]),
+                $enemyTeam->name
+            );
         } else {
             $enemies = $enemyTeam;
         }
