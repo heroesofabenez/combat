@@ -34,10 +34,10 @@ final class CharacterAttackSkill extends BaseCharacterSkill
     protected function getDamage(): int
     {
         $damage = 0;
-        if (substr($this->skill->baseDamage, -1) === "%") {
+        if (str_ends_with($this->skill->baseDamage, "%")) {
             $damage += (int) $this->skill->baseDamage;
         }
-        if (substr($this->skill->damageGrowth, -1) === "%") {
+        if (str_ends_with($this->skill->damageGrowth, "%")) {
             $damage += (int) $this->skill->damageGrowth * ($this->level - 1);
         }
         return $damage;
@@ -45,7 +45,7 @@ final class CharacterAttackSkill extends BaseCharacterSkill
 
     protected function getHitRate(): int
     {
-        if (is_string($this->skill->hitRate) && substr($this->skill->hitRate, -1) === "%") {
+        if (is_string($this->skill->hitRate) && str_ends_with($this->skill->hitRate, "%")) {
             return (int) $this->skill->hitRate;
         }
         return 100;
