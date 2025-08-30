@@ -37,7 +37,7 @@ final class SkillAttack implements ICombatAction
         return ($character->usableSkills[0] instanceof CharacterAttackSkill);
     }
 
-    protected function doSingleAttack(
+    private function doSingleAttack(
         Character $attacker,
         Character $defender,
         CharacterAttackSkill $skill,

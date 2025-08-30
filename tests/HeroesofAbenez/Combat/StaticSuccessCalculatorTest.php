@@ -13,14 +13,14 @@ use Tester\Assert;
  */
 final class StaticSuccessCalculatorTest extends \Tester\TestCase
 {
-    protected StaticSuccessCalculator $calculator;
+    private StaticSuccessCalculator $calculator;
 
     protected function setUp(): void
     {
         $this->calculator = new StaticSuccessCalculator();
     }
 
-    protected function generateCharacter(int $id): Character
+    private function generateCharacter(int $id): Character
     {
         $stats = [
             "id" => $id, "name" => "Player $id", "level" => 1, "initiativeFormula" => "1d2+DEX/4", "strength" => 10,

@@ -37,7 +37,7 @@ final class SkillSpecial implements ICombatAction
         return ($character->usableSkills[0] instanceof CharacterSpecialSkill);
     }
 
-    protected function doSingleTarget(
+    private function doSingleTarget(
         Character $character1,
         Character $target,
         CharacterSpecialSkill $skill,

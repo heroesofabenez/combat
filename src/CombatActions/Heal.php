@@ -46,7 +46,7 @@ final class Heal implements ICombatAction
         $combat->log->log($result);
     }
 
-    protected function findHealers(CombatBase $combat): Team
+    private function findHealers(CombatBase $combat): Team
     {
         $healers = call_user_func($combat->healers, $combat->team1, $combat->team2);
         if ($healers instanceof Team) {
@@ -55,7 +55,7 @@ final class Heal implements ICombatAction
         return new Team("healers");
     }
 
-    protected function selectHealingTarget(Character $healer, CombatBase $combat): ?Character
+    private function selectHealingTarget(Character $healer, CombatBase $combat): ?Character
     {
         return $combat->getTeam($healer)->getLowestHpCharacter();
     }

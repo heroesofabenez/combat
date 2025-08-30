@@ -20,14 +20,14 @@ final class AttackTest extends \Tester\TestCase
 {
     use \Testbench\TCompiledContainer;
 
-    protected CombatLogger $logger;
+    private CombatLogger $logger;
 
     public function setUp(): void
     {
         $this->logger = $this->getService(CombatLogger::class); // @phpstan-ignore assign.propertyType
     }
 
-    protected function generateCharacter(int $id): Character
+    private function generateCharacter(int $id): Character
     {
         $stats = [
             "id" => $id, "name" => "Player $id", "level" => 1, "initiativeFormula" => "1d2+DEX/4", "strength" => 10,

@@ -28,7 +28,7 @@ final class Pet implements ICharacterEffectsProvider
         $this->bonusValue = $data["bonusValue"];
     }
 
-    protected function configureOptions(OptionsResolver $resolver): void
+    private function configureOptions(OptionsResolver $resolver): void
     {
         $allStats = ["id", "deployed", "bonusStat", "bonusValue",];
         $resolver->setRequired($allStats);

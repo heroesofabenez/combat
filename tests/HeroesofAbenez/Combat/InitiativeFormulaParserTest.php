@@ -13,7 +13,7 @@ use Tester\Assert;
  */
 final class InitiativeFormulaParserTest extends \Tester\TestCase
 {
-    protected function generateCharacter(int $id): Character
+    private function generateCharacter(int $id): Character
     {
         $stats = [
             "id" => $id, "name" => "Player $id", "level" => 1, "initiativeFormula" => "1d4+DEX/4", "strength" => 10,

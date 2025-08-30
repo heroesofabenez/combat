@@ -35,7 +35,7 @@ final class CombatLogEntry
         $this->name = $action["name"];
     }
 
-    protected function configureOptions(OptionsResolver $resolver): void
+    private function configureOptions(OptionsResolver $resolver): void
     {
         $requiredStats = ["action", "result", "character1", "character2",];
         $resolver->setDefined(["amount", "name",]);
