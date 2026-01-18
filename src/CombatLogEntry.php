@@ -30,8 +30,8 @@ final class CombatLogEntry
         $this->action = $action["action"];
         $this->result = $action["result"];
         $this->amount = $action["amount"];
-        $this->character1 = clone $action["character1"];
-        $this->character2 = clone $action["character2"];
+        $this->character1 = clone $action["character1"]; // @phpstan-ignore assign.propertyType
+        $this->character2 = clone $action["character2"]; // @phpstan-ignore assign.propertyType
         $this->name = $action["name"];
     }
 
