@@ -347,7 +347,7 @@ class CombatBase
     public function selectAttackTarget(Character $attacker): ?Character
     {
         $enemyTeam = $this->getEnemyTeam($attacker);
-        $rangedWeapon = ($attacker->equipment->hasItems(["%class%" => Weapon::class, "worn" => true, "ranged" => true,]));
+        $rangedWeapon = $attacker->equipment->hasItems(["%class%" => Weapon::class, "worn" => true, "ranged" => true,]);
         if (!$rangedWeapon) {
             $rowToAttack = $enemyTeam->rowToAttack;
             if ($rowToAttack === null) {
