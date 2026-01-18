@@ -24,7 +24,7 @@
         "nette/utils": "^3.2.2",
         "nexendrie/translation": "^2.3.1",
         "nexendrie/utils": "^1.9",
-        "symfony/options-resolver": "^6.4"
+        "symfony/options-resolver": "^6.4 || ^7.4"
     },
     "require-dev": {
         "nexendrie/code-quality": "dev-master",
