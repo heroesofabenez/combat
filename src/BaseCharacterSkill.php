@@ -42,7 +42,7 @@ abstract class BaseCharacterSkill
 
     protected function setLevel(int $level): void
     {
-        $this->level = Numbers::range($level, 0, $this->skill->levels);
+        $this->level = Numbers::clamp($level, 0, $this->skill->levels);
     }
 
     protected function isUsable(): bool

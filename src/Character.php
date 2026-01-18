@@ -417,7 +417,7 @@ class Character
 
     protected function setPositionRow(int $positionRow): void
     {
-        $this->positionRow = Numbers::range($positionRow, 1, PHP_INT_MAX);
+        $this->positionRow = Numbers::clamp($positionRow, 1, PHP_INT_MAX);
     }
 
     protected function getPositionColumn(): int
@@ -427,7 +427,7 @@ class Character
 
     protected function setPositionColumn(int $positionColumn): void
     {
-        $this->positionColumn = Numbers::range($positionColumn, 1, PHP_INT_MAX);
+        $this->positionColumn = Numbers::clamp($positionColumn, 1, PHP_INT_MAX);
     }
 
     /**
@@ -484,7 +484,7 @@ class Character
      */
     public function harm(int $amount): void
     {
-        $this->hitpoints -= Numbers::range($amount, 0, $this->hitpoints);
+        $this->hitpoints -= Numbers::clamp($amount, 0, $this->hitpoints);
     }
 
     /**
@@ -492,7 +492,7 @@ class Character
      */
     public function heal(int $amount): void
     {
-        $this->hitpoints += Numbers::range($amount, 0, $this->maxHitpoints - $this->hitpoints);
+        $this->hitpoints += Numbers::clamp($amount, 0, $this->maxHitpoints - $this->hitpoints);
     }
 
     /**

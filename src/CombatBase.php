@@ -105,7 +105,7 @@ class CombatBase
 
     public function setRoundLimit(int $roundLimit): void
     {
-        $this->roundLimit = Numbers::range($roundLimit, 1, PHP_INT_MAX);
+        $this->roundLimit = Numbers::clamp($roundLimit, 1, PHP_INT_MAX);
     }
 
     /**
@@ -193,7 +193,7 @@ class CombatBase
         static $result = 0;
         if ($result === 0) {
             $result = call_user_func($this->victoryCondition, $this);
-            $result = Numbers::range($result, 0, 2);
+            $result = Numbers::clamp($result, 0, 2);
         }
         return $result;
     }

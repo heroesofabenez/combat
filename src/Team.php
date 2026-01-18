@@ -36,7 +36,7 @@ final class Team extends Collection
 
     protected function setMaxRowSize(int $maxRowSize): void
     {
-        $this->maxRowSize = Numbers::range($maxRowSize, 1, PHP_INT_MAX);
+        $this->maxRowSize = Numbers::clamp($maxRowSize, 1, PHP_INT_MAX);
     }
 
     /**

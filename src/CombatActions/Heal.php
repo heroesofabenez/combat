@@ -35,7 +35,7 @@ final class Heal implements ICombatAction
         $patient = $this->selectHealingTarget($character, $combat);
         $result["result"] = $combat->successCalculator->hasHealed($character);
         $amount = ($result["result"]) ? (int) ($character->intelligence / 2) : 0;
-        $result["amount"] = Numbers::range($amount, 0, $patient->maxHitpoints - $patient->hitpoints);
+        $result["amount"] = Numbers::clamp($amount, 0, $patient->maxHitpoints - $patient->hitpoints);
         if ($result["amount"] > 0) {
             $patient->heal($result["amount"]);
         }

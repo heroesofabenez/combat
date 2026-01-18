@@ -104,7 +104,7 @@ class Equipment implements ICharacterEffectsProvider
 
     protected function setDurability(int $durability): void
     {
-        $this->durability = Numbers::range($durability, 0, $this->maxDurability);
+        $this->durability = Numbers::clamp($durability, 0, $this->maxDurability);
     }
 
     protected function getDeployParams(): array
