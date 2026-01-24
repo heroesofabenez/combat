@@ -14,6 +14,7 @@ final class CombatLogger implements \Countable, \IteratorAggregate, \Stringable
 {
     private Team $team1;
     private Team $team2;
+    /** @var array<int, CombatLogEntry[]|string[]> */
     private array $actions = [];
     public int $round = 0;
     public string $title = "";
