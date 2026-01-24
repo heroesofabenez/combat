@@ -8,9 +8,9 @@ namespace HeroesofAbenez\Combat;
  *
  * @author Jakub Konečný
  */
-final class ConstantInitiativeFormulaParser implements IInitiativeFormulaParser
+final readonly class ConstantInitiativeFormulaParser implements IInitiativeFormulaParser
 {
-    public function __construct(private readonly int $initiative)
+    public function __construct(private int $initiative)
     {
     }
 

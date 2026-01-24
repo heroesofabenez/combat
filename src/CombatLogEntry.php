@@ -10,17 +10,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @author Jakub Konečný
  */
-final class CombatLogEntry
+final readonly class CombatLogEntry
 {
     /** @internal */
     public const ACTION_POISON = "poison";
 
-    public readonly Character $character1;
-    public readonly Character $character2;
-    public readonly string $action;
-    public readonly string $name;
-    public readonly bool $result;
-    public readonly int $amount;
+    public Character $character1;
+    public Character $character2;
+    public string $action;
+    public string $name;
+    public bool $result;
+    public int $amount;
 
     public function __construct(array $action)
     {
