@@ -18,8 +18,8 @@ class CharacterEffect
 {
     use \Nette\SmartObject;
 
-    public const DURATION_COMBAT = "combat";
-    public const DURATION_FOREVER = "forever";
+    public const string DURATION_COMBAT = "combat";
+    public const string DURATION_FOREVER = "forever";
 
     public readonly string $id;
     public readonly string $type;

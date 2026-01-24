@@ -13,7 +13,7 @@ use Nexendrie\Utils\Numbers;
 
 final class SkillAttack implements ICombatAction
 {
-    public const ACTION_NAME = "skill_attack";
+    public const string ACTION_NAME = "skill_attack";
 
     public function getName(): string
     {

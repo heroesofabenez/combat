@@ -12,8 +12,8 @@ use Nexendrie\Utils\Numbers;
  */
 final class RandomSuccessCalculator implements ISuccessCalculator
 {
-    public const MAX_HIT_CHANCE = 100;
-    public const MIN_HIT_CHANCE = 15;
+    public const int MAX_HIT_CHANCE = 100;
+    public const int MIN_HIT_CHANCE = 15;
 
     public function hasHit(Character $character1, Character $character2, ?CharacterAttackSkill $skill = null): bool
     {

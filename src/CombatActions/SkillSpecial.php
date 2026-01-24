@@ -13,7 +13,7 @@ use HeroesofAbenez\Combat\CharacterEffect;
 
 final class SkillSpecial implements ICombatAction
 {
-    public const ACTION_NAME = "skill_special";
+    public const string ACTION_NAME = "skill_special";
 
     public function getName(): string
     {

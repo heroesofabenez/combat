@@ -13,17 +13,17 @@ use Nexendrie\Utils\Constants;
  */
 final class SkillSpecial extends BaseSkill
 {
-    public const TYPE_BUFF = "buff";
-    public const TYPE_DEBUFF = "debuff";
-    public const TYPE_STUN = "stun";
-    public const TYPE_POISON = "poison";
-    public const TYPE_HIDE = "hide";
-    public const TARGET_SELF = "self";
-    public const TARGET_ENEMY = "enemy";
-    public const TARGET_PARTY = "party";
-    public const TARGET_ENEMY_PARTY = "enemy_party";
+    public const string TYPE_BUFF = "buff";
+    public const string TYPE_DEBUFF = "debuff";
+    public const string TYPE_STUN = "stun";
+    public const string TYPE_POISON = "poison";
+    public const string TYPE_HIDE = "hide";
+    public const string TARGET_SELF = "self";
+    public const string TARGET_ENEMY = "enemy";
+    public const string TARGET_PARTY = "party";
+    public const string TARGET_ENEMY_PARTY = "enemy_party";
     /** @var string[] */
-    public const NO_STAT_TYPES = [self::TYPE_STUN, self::TYPE_POISON, self::TYPE_HIDE,];
+    public const array NO_STAT_TYPES = [self::TYPE_STUN, self::TYPE_POISON, self::TYPE_HIDE,];
 
     public readonly string $type;
     public readonly ?string $stat;

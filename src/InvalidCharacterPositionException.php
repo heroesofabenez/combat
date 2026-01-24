@@ -10,6 +10,6 @@ namespace HeroesofAbenez\Combat;
  */
 class InvalidCharacterPositionException extends \RuntimeException
 {
-    public const ROW_FULL = 1;
-    public const POSITION_OCCUPIED = 2;
+    public const int ROW_FULL = 1;
+    public const int POSITION_OCCUPIED = 2;
 }

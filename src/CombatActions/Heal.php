@@ -11,7 +11,7 @@ use HeroesofAbenez\Combat\Team;
 
 final class Heal implements ICombatAction
 {
-    public const ACTION_NAME = "healing";
+    public const string ACTION_NAME = "healing";
 
     public function getName(): string
     {

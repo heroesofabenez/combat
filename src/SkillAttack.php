@@ -12,9 +12,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class SkillAttack extends BaseSkill
 {
-    public const TARGET_SINGLE = "single";
-    public const TARGET_ROW = "row";
-    public const TARGET_COLUMN = "column";
+    public const string TARGET_SINGLE = "single";
+    public const string TARGET_ROW = "row";
+    public const string TARGET_COLUMN = "column";
 
     public readonly string $baseDamage;
     public readonly string $damageGrowth;

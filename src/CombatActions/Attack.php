@@ -10,7 +10,7 @@ use Nexendrie\Utils\Numbers;
 
 final class Attack implements ICombatAction
 {
-    public const ACTION_NAME = "attack";
+    public const string ACTION_NAME = "attack";
 
     public function getName(): string
     {

@@ -54,26 +54,26 @@ class Character
 {
     use \Nette\SmartObject;
 
-    public const HITPOINTS_PER_CONSTITUTION = 5;
-    public const STAT_STRENGTH = "strength";
-    public const STAT_DEXTERITY = "dexterity";
-    public const STAT_CONSTITUTION = "constitution";
-    public const STAT_INTELLIGENCE = "intelligence";
-    public const STAT_CHARISMA = "charisma";
-    public const STAT_MAX_HITPOINTS = "maxHitpoints";
-    public const STAT_DAMAGE = "damage";
-    public const STAT_DEFENSE = "defense";
-    public const STAT_HIT = "hit";
-    public const STAT_DODGE = "dodge";
-    public const STAT_INITIATIVE = "initiative";
-    public const BASE_STATS = [
+    public const int HITPOINTS_PER_CONSTITUTION = 5;
+    public const string STAT_STRENGTH = "strength";
+    public const string STAT_DEXTERITY = "dexterity";
+    public const string STAT_CONSTITUTION = "constitution";
+    public const string STAT_INTELLIGENCE = "intelligence";
+    public const string STAT_CHARISMA = "charisma";
+    public const string STAT_MAX_HITPOINTS = "maxHitpoints";
+    public const string STAT_DAMAGE = "damage";
+    public const string STAT_DEFENSE = "defense";
+    public const string STAT_HIT = "hit";
+    public const string STAT_DODGE = "dodge";
+    public const string STAT_INITIATIVE = "initiative";
+    public const array BASE_STATS = [
         self::STAT_STRENGTH,
         self::STAT_DEXTERITY,
         self::STAT_CONSTITUTION,
         self::STAT_INTELLIGENCE,
         self::STAT_CHARISMA,
     ];
-    public const SECONDARY_STATS = [
+    public const array SECONDARY_STATS = [
         self::STAT_MAX_HITPOINTS,
         self::STAT_DAMAGE,
         self::STAT_DEFENSE,
@@ -81,9 +81,9 @@ class Character
         self::STAT_DODGE,
         self::STAT_INITIATIVE,
     ];
-    public const STATUS_STUNNED = "stunned";
-    public const STATUS_POISONED = "poisoned";
-    public const STATUS_HIDDEN = "hidden";
+    public const string STATUS_STUNNED = "stunned";
+    public const string STATUS_POISONED = "poisoned";
+    public const string STATUS_HIDDEN = "hidden";
 
     protected int|string $id;
     protected string $name;

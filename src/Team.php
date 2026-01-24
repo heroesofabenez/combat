@@ -19,7 +19,7 @@ final class Team extends Collection
 {
     use \Nette\SmartObject;
 
-    private const LOWEST_HP_THRESHOLD = 0.5;
+    private const float LOWEST_HP_THRESHOLD = 0.5;
 
     protected string $class = Character::class;
     private int $maxRowSize = 5;

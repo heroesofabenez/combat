@@ -15,20 +15,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class Weapon extends Equipment
 {
-    public const TYPE_SWORD = "sword";
-    public const TYPE_AXE = "axe";
-    public const TYPE_CLUB = "club";
-    public const TYPE_DAGGER = "dagger";
-    public const TYPE_SPEAR = "spear";
-    public const TYPE_STAFF = "staff";
-    public const TYPE_BOW = "bow";
-    public const TYPE_CROSSBOW = "crossbow";
-    public const TYPE_THROWING_KNIFE = "throwing knife";
-    public const TYPE_INSTRUMENT = "instrument";
-    public const MELEE_TYPES = [
+    public const string TYPE_SWORD = "sword";
+    public const string TYPE_AXE = "axe";
+    public const string TYPE_CLUB = "club";
+    public const string TYPE_DAGGER = "dagger";
+    public const string TYPE_SPEAR = "spear";
+    public const string TYPE_STAFF = "staff";
+    public const string TYPE_BOW = "bow";
+    public const string TYPE_CROSSBOW = "crossbow";
+    public const string TYPE_THROWING_KNIFE = "throwing knife";
+    public const string TYPE_INSTRUMENT = "instrument";
+    public const array MELEE_TYPES = [
         self::TYPE_SWORD, self::TYPE_AXE, self::TYPE_CLUB, self::TYPE_DAGGER, self::TYPE_SPEAR,
     ];
-    public const RANGED_TYPES = [
+    public const array RANGED_TYPES = [
         self::TYPE_STAFF, self::TYPE_BOW, self::TYPE_CROSSBOW, self::TYPE_THROWING_KNIFE, self::TYPE_INSTRUMENT,
     ];
 

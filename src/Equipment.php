@@ -19,12 +19,12 @@ class Equipment implements ICharacterEffectsProvider
 {
     use \Nette\SmartObject;
 
-    public const SLOT_WEAPON = "weapon";
-    public const SLOT_ARMOR = "armor";
-    public const SLOT_SHIELD = "shield";
-    public const SLOT_AMULET = "amulet";
-    public const SLOT_HELMET = "helmet";
-    public const SLOT_RING = "ring";
+    public const string SLOT_WEAPON = "weapon";
+    public const string SLOT_ARMOR = "armor";
+    public const string SLOT_SHIELD = "shield";
+    public const string SLOT_AMULET = "amulet";
+    public const string SLOT_HELMET = "helmet";
+    public const string SLOT_RING = "ring";
 
     public readonly int $id;
     public readonly string $name;

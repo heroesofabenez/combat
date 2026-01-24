@@ -13,7 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final readonly class CombatLogEntry
 {
     /** @internal */
-    public const ACTION_POISON = "poison";
+    public const string ACTION_POISON = "poison";
 
     public Character $character1;
     public Character $character2;
