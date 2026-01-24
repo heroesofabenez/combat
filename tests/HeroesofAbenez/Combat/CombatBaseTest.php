@@ -54,11 +54,11 @@ final class CombatBaseTest extends \Tester\TestCase
     public function testInvalidStates(): void
     {
         $combat = new CombatBase(clone $this->logger);
-        Assert::exception(function () use ($combat) {
+        Assert::exception(static function () use ($combat) {
             $combat->execute();
         }, InvalidStateException::class);
         $combat->setTeams(new Team(""), new Team(""));
-        Assert::exception(function () use ($combat) {
+        Assert::exception(static function () use ($combat) {
             $combat->setTeams(new Team(""), new Team(""));
         }, ImmutableException::class);
     }
@@ -186,9 +186,7 @@ final class CombatBaseTest extends \Tester\TestCase
     public function testPostCombat(): void
     {
         $combat = new CombatBase(clone $this->logger);
-        $combat->healers = function (Team $team1, Team $team2): Team {
-            return Team::fromArray(array_merge($team1->toArray(), $team2->toArray()), "healers");
-        };
+        $combat->healers = static fn(Team $team1, Team $team2): Team => Team::fromArray(array_merge($team1->toArray(), $team2->toArray()), "healers");
         $character1 = $this->generateCharacter(1);
         $character2 = $this->generateCharacter(2);
         $combat->setDuelParticipants($character1, $character2);

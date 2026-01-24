@@ -43,9 +43,7 @@ final class HealTest extends \Tester\TestCase
         $character2 = $this->generateCharacter(2);
         $combat = new CombatBase(clone $this->logger, new StaticSuccessCalculator());
         $combat->setDuelParticipants($character1, $character2);
-        $combat->healers = function (Team $team1, Team $team2) {
-            return Team::fromArray($team1->toArray(), "healers");
-        };
+        $combat->healers = static fn(Team $team1, Team $team2) => Team::fromArray($team1->toArray(), "healers");
         $action = new Heal();
         Assert::false($action->shouldUse($combat, $character1));
         $character1->harm(30);
@@ -60,9 +58,7 @@ final class HealTest extends \Tester\TestCase
         $character2 = $this->generateCharacter(2);
         $combat = new CombatBase(clone $this->logger, new StaticSuccessCalculator());
         $combat->setDuelParticipants($character1, $character2);
-        $combat->healers = function (Team $team1, Team $team2) {
-            return Team::fromArray($team1->toArray(), "healers");
-        };
+        $combat->healers = static fn(Team $team1, Team $team2) => Team::fromArray($team1->toArray(), "healers");
         $combat->onCombatStart($combat);
         $combat->onRoundStart($combat);
         $action = new Heal();

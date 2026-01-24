@@ -25,7 +25,7 @@ final class CombatLoggerTest extends \Tester\TestCase
         /** @var CombatLogger $logger */
         $logger = $this->getService(CombatLogger::class);
         $logger->setTeams(new Team("Team1"), new Team("Team 2"));
-        Assert::exception(function () use ($logger) {
+        Assert::exception(static function () use ($logger) {
             $logger->setTeams(new Team("Team1"), new Team("Team 2"));
         }, ImmutableException::class);
     }

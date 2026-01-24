@@ -162,9 +162,10 @@ class Character
 
     protected function registerDefaultStatuses(): void
     {
-        $this->registerStatus(static::STATUS_STUNNED, function (Character $character): bool {
-            return $character->effects->hasItems(["type" => SkillSpecial::TYPE_STUN]);
-        });
+        $this->registerStatus(
+            static::STATUS_STUNNED,
+            static fn(Character $character): bool => $character->effects->hasItems(["type" => SkillSpecial::TYPE_STUN])
+        );
         $this->registerStatus(static::STATUS_POISONED, function (Character $character): int {
             $poisons = $character->effects->getItems(["type" => SkillSpecial::TYPE_POISON]);
             $poisonValue = 0;
@@ -174,9 +175,10 @@ class Character
             }
             return $poisonValue;
         });
-        $this->registerStatus(static::STATUS_HIDDEN, function (Character $character): bool {
-            return $character->effects->hasItems(["type" => SkillSpecial::TYPE_HIDE]);
-        });
+        $this->registerStatus(
+            static::STATUS_HIDDEN,
+            static fn(Character $character): bool => $character->effects->hasItems(["type" => SkillSpecial::TYPE_HIDE])
+        );
     }
 
     protected function setStats(array $stats): void
@@ -190,17 +192,13 @@ class Character
         $resolver->setAllowedTypes("id", ["integer", "string",]);
         foreach ($numberStats as $stat) {
             $resolver->setAllowedTypes($stat, ["integer", "float"]);
-            $resolver->setNormalizer($stat, function (OptionsResolver $resolver, $value): int {
-                return (int) $value;
-            });
+            $resolver->setNormalizer($stat, static fn(OptionsResolver $resolver, $value): int => (int) $value);
         }
         foreach ($textStats as $stat) {
-            $resolver->setNormalizer($stat, function (OptionsResolver $resolver, $value): string {
-                return (string) $value;
-            });
+            $resolver->setNormalizer($stat, static fn(OptionsResolver $resolver, $value): string => (string) $value);
         }
         $resolver->setRequired($requiredStats);
-        $stats = array_filter($stats, function ($key) use ($allStats): bool {
+        $stats = array_filter($stats, static function ($key) use ($allStats): bool {
             return in_array($key, $allStats, true);
         }, ARRAY_FILTER_USE_KEY);
         $stats = $resolver->resolve($stats);

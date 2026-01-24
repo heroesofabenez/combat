@@ -63,18 +63,12 @@ class Equipment implements ICharacterEffectsProvider
         $resolver->setAllowedTypes("type", "null");
         $resolver->setDefault("type", null);
         $resolver->setAllowedTypes("strength", "integer");
-        $resolver->setAllowedValues("strength", function (int $value): bool {
-            return ($value >= 0);
-        });
+        $resolver->setAllowedValues("strength", static fn(int $value): bool => ($value >= 0));
         $resolver->setAllowedTypes("worn", "boolean");
         $resolver->setDefault("maxDurability", 0);
         $resolver->setAllowedTypes("maxDurability", "integer");
-        $resolver->setAllowedValues("maxDurability", function (int $value): bool {
-            return ($value >= 0);
-        });
-        $resolver->setDefault("durability", function (Options $options) {
-            return $options["maxDurability"];
-        });
+        $resolver->setAllowedValues("maxDurability", static fn(int $value): bool => ($value >= 0));
+        $resolver->setDefault("durability", static fn(Options $options) => $options["maxDurability"]);
         $resolver->setAllowedTypes("durability", "integer");
     }
 

@@ -17,9 +17,7 @@ final class CombatActionSelector implements ICombatActionSelector
         }
         /** @var ICombatAction[] $actions */
         $actions = $combat->combatActions->toArray();
-        usort($actions, function (ICombatAction $a, ICombatAction $b): int {
-            return $a->getPriority() <=> $b->getPriority();
-        });
+        usort($actions, static fn(ICombatAction $a, ICombatAction $b): int => $a->getPriority() <=> $b->getPriority());
         foreach ($actions as $action) {
             if ($action->shouldUse($combat, $character)) {
                 return $action;

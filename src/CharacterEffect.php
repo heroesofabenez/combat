@@ -51,13 +51,13 @@ class CharacterEffect
 
     protected function registerDefaultHandlers(): void
     {
-        $this->onApply[] = function (Character $character, self $effect): void {
+        $this->onApply[] = static function (Character $character, self $effect): void {
             $character->recalculateStats();
             if ($effect->stat === Character::STAT_MAX_HITPOINTS) {
                 $character->heal($effect->value);
             }
         };
-        $this->onRemove[] = function (Character $character, self $effect): void {
+        $this->onRemove[] = static function (Character $character, self $effect): void {
             $character->recalculateStats();
             if ($effect->stat === Character::STAT_MAX_HITPOINTS) {
                 $character->harm($effect->value);

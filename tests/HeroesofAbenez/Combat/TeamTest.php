@@ -84,14 +84,14 @@ final class TeamTest extends \Tester\TestCase
         $team->setCharacterPosition(1, 1, 1);
         Assert::same(1, $team[0]->positionRow);
         Assert::same(1, $team[0]->positionColumn);
-        Assert::exception(function () use ($team) {
+        Assert::exception(static function () use ($team) {
             $team->setCharacterPosition(2, 1, 1);
         }, \OutOfBoundsException::class);
         $team[] = $this->generateCharacter(2);
-        Assert::exception(function () use ($team) {
+        Assert::exception(static function () use ($team) {
             $team->setCharacterPosition(2, 1, 1);
         }, InvalidCharacterPositionException::class, null, InvalidCharacterPositionException::POSITION_OCCUPIED);
-        Assert::exception(function () use ($team) {
+        Assert::exception(static function () use ($team) {
             $team->maxRowSize = 1;
             $team->setCharacterPosition(2, 1, 2);
         }, InvalidCharacterPositionException::class, null, InvalidCharacterPositionException::ROW_FULL);

@@ -35,9 +35,7 @@ abstract class BaseSkill
             return in_array($value, $this->getAllowedTargets(), true);
         });
         $resolver->setAllowedTypes("levels", "integer");
-        $resolver->setAllowedValues("levels", function (int $value): bool {
-            return ($value > 0);
-        });
+        $resolver->setAllowedValues("levels", static fn(int $value): bool => ($value > 0));
     }
 
     protected function getAllowedTargets(): array

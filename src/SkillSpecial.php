@@ -53,35 +53,21 @@ final class SkillSpecial extends BaseSkill
         $allStats = ["type", "stat", "value", "valueGrowth", "duration",];
         $resolver->setRequired($allStats);
         $resolver->setAllowedTypes("type", "string");
-        $resolver->setAllowedValues("type", function (string $value): bool {
-            return in_array($value, $this->getAllowedTypes(), true);
-        });
+        $resolver->setAllowedValues(
+            "type",
+            static fn(string $value): bool => in_array($value, Constants::getConstantsValues(self::class, "TYPE_"), true)
+        );
         $resolver->setAllowedTypes("stat", ["string", "null"]);
-        $resolver->setAllowedValues("stat", function (?string $value): bool {
-            return $value === null || in_array($value, $this->getAllowedStats(), true);
-        });
+        $resolver->setAllowedValues(
+            "stat",
+            static fn(?string $value): bool => $value === null || in_array($value, Character::SECONDARY_STATS, true)
+        );
         $resolver->setAllowedTypes("value", "integer");
-        $resolver->setAllowedValues("value", function (int $value): bool {
-            return ($value >= 0);
-        });
+        $resolver->setAllowedValues("value", static fn(int $value): bool => ($value >= 0));
         $resolver->setAllowedTypes("valueGrowth", "integer");
-        $resolver->setAllowedValues("valueGrowth", function (int $value): bool {
-            return ($value >= 0);
-        });
+        $resolver->setAllowedValues("valueGrowth", static fn(int $value): bool => ($value >= 0));
         $resolver->setAllowedTypes("duration", "integer");
-        $resolver->setAllowedValues("duration", function (int $value): bool {
-            return ($value >= 0);
-        });
-    }
-
-    protected function getAllowedTypes(): array
-    {
-        return Constants::getConstantsValues(self::class, "TYPE_");
-    }
-
-    protected function getAllowedStats(): array
-    {
-        return Character::SECONDARY_STATS;
+        $resolver->setAllowedValues("duration", static fn(int $value): bool => ($value >= 0));
     }
 
     protected function getCooldown(): int

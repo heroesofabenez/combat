@@ -35,18 +35,12 @@ final class Pet implements ICharacterEffectsProvider
         $resolver->setAllowedTypes("id", "integer");
         $resolver->setAllowedTypes("deployed", "boolean");
         $resolver->setAllowedTypes("bonusStat", "string");
-        $resolver->setAllowedValues("bonusStat", function (string $value): bool {
-            return in_array($value, $this->getAllowedStats(), true);
-        });
+        $resolver->setAllowedValues(
+            "bonusStat",
+            static fn(string $value): bool => in_array($value, Character::BASE_STATS, true)
+        );
         $resolver->setAllowedTypes("bonusValue", "integer");
-        $resolver->setAllowedValues("bonusValue", function (int $value): bool {
-            return ($value >= 0);
-        });
-    }
-
-    protected function getAllowedStats(): array
-    {
-        return Character::BASE_STATS;
+        $resolver->setAllowedValues("bonusValue", static fn(int $value): bool => ($value >= 0));
     }
 
     protected function getDeployParams(): array

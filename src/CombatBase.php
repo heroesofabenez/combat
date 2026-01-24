@@ -59,9 +59,7 @@ class CombatBase
         public ICombatActionSelector $actionSelector = new CombatActionSelector()
     ) {
         $this->victoryCondition = [VictoryConditions::class, "moreDamage"];
-        $this->healers = function (): Team {
-            return new Team("healers");
-        };
+        $this->healers = static fn(): Team => new Team("healers");
         $this->combatActions = new class extends Collection {
             protected string $class = ICombatAction::class;
         };
@@ -225,7 +223,7 @@ class CombatBase
 
     public function assignPositions(self $combat): void
     {
-        $assignPositions = function (Team $team): void {
+        $assignPositions = static function (Team $team): void {
             $row = 1;
             $column = 0;
             /** @var Character $character */
@@ -376,9 +374,10 @@ class CombatBase
     {
         /** @var Character[] $characters */
         $characters = array_merge($combat->team1->usableMembers, $combat->team2->usableMembers);
-        usort($characters, function (Character $a, Character $b): int {
-            return -1 * strcmp((string) $a->initiative, (string) $b->initiative);
-        });
+        usort(
+            $characters,
+            static fn(Character $a, Character $b): int => -1 * strcmp((string) $a->initiative, (string) $b->initiative)
+        );
         foreach ($characters as $character) {
             /** @var ICombatAction|null $combatAction */
             $combatAction = $combat->actionSelector->chooseAction($combat, $character);
