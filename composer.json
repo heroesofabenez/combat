@@ -26,7 +26,6 @@
     },
     "require-dev": {
         "nexendrie/code-quality": "dev-master",
-        "nexendrie/site-generator": "^0.9",
         "phpstan/phpstan-nette": "^2.0"
     },
     "autoload": {
