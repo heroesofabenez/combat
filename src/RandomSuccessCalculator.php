@@ -10,7 +10,7 @@ use Nexendrie\Utils\Numbers;
  *
  * @author Jakub Konečný
  */
-final class RandomSuccessCalculator implements ISuccessCalculator
+final class RandomSuccessCalculator implements SuccessCalculator
 {
     public const int MAX_HIT_CHANCE = 100;
     public const int MIN_HIT_CHANCE = 15;

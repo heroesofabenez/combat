@@ -10,5 +10,5 @@ namespace HeroesofAbenez\Combat;
  */
 interface ICombatActionSelector
 {
-    public function chooseAction(CombatBase $combat, Character $character): ?ICombatAction;
+    public function chooseAction(CombatBase $combat, Character $character): ?CombatAction;
 }

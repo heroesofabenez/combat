@@ -46,7 +46,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property-read bool $poisoned
  * @property-read bool $hidden
  * @property-read BaseCharacterSkill[] $usableSkills
- * @property IInitiativeFormulaParser $initiativeFormulaParser
+ * @property InitiativeFormulaParser $initiativeFormulaParser
  * @property int $positionRow
  * @property int $positionColumn
  */
@@ -114,7 +114,7 @@ class Character
     protected int $initiative = 0;
     protected int $initiativeBase = 0;
     protected string $initiativeFormula;
-    protected IInitiativeFormulaParser $initiativeFormulaParser;
+    protected InitiativeFormulaParser $initiativeFormulaParser;
     protected float $defense = 0;
     protected float $defenseBase = 0;
     /** @var Equipment[]|EquipmentCollection Character's equipment */
@@ -126,7 +126,7 @@ class Character
     protected ?int $activePet = null;
     /** @var CharacterEffect[]|CharacterEffectsCollection Active effects */
     public CharacterEffectsCollection $effects;
-    /** @var ICharacterEffectsProvider[]|CharacterEffectsProvidersCollection */
+    /** @var CharacterEffectsProvider[]|CharacterEffectsProvidersCollection */
     public CharacterEffectsProvidersCollection $effectProviders;
     protected int $positionRow = 0;
     protected int $positionColumn = 0;
@@ -145,7 +145,7 @@ class Character
         array $equipment = [],
         array $pets = [],
         array $skills = [],
-        IInitiativeFormulaParser $initiativeFormulaParser = new InitiativeFormulaParser()
+        InitiativeFormulaParser $initiativeFormulaParser = new DefaultInitiativeFormulaParser()
     ) {
         $this->initiativeFormulaParser = $initiativeFormulaParser;
         $this->equipment = EquipmentCollection::fromArray($equipment);
@@ -394,12 +394,12 @@ class Character
         return $this->intelligenceBase;
     }
 
-    protected function getInitiativeFormulaParser(): IInitiativeFormulaParser
+    protected function getInitiativeFormulaParser(): InitiativeFormulaParser
     {
         return $this->initiativeFormulaParser;
     }
 
-    protected function setInitiativeFormulaParser(IInitiativeFormulaParser $initiativeFormulaParser): void
+    protected function setInitiativeFormulaParser(InitiativeFormulaParser $initiativeFormulaParser): void
     {
         $oldParser = $this->initiativeFormulaParser;
         $this->initiativeFormulaParser = $initiativeFormulaParser;

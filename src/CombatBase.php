@@ -17,7 +17,7 @@ use Nexendrie\Utils\Collection;
  * @property Team $team2
  * @property-read int $team1Damage
  * @property-read int $team2Damage
- * @property Collection|ICombatAction[] $combatActions
+ * @property Collection|CombatAction[] $combatActions
  * @property callable $victoryCondition To evaluate the winner of combat. Gets combat as parameter, should return winning team (1/2) or 0 if there is not winner (yet)
  * @property callable $healers To determine characters that are supposed to heal their team. Gets team1 and team2 as parameters, should return Team
  * @method void onCombatStart(CombatBase $combat)
@@ -50,18 +50,18 @@ class CombatBase
     protected $victoryCondition;
     /** @var callable */
     protected $healers;
-    /** @var Collection|ICombatAction[] */
+    /** @var Collection|CombatAction[] */
     protected Collection $combatActions;
 
     public function __construct(
         public readonly CombatLogger $log,
-        public ISuccessCalculator $successCalculator = new RandomSuccessCalculator(),
+        public SuccessCalculator $successCalculator = new RandomSuccessCalculator(),
         public ICombatActionSelector $actionSelector = new CombatActionSelector()
     ) {
         $this->victoryCondition = [VictoryConditions::class, "moreDamage"];
         $this->healers = static fn(): Team => new Team("healers");
         $this->combatActions = new class extends Collection {
-            protected string $class = ICombatAction::class;
+            protected string $class = CombatAction::class;
         };
         $this->registerDefaultHandlers();
         $this->registerDefaultCombatActions();
@@ -173,7 +173,7 @@ class CombatBase
     }
 
     /**
-     * @return Collection|ICombatAction[]
+     * @return Collection|CombatAction[]
      */
     public function getCombatActions(): Collection
     {
@@ -379,7 +379,7 @@ class CombatBase
             static fn(Character $a, Character $b): int => -1 * strcmp((string) $a->initiative, (string) $b->initiative)
         );
         foreach ($characters as $character) {
-            /** @var ICombatAction|null $combatAction */
+            /** @var CombatAction|null $combatAction */
             $combatAction = $combat->actionSelector->chooseAction($combat, $character);
             if ($combatAction === null) {
                 break;

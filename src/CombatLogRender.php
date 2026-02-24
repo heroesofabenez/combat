@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-interface ICombatLogRender
+interface CombatLogRender
 {
     public function render(array $params): string;
 }

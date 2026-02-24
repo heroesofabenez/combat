@@ -5,10 +5,10 @@ namespace HeroesofAbenez\Combat\CombatActions;
 
 use HeroesofAbenez\Combat\Character;
 use HeroesofAbenez\Combat\CombatBase;
-use HeroesofAbenez\Combat\ICombatAction;
+use HeroesofAbenez\Combat\CombatAction;
 use Nexendrie\Utils\Numbers;
 
-final class Attack implements ICombatAction
+final class Attack implements CombatAction
 {
     public const string ACTION_NAME = "attack";
 

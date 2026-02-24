@@ -6,12 +6,12 @@ namespace HeroesofAbenez\Combat\CombatActions;
 use HeroesofAbenez\Combat\Character;
 use HeroesofAbenez\Combat\CombatBase;
 use HeroesofAbenez\Combat\CharacterSpecialSkill;
-use HeroesofAbenez\Combat\ICombatAction;
+use HeroesofAbenez\Combat\CombatAction;
 use HeroesofAbenez\Combat\SkillSpecial as Skill;
 use HeroesofAbenez\Combat\NotImplementedException;
 use HeroesofAbenez\Combat\CharacterEffect;
 
-final class SkillSpecial implements ICombatAction
+final class SkillSpecial implements CombatAction
 {
     public const string ACTION_NAME = "skill_special";
 

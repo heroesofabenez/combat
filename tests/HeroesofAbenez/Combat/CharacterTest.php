@@ -61,7 +61,7 @@ final class CharacterTest extends \Tester\TestCase
     public function testInitiativeFormulaParser(): void
     {
         $character = $this->generateCharacter(1);
-        Assert::type(InitiativeFormulaParser::class, $character->initiativeFormulaParser);
+        Assert::type(DefaultInitiativeFormulaParser::class, $character->initiativeFormulaParser);
         Assert::notEqual(0, $character->initiative);
         $character->initiativeFormulaParser = new ConstantInitiativeFormulaParser(0);
         Assert::equal(0, $character->initiative);

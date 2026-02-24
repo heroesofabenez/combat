@@ -11,7 +11,7 @@ use Tester\Assert;
  * @author Jakub Konečný
  * @testCase
  */
-final class InitiativeFormulaParserTest extends \Tester\TestCase
+final class DefaultInitiativeFormulaParserTest extends \Tester\TestCase
 {
     private function generateCharacter(int $id): Character
     {
@@ -25,7 +25,7 @@ final class InitiativeFormulaParserTest extends \Tester\TestCase
     public function testCalculateInitiative(): void
     {
         $character = $this->generateCharacter(1);
-        $parser = new InitiativeFormulaParser();
+        $parser = new DefaultInitiativeFormulaParser();
         for ($i = 1; $i <= 10; $i++) {
             $initiative = $parser->calculateInitiative($character);
             Assert::true($initiative >= 4);
@@ -34,5 +34,5 @@ final class InitiativeFormulaParserTest extends \Tester\TestCase
     }
 }
 
-$test = new InitiativeFormulaParserTest();
+$test = new DefaultInitiativeFormulaParserTest();
 $test->run();

@@ -8,7 +8,7 @@ namespace HeroesofAbenez\Combat;
  *
  * @author Jakub Konečný
  */
-final class EffectsProvider implements ICharacterEffectsProvider
+final class EffectsProvider implements CharacterEffectsProvider
 {
     public int $value = 10;
 

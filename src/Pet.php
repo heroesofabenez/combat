@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @author Jakub Konečný
  */
-final class Pet implements ICharacterEffectsProvider
+final class Pet implements CharacterEffectsProvider
 {
     public readonly int $id;
     public bool $deployed;

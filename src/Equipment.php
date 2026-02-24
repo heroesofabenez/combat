@@ -15,7 +15,7 @@ use Nexendrie\Utils\Numbers;
  * @property-read int $strength
  * @property int $durability
  */
-class Equipment implements ICharacterEffectsProvider
+class Equipment implements CharacterEffectsProvider
 {
     use \Nette\SmartObject;
 

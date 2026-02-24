@@ -5,11 +5,11 @@ namespace HeroesofAbenez\Combat\CombatActions;
 
 use HeroesofAbenez\Combat\Character;
 use HeroesofAbenez\Combat\CombatBase;
-use HeroesofAbenez\Combat\ICombatAction;
+use HeroesofAbenez\Combat\CombatAction;
 use Nexendrie\Utils\Numbers;
 use HeroesofAbenez\Combat\Team;
 
-final class Heal implements ICombatAction
+final class Heal implements CombatAction
 {
     public const string ACTION_NAME = "healing";
 

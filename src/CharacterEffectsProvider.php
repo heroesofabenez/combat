@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace HeroesofAbenez\Combat;
 
 /**
- * ICombatEffectsProvider
+ * CharacterEffectsProvider
  *
  * @author Jakub Konečný
  */
-interface ICharacterEffectsProvider
+interface CharacterEffectsProvider
 {
     /** @return CharacterEffect[] */
     public function getCombatEffects(): array;

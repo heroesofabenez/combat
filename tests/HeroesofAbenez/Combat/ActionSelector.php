@@ -10,7 +10,7 @@ namespace HeroesofAbenez\Combat;
  */
 final class ActionSelector implements ICombatActionSelector
 {
-    public function chooseAction(CombatBase $combat, Character $character): ?ICombatAction
+    public function chooseAction(CombatBase $combat, Character $character): ?CombatAction
     {
         return null;
     }

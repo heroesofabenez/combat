@@ -9,5 +9,5 @@ namespace HeroesofAbenez\Combat;
  */
 class CharacterEffectsProvidersCollection extends \Nexendrie\Utils\Collection
 {
-    protected string $class = ICharacterEffectsProvider::class;
+    protected string $class = CharacterEffectsProvider::class;
 }

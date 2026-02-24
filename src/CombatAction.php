@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-interface ICombatAction
+interface CombatAction
 {
     public function getName(): string;
     public function getPriority(): int;

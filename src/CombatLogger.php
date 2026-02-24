@@ -19,7 +19,7 @@ final class CombatLogger implements \Countable, \IteratorAggregate, \Stringable
     public int $round = 0;
     public string $title = "";
 
-    public function __construct(private readonly ICombatLogRender $render, private readonly Translator $translator)
+    public function __construct(private readonly CombatLogRender $render, private readonly Translator $translator)
     {
     }
 

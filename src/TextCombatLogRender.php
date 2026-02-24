@@ -11,7 +11,7 @@ use Nette\Localization\Translator;
  *
  * @property-write string $template
  */
-final class TextCombatLogRender implements ICombatLogRender
+final class TextCombatLogRender implements CombatLogRender
 {
     use \Nette\SmartObject;
 
