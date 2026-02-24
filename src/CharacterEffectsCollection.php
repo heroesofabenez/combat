@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-use Nette\Utils\Arrays;
-
 /**
  * @author Jakub Konečný
  * @internal
@@ -38,12 +36,11 @@ final class CharacterEffectsCollection extends \Nexendrie\Utils\Collection
      */
     public function offsetUnset($index): void
     {
-        try {
-            /** @var CharacterEffect $item */
-            $item = Arrays::get($this->items, $index);
-        } catch (\Nette\InvalidArgumentException) {
+        if (!array_key_exists($index, $this->items)) {
             throw new \OutOfRangeException("Offset invalid or out of range.");
         }
+        /** @var CharacterEffect $item */
+        $item = $this->items[$index];
         parent::offsetUnset($index);
         $item->onRemove($this->character, $item);
     }
