@@ -60,7 +60,7 @@ final class TeamTest extends \Tester\TestCase
         Assert::count(1, $team->usableMembers);
         $stunEffect = [
             "id" => "stunEffect", "type" => SkillSpecial::TYPE_STUN, "valueAbsolute" => false,
-            "value" => 0, "duration" => CharacterEffect::DURATION_FOREVER, "stat" => "",
+            "value" => 0, "duration" => CharacterEffectDuration::Forever, "stat" => "",
         ];
         $team[1]->effects[] = new CharacterEffect($stunEffect);
         $team[1]->recalculateStats();

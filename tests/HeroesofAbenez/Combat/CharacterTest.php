@@ -49,7 +49,7 @@ final class CharacterTest extends \Tester\TestCase
             "stat" => Character::STAT_DAMAGE,
             "value" => 10,
             "valueAbsolute" => true,
-            "duration" => CharacterEffect::DURATION_COMBAT,
+            "duration" => CharacterEffectDuration::Combat,
         ]);
         Assert::count(1, $character->effects);
         Assert::same(15, $character->damage);
@@ -111,7 +111,7 @@ final class CharacterTest extends \Tester\TestCase
         $character->effects[] = new CharacterEffect([
             "id" => "stunEffect",
             "type" => SkillSpecial::TYPE_STUN,
-            "duration" => CharacterEffect::DURATION_COMBAT,
+            "duration" => CharacterEffectDuration::Combat,
             "valueAbsolute" => false,
         ]);
         Assert::true($character->hasStatus(Character::STATUS_STUNNED));
@@ -120,7 +120,7 @@ final class CharacterTest extends \Tester\TestCase
         $character->effects[] = new CharacterEffect([
             "id" => "poisonEffect",
             "type" => SkillSpecial::TYPE_POISON,
-            "duration" => CharacterEffect::DURATION_COMBAT,
+            "duration" => CharacterEffectDuration::Combat,
             "value" => 5,
             "valueAbsolute" => false,
         ]);
@@ -136,7 +136,7 @@ final class CharacterTest extends \Tester\TestCase
         $character->effects[] = new CharacterEffect([
             "id" => "stunEffect",
             "type" => SkillSpecial::TYPE_STUN,
-            "duration" => CharacterEffect::DURATION_COMBAT,
+            "duration" => CharacterEffectDuration::Combat,
             "valueAbsolute" => false,
         ]);
         Assert::false($character->canAct());
@@ -157,7 +157,7 @@ final class CharacterTest extends \Tester\TestCase
         $character->effects[] = new CharacterEffect([
             "id" => "stunEffect",
             "type" => SkillSpecial::TYPE_STUN,
-            "duration" => CharacterEffect::DURATION_COMBAT,
+            "duration" => CharacterEffectDuration::Combat,
             "valueAbsolute" => false,
         ]);
         Assert::false($character->canDefend());

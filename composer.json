@@ -21,7 +21,7 @@
         "latte/latte": "^2.8",
         "nette/utils": "^3.2.2",
         "nexendrie/translation": "^2.4",
-        "nexendrie/utils": "^1.10",
+        "nexendrie/utils": "^1.10.1",
         "symfony/options-resolver": "^6.4 || ^7.4"
     },
     "require-dev": {

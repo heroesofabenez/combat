@@ -287,7 +287,7 @@ class CombatBase
         /** @var Character[] $characters */
         $characters = array_merge($combat->team1->toArray(), $combat->team2->toArray());
         foreach ($characters as $character) {
-            $character->effects->removeByFilter(["duration!=" => CharacterEffect::DURATION_FOREVER]);
+            $character->effects->removeByFilter(["duration!=" => CharacterEffectDuration::Forever,]);
         }
     }
 

@@ -10,7 +10,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Data structure for effect on character
  *
  * @author Jakub Konečný
- * @property int|string $duration
  * @method void onApply(Character $character, CharacterEffect $effect)
  * @method void onRemove(Character $character, CharacterEffect $effect)
  */
@@ -18,15 +17,12 @@ class CharacterEffect
 {
     use \Nette\SmartObject;
 
-    public const string DURATION_COMBAT = "combat";
-    public const string DURATION_FOREVER = "forever";
-
     public readonly string $id;
     public readonly string $type;
     public readonly string $stat;
     public readonly int $value;
     public readonly bool $valueAbsolute;
-    protected int|string $duration;
+    public int|CharacterEffectDuration $duration;
     /** @var callable[] */
     public array $onApply = [];
     /** @var callable[] */
@@ -82,9 +78,9 @@ class CharacterEffect
         $resolver->setAllowedTypes("value", "integer");
         $resolver->setAllowedTypes("valueAbsolute", "bool");
         $resolver->setDefault("value", 0);
-        $resolver->setAllowedTypes("duration", ["string", "integer"]);
-        $resolver->setAllowedValues("duration", function ($value): bool {
-            return (in_array($value, $this->getDurations(), true)) || ($value > 0);
+        $resolver->setAllowedTypes("duration", [CharacterEffectDuration::class, "integer"]);
+        $resolver->setAllowedValues("duration", function (CharacterEffectDuration|int $value): bool {
+            return $value instanceof CharacterEffectDuration || ($value > 0);
         });
     }
 
@@ -99,31 +95,5 @@ class CharacterEffect
     protected function getAllowedTypes(): array
     {
         return Constants::getConstantsValues(SkillSpecial::class, "TYPE_");
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getDurations(): array
-    {
-        return Constants::getConstantsValues(static::class, "DURATION_");
-    }
-
-    protected function getDuration(): int|string
-    {
-        return $this->duration;
-    }
-
-    /**
-     * @throws \InvalidArgumentException
-     */
-    protected function setDuration(string|int $value): void
-    {
-        if (!is_int($value) && !in_array($value, $this->getDurations(), true)) {
-            throw new \InvalidArgumentException(
-                "Invalid value set to CharacterEffect::\$duration. Expected string or integer."
-            );
-        }
-        $this->duration = $value;
     }
 }

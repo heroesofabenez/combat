@@ -19,7 +19,7 @@ final class EffectsProvider implements CharacterEffectsProvider
             "type" => SkillSpecial::TYPE_BUFF,
             "valueAbsolute" => true,
             "value" => $this->value,
-            "duration" => CharacterEffect::DURATION_COMBAT,
+            "duration" => CharacterEffectDuration::Combat,
             "stat" => Character::STAT_MAX_HITPOINTS,
         ])];
     }

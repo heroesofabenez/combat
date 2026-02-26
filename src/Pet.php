@@ -51,7 +51,7 @@ final class Pet implements CharacterEffectsProvider
             "stat" => $this->bonusStat,
             "value" => $this->bonusValue,
             "valueAbsolute" => false,
-            "duration" => CharacterEffect::DURATION_COMBAT,
+            "duration" => CharacterEffectDuration::Combat,
         ];
     }
 

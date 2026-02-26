@@ -114,7 +114,7 @@ class Equipment implements CharacterEffectsProvider
             "stat" => $stat[$this->slot],
             "value" => $this->strength,
             "valueAbsolute" => true,
-            "duration" => CharacterEffect::DURATION_COMBAT,
+            "duration" => CharacterEffectDuration::Combat,
         ];
         return $return;
     }

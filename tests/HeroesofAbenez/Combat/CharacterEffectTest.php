@@ -34,7 +34,7 @@ final class CharacterEffectTest extends \Tester\TestCase
             "stat" => Character::STAT_INITIATIVE,
             "value" => 10,
             "valueAbsolute" => true,
-            "duration" => CharacterEffect::DURATION_COMBAT,
+            "duration" => CharacterEffectDuration::Combat,
         ]);
         $character->effects[] = $effect;
         Assert::same(11, $character->initiative);
@@ -57,7 +57,7 @@ final class CharacterEffectTest extends \Tester\TestCase
             "stat" => Character::STAT_MAX_HITPOINTS,
             "value" => 10,
             "valueAbsolute" => true,
-            "duration" => CharacterEffect::DURATION_COMBAT,
+            "duration" => CharacterEffectDuration::Combat,
         ]);
         $character->effects[] = $effect;
         Assert::same($baseHitpoints, $character->maxHitpointsBase);
