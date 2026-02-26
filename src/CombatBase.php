@@ -325,6 +325,7 @@ class CombatBase
     {
         $enemyTeam = $this->getEnemyTeam($attacker);
         $rangedWeapon = $attacker->equipment->hasItems(["%class%" => Weapon::class, "worn" => true, "ranged" => true,]);
+        $enemies = $enemyTeam;
         if (!$rangedWeapon) {
             $rowToAttack = $enemyTeam->rowToAttack;
             if ($rowToAttack === null) {
@@ -334,8 +335,6 @@ class CombatBase
                 $enemyTeam->getItems(["positionRow" => $rowToAttack, "hitpoints>" => 0, "hidden" => false,]),
                 $enemyTeam->name
             );
-        } else {
-            $enemies = $enemyTeam;
         }
         $target = $enemies->getLowestHpCharacter();
         if ($target !== null) {

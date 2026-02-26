@@ -50,10 +50,7 @@ final class Heal implements CombatAction
     private function findHealers(CombatBase $combat): Team
     {
         $healers = call_user_func($combat->healers, $combat->team1, $combat->team2);
-        if ($healers instanceof Team) {
-            return $healers;
-        }
-        return new Team("healers");
+        return $healers instanceof Team ? $healers : new Team("healers");
     }
 
     private function selectHealingTarget(Character $healer, CombatBase $combat): ?Character
