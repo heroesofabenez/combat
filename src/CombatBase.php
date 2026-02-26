@@ -56,7 +56,7 @@ class CombatBase
     public function __construct(
         public readonly CombatLogger $log,
         public SuccessCalculator $successCalculator = new RandomSuccessCalculator(),
-        public ICombatActionSelector $actionSelector = new CombatActionSelector()
+        public CombatActionSelector $actionSelector = new DefaultCombatActionSelector()
     ) {
         $this->victoryCondition = [VictoryConditions::class, "moreDamage"];
         $this->healers = static fn(): Team => new Team("healers");

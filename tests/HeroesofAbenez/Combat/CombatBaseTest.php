@@ -108,7 +108,7 @@ final class CombatBaseTest extends \Tester\TestCase
     public function testActionSelector(): void
     {
         $combat = new CombatBase(clone $this->logger);
-        Assert::type(CombatActionSelector::class, $combat->actionSelector);
+        Assert::type(DefaultCombatActionSelector::class, $combat->actionSelector);
         $combat->actionSelector = new ActionSelector();
         Assert::type(ActionSelector::class, $combat->actionSelector);
     }
