@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
+use Closure;
 use Nexendrie\Utils\Numbers;
 use Nexendrie\Utils\Collection;
 
@@ -18,8 +19,6 @@ use Nexendrie\Utils\Collection;
  * @property-read int $team1Damage
  * @property-read int $team2Damage
  * @property Collection|CombatAction[] $combatActions
- * @property callable $victoryCondition To evaluate the winner of combat. Gets combat as parameter, should return winning team (1/2) or 0 if there is not winner (yet)
- * @property callable $healers To determine characters that are supposed to heal their team. Gets team1 and team2 as parameters, should return Team
  * @method void onCombatStart(CombatBase $combat)
  * @method void onCombatEnd(CombatBase $combat)
  * @method void onRoundStart(CombatBase $combat)
@@ -46,10 +45,10 @@ class CombatBase
     public array $onRound = [];
     /** @var callable[] */
     public array $onRoundEnd = [];
-    /** @var callable */
-    protected $victoryCondition;
-    /** @var callable */
-    protected $healers;
+    /** @var Closure To evaluate the winner of combat. Gets combat as parameter, should return winning team (1/2) or 0 if there is not winner (yet) */
+    public Closure $victoryCondition;
+    /** @var Closure To determine characters that are supposed to heal their team. Gets team1 and team2 as parameters, should return {@see Team} */
+    public Closure $healers;
     /** @var Collection|CombatAction[] */
     protected Collection $combatActions;
 
@@ -140,26 +139,6 @@ class CombatBase
     public function getTeam2(): Team
     {
         return $this->team2;
-    }
-
-    public function getVictoryCondition(): callable
-    {
-        return $this->victoryCondition;
-    }
-
-    public function setVictoryCondition(callable $victoryCondition): void
-    {
-        $this->victoryCondition = $victoryCondition;
-    }
-
-    public function getHealers(): callable
-    {
-        return $this->healers;
-    }
-
-    public function setHealers(callable $healers): void
-    {
-        $this->healers = $healers;
     }
 
     public function getTeam1Damage(): int
