@@ -58,7 +58,7 @@ class CombatBase
         public SuccessCalculator $successCalculator = new RandomSuccessCalculator(),
         public CombatActionSelector $actionSelector = new DefaultCombatActionSelector()
     ) {
-        $this->victoryCondition = [VictoryConditions::class, "moreDamage"];
+        $this->victoryCondition = VictoryConditions::moreDamage(...);
         $this->healers = static fn(): Team => new Team("healers");
         $this->combatActions = new class extends Collection {
             protected string $class = CombatAction::class;
@@ -69,18 +69,18 @@ class CombatBase
 
     protected function registerDefaultHandlers(): void
     {
-        $this->onCombatStart[] = [$this, "assignPositions"];
-        $this->onCombatEnd[] = [$this, "removeCombatEffects"];
-        $this->onCombatEnd[] = [$this, "logCombatResult"];
-        $this->onCombatEnd[] = [$this, "resetInitiative"];
-        $this->onRoundStart[] = [$this, "applyEffectProviders"];
-        $this->onRoundStart[] = [$this, "decreaseEffectsDuration"];
-        $this->onRoundStart[] = [$this, "recalculateStats"];
-        $this->onRoundStart[] = [$this, "logRoundNumber"];
-        $this->onRoundStart[] = [$this, "applyPoison"];
-        $this->onRound[] = [$this, "mainStage"];
-        $this->onRoundEnd[] = [$this, "decreaseSkillsCooldowns"];
-        $this->onRoundEnd[] = [$this, "resetInitiative"];
+        $this->onCombatStart[] = $this->assignPositions(...);
+        $this->onCombatEnd[] = $this->removeCombatEffects(...);
+        $this->onCombatEnd[] = $this->logCombatResult(...);
+        $this->onCombatEnd[] = $this->resetInitiative(...);
+        $this->onRoundStart[] = $this->applyEffectProviders(...);
+        $this->onRoundStart[] = $this->decreaseEffectsDuration(...);
+        $this->onRoundStart[] = $this->recalculateStats(...);
+        $this->onRoundStart[] = $this->logRoundNumber(...);
+        $this->onRoundStart[] = $this->applyPoison(...);
+        $this->onRound[] = $this->mainStage(...);
+        $this->onRoundEnd[] = $this->decreaseSkillsCooldowns(...);
+        $this->onRoundEnd[] = $this->resetInitiative(...);
     }
 
     protected function registerDefaultCombatActions(): void
