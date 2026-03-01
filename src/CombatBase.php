@@ -19,11 +19,6 @@ use Nexendrie\Utils\Collection;
  * @property-read int $team1Damage
  * @property-read int $team2Damage
  * @property Collection|CombatAction[] $combatActions
- * @method void onCombatStart(CombatBase $combat)
- * @method void onCombatEnd(CombatBase $combat)
- * @method void onRoundStart(CombatBase $combat)
- * @method void onRound(CombatBase $combat)
- * @method void onRoundEnd(CombatBase $combat)
  */
 class CombatBase
 {
@@ -173,6 +168,41 @@ class CombatBase
             $result = Numbers::clamp($result, 0, 2);
         }
         return $result;
+    }
+
+    public function onCombatStart(self $combat): void
+    {
+        foreach ($this->onCombatStart as $callback) {
+            $callback(...func_get_args());
+        }
+    }
+
+    public function onCombatEnd(self $combat): void
+    {
+        foreach ($this->onCombatEnd as $callback) {
+            $callback(...func_get_args());
+        }
+    }
+
+    public function onRoundStart(self $combat): void
+    {
+        foreach ($this->onRoundStart as $callback) {
+            $callback(...func_get_args());
+        }
+    }
+
+    public function onRound(self $combat): void
+    {
+        foreach ($this->onRound as $callback) {
+            $callback(...func_get_args());
+        }
+    }
+
+    public function onRoundEnd(self $combat): void
+    {
+        foreach ($this->onRoundEnd as $callback) {
+            $callback(...func_get_args());
+        }
     }
 
     /**

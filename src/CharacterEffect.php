@@ -10,13 +10,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Data structure for effect on character
  *
  * @author Jakub Konečný
- * @method void onApply(Character $character, CharacterEffect $effect)
- * @method void onRemove(Character $character, CharacterEffect $effect)
  */
 class CharacterEffect
 {
-    use \Nette\SmartObject;
-
     public readonly string $id;
     public readonly string $type;
     public readonly string $stat;
@@ -95,5 +91,19 @@ class CharacterEffect
     protected function getAllowedTypes(): array
     {
         return Constants::getConstantsValues(SkillSpecial::class, "TYPE_");
+    }
+
+    public function onApply(Character $character, self $characterEffect): void
+    {
+        foreach ($this->onApply as $callback) {
+            $callback(...func_get_args());
+        }
+    }
+
+    public function onRemove(Character $character, self $characterEffect): void
+    {
+        foreach ($this->onRemove as $callback) {
+            $callback(...func_get_args());
+        }
     }
 }
