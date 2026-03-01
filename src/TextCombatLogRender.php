@@ -8,30 +8,15 @@ use Nette\Localization\Translator;
 
 /**
  * TextCombatLogRender
- *
- * @property-write string $template
  */
 final class TextCombatLogRender implements CombatLogRender
 {
-    use \Nette\SmartObject;
-
     private \Latte\Engine $latte;
-    private string $template = __DIR__ . "/CombatLog.latte";
+    public string $template = __DIR__ . "/CombatLog.latte";
 
     public function __construct(LatteFactory $latteFactory, private readonly Translator $translator)
     {
         $this->latte = $latteFactory->create();
-    }
-
-    /**
-     * @throws \RuntimeException
-     */
-    protected function setTemplate(string $template): void
-    {
-        if (!is_file($template)) {
-            throw new \RuntimeException("File $template does not exist.");
-        }
-        $this->template = $template;
     }
 
     public function render(array $params): string
