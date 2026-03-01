@@ -10,7 +10,9 @@ namespace HeroesofAbenez\Combat;
  */
 final class VictoryConditions
 {
-    use \Nette\StaticClass;
+    private function __construct()
+    {
+    }
 
     /**
      * Evaluate winner of combat
