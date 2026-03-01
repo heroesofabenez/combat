@@ -21,17 +21,14 @@ final class VictoryConditions
      */
     public static function moreDamage(CombatBase $combat): int
     {
-        $result = 0;
-        if ($combat->round <= $combat->roundLimit) {
-            if (!$combat->team1->hasAliveMembers()) {
-                $result = 2;
-            } elseif (!$combat->team2->hasAliveMembers()) {
-                $result = 1;
-            }
-        } elseif ($combat->round > $combat->roundLimit) {
-            $result = ($combat->team1Damage > $combat->team2Damage) ? 1 : 2;
+        if ($combat->round > $combat->roundLimit) {
+            return $combat->team1Damage > $combat->team2Damage ? 1 : 2;
+        } elseif (!$combat->team1->hasAliveMembers()) {
+            return 2;
+        } elseif (!$combat->team2->hasAliveMembers()) {
+            return 1;
         }
-        return $result;
+        return 0;
     }
 
     /**
@@ -40,17 +37,14 @@ final class VictoryConditions
      */
     public static function eliminateSecondTeam(CombatBase $combat): int
     {
-        $result = 0;
-        if ($combat->round <= $combat->roundLimit) {
-            if (!$combat->team1->hasAliveMembers()) {
-                $result = 2;
-            } elseif (!$combat->team2->hasAliveMembers()) {
-                $result = 1;
-            }
-        } elseif ($combat->round > $combat->roundLimit) {
-            $result = (!$combat->team2->hasAliveMembers()) ? 1 : 2;
+        if ($combat->round > $combat->roundLimit) {
+            return $combat->team2->hasAliveMembers() ? 2 : 1;
+        } elseif (!$combat->team1->hasAliveMembers()) {
+            return 2;
+        } elseif (!$combat->team2->hasAliveMembers()) {
+             return 1;
         }
-        return $result;
+        return 0;
     }
 
     /**
@@ -59,16 +53,13 @@ final class VictoryConditions
      */
     public static function firstTeamSurvives(CombatBase $combat): int
     {
-        $result = 0;
-        if ($combat->round <= $combat->roundLimit) {
-            if (!$combat->team1->hasAliveMembers()) {
-                $result = 2;
-            } elseif (!$combat->team2->hasAliveMembers()) {
-                $result = 1;
-            }
-        } elseif ($combat->round > $combat->roundLimit) {
-            $result = ($combat->team1->hasAliveMembers()) ? 1 : 2;
+        if ($combat->round > $combat->roundLimit) {
+            return $combat->team1->hasAliveMembers() ? 1 : 2;
+        } elseif (!$combat->team1->hasAliveMembers()) {
+            return 2;
+        } elseif (!$combat->team2->hasAliveMembers()) {
+            return 1;
         }
-        return $result;
+        return 0;
     }
 }
