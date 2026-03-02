@@ -35,10 +35,7 @@ final class Pet implements CharacterEffectsProvider
         $resolver->setAllowedTypes("id", "integer");
         $resolver->setAllowedTypes("deployed", "boolean");
         $resolver->setAllowedTypes("bonusStat", "string");
-        $resolver->setAllowedValues(
-            "bonusStat",
-            static fn(string $value): bool => in_array($value, Character::BASE_STATS, true)
-        );
+        $resolver->setAllowedValues("bonusStat", Character::BASE_STATS);
         $resolver->setAllowedTypes("bonusValue", "integer");
         $resolver->setAllowedValues("bonusValue", static fn(int $value): bool => ($value >= 0));
     }
