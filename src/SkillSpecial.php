@@ -53,7 +53,7 @@ final class SkillSpecial extends BaseSkill
         $allStats = ["type", "stat", "value", "valueGrowth", "duration",];
         $resolver->setRequired($allStats);
         $resolver->setAllowedTypes("type", "string");
-        $resolver->setAllowedValues("type", Constants::getConstantsValues(self::class, "TYPE_"));
+        $resolver->setAllowedValues("type", Constants::getValues(self::class, "TYPE_"));
         $resolver->setAllowedTypes("stat", ["string", "null"]);
         $resolver->setAllowedValues(
             "stat",

@@ -57,6 +57,6 @@ class Weapon extends Equipment
 
     protected function getAllowedTypes(): array
     {
-        return Constants::getConstantsValues(static::class, "TYPE_");
+        return Constants::getValues(static::class, "TYPE_");
     }
 }

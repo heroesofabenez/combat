@@ -38,7 +38,7 @@ abstract class BaseSkill
 
     protected function getAllowedTargets(): array
     {
-        return Constants::getConstantsValues(static::class, "TARGET_");
+        return Constants::getValues(static::class, "TARGET_");
     }
 
     abstract protected function getCooldown(): int;

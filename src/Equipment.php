@@ -74,7 +74,7 @@ class Equipment implements CharacterEffectsProvider
 
     protected function getAllowedSlots(): array
     {
-        return Constants::getConstantsValues(static::class, "SLOT_");
+        return Constants::getValues(static::class, "SLOT_");
     }
 
     protected function getStrength(): int

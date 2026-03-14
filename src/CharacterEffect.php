@@ -82,7 +82,7 @@ class CharacterEffect
 
     protected function getAllowedStats(): array
     {
-        return Constants::getConstantsValues(Character::class, "STAT_");
+        return Constants::getValues(Character::class, "STAT_");
     }
 
     /**
@@ -90,7 +90,7 @@ class CharacterEffect
      */
     protected function getAllowedTypes(): array
     {
-        return Constants::getConstantsValues(SkillSpecial::class, "TYPE_");
+        return Constants::getValues(SkillSpecial::class, "TYPE_");
     }
 
     public function onApply(Character $character, self $characterEffect): void
