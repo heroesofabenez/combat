@@ -18,9 +18,9 @@
     },
     "require": {
         "php": ">=8.3.0",
-        "latte/latte": "^2.8",
+        "latte/latte": "^2.8 || ^3.0",
         "nette/utils": "^3.2.2",
-        "nexendrie/translation": "^2.4",
+        "nexendrie/translation": "^2.5",
         "nexendrie/utils": "^1.11",
         "symfony/options-resolver": "^6.4 || ^7.4"
     },
