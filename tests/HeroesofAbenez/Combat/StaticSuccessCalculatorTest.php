@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
+use MyTester\Attributes\BeforeTest;
 use MyTester\Attributes\Group;
 use MyTester\Attributes\TestSuite;
 
@@ -12,7 +13,8 @@ final class StaticSuccessCalculatorTest extends \MyTester\TestCase
 {
     private StaticSuccessCalculator $calculator;
 
-    public function setUp(): void
+    #[BeforeTest]
+    public function rebuildContainer(): void
     {
         $this->calculator = new StaticSuccessCalculator();
     }

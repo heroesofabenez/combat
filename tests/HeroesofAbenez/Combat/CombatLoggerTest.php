@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
+use MyTester\Attributes\BeforeTest;
 use MyTester\Attributes\TestSuite;
 
 #[TestSuite("CombatLogger")]
@@ -10,7 +11,8 @@ final class CombatLoggerTest extends \MyTester\TestCase
 {
     use \MyTester\Bridges\NetteDI\TCompiledContainer;
 
-    public function setUp(): void
+    #[BeforeTest]
+    public function rebuildContainer(): void
     {
         $this->refreshContainer();
     }

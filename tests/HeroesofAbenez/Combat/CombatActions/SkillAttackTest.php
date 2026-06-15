@@ -11,6 +11,7 @@ use HeroesofAbenez\Combat\CombatLogEntry;
 use HeroesofAbenez\Combat\SkillAttack as Skill;
 use HeroesofAbenez\Combat\CharacterAttackSkill as CharacterSkill;
 use MyTester\Attributes\AfterTest;
+use MyTester\Attributes\BeforeTest;
 use MyTester\Attributes\BeforeTestSuite;
 use MyTester\Attributes\Group;
 use MyTester\Attributes\TestSuite;
@@ -23,7 +24,8 @@ final class SkillAttackTest extends \MyTester\TestCase
 
     protected CombatLogger $logger;
 
-    public function setUp(): void
+    #[BeforeTest]
+    public function getLogger(): void
     {
         $this->logger = $this->getService(CombatLogger::class);
     }

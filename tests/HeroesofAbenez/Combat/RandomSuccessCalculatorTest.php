@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
+use MyTester\Attributes\BeforeTest;
 use MyTester\Attributes\Group;
 use MyTester\Attributes\TestSuite;
 
@@ -12,7 +13,8 @@ final class RandomSuccessCalculatorTest extends \MyTester\TestCase
 {
     private RandomSuccessCalculator $calculator;
 
-    public function setUp(): void
+    #[BeforeTest]
+    public function rebuildContainer(): void
     {
         $this->calculator = new RandomSuccessCalculator();
     }

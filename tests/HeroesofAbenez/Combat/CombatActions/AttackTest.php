@@ -9,6 +9,7 @@ use HeroesofAbenez\Combat\CombatLogger;
 use HeroesofAbenez\Combat\StaticSuccessCalculator;
 use HeroesofAbenez\Combat\CombatLogEntry;
 use MyTester\Attributes\AfterTest;
+use MyTester\Attributes\BeforeTest;
 use MyTester\Attributes\BeforeTestSuite;
 use MyTester\Attributes\Group;
 use MyTester\Attributes\TestSuite;
@@ -21,7 +22,8 @@ final class AttackTest extends \MyTester\TestCase
 
     private CombatLogger $logger;
 
-    public function setUp(): void
+    #[BeforeTest]
+    public function getLogger(): void
     {
         $this->logger = $this->getService(CombatLogger::class);
     }
