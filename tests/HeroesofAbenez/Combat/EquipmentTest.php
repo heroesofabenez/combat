@@ -3,15 +3,10 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-require __DIR__ . "/../../bootstrap.php";
+use MyTester\Attributes\TestSuite;
 
-use Tester\Assert;
-
-/**
- * @author Jakub Konečný
- * @testCase
- */
-final class EquipmentTest extends \Tester\TestCase
+#[TestSuite("Equipment")]
+final class EquipmentTest extends \MyTester\TestCase
 {
     public function testGetCombatEffects(): void
     {
@@ -19,9 +14,9 @@ final class EquipmentTest extends \Tester\TestCase
             "id" => 1, "name" => "Novice Helmet", "slot" => Equipment::SLOT_HELMET,
             "strength" => 1, "worn" => false,
         ]);
-        Assert::count(0, $equipment->getCombatEffects());
+        $this->assertCount(0, $equipment->getCombatEffects());
         $equipment->worn = true;
-        Assert::count(1, $equipment->getCombatEffects());
+        $this->assertCount(1, $equipment->getCombatEffects());
     }
 
     public function testDurability(): void
@@ -31,28 +26,25 @@ final class EquipmentTest extends \Tester\TestCase
             "strength" => 20, "worn" => true, "maxDurability" => 10,
         ];
         $equipment = new Equipment($data);
-        Assert::same($equipment->maxDurability, $equipment->durability);
+        $this->assertSame($equipment->maxDurability, $equipment->durability);
         $data["durability"] = 0;
         $equipment = new Equipment($data);
-        Assert::same(0, $equipment->durability);
+        $this->assertSame(0, $equipment->durability);
         $equipment->durability = 20;
-        Assert::same($equipment->maxDurability, $equipment->durability);
-        Assert::same($equipment->rawStrength, $equipment->strength);
-        Assert::same($equipment->rawStrength, $equipment->getCombatEffects()[0]->value);
+        $this->assertSame($equipment->maxDurability, $equipment->durability);
+        $this->assertSame($equipment->rawStrength, $equipment->strength);
+        $this->assertSame($equipment->rawStrength, $equipment->getCombatEffects()[0]->value);
         $equipment->durability = (int) ($equipment->maxDurability * 0.7 - 1);
-        Assert::same((int) ($equipment->rawStrength * 0.75), $equipment->strength);
-        Assert::same((int) ($equipment->rawStrength * 0.75), $equipment->getCombatEffects()[0]->value);
+        $this->assertSame((int) ($equipment->rawStrength * 0.75), $equipment->strength);
+        $this->assertSame((int) ($equipment->rawStrength * 0.75), $equipment->getCombatEffects()[0]->value);
         $equipment->durability = (int) ($equipment->maxDurability / 2 - 1);
-        Assert::same($equipment->rawStrength / 2, $equipment->strength);
-        Assert::same($equipment->rawStrength / 2, $equipment->getCombatEffects()[0]->value);
+        $this->assertSame($equipment->rawStrength / 2, $equipment->strength);
+        $this->assertSame($equipment->rawStrength / 2, $equipment->getCombatEffects()[0]->value);
         $equipment->durability = (int) ($equipment->maxDurability / 4 - 1);
-        Assert::same($equipment->rawStrength / 4, $equipment->strength);
-        Assert::same($equipment->rawStrength / 4, $equipment->getCombatEffects()[0]->value);
+        $this->assertSame($equipment->rawStrength / 4, $equipment->strength);
+        $this->assertSame($equipment->rawStrength / 4, $equipment->getCombatEffects()[0]->value);
         $equipment->durability = (int) ($equipment->maxDurability / 10 - 1);
-        Assert::same(0, $equipment->strength);
-        Assert::same(0, $equipment->getCombatEffects()[0]->value);
+        $this->assertSame(0, $equipment->strength);
+        $this->assertSame(0, $equipment->getCombatEffects()[0]->value);
     }
 }
-
-$test = new EquipmentTest();
-$test->run();

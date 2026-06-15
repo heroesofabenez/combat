@@ -25,8 +25,10 @@
         "symfony/options-resolver": "^6.4 || ^7.4"
     },
     "require-dev": {
-        "nexendrie/code-quality": "dev-master",
-        "phpstan/phpstan-nette": "^2.0"
+        "nexendrie/code-quality": "dev-mytester",
+        "phpstan/phpstan-nette": "^2.0",
+        "nette/bootstrap": "^3.2",
+        "nette/application": "^3.1"
     },
     "autoload": {
         "psr-4": {

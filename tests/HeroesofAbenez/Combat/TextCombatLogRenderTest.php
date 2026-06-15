@@ -3,18 +3,12 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-require __DIR__ . "/../../bootstrap.php";
+use MyTester\Attributes\TestSuite;
 
-use Tester\Assert;
-use HeroesofAbenez\Combat\CombatActions;
-
-/**
- * @author Jakub Konečný
- * @testCase
- */
-final class TextCombatLogRenderTest extends \Tester\TestCase
+#[TestSuite("TextCombatLogRender")]
+final class TextCombatLogRenderTest extends \MyTester\TestCase
 {
-    use \Testbench\TCompiledContainer;
+    use \MyTester\Bridges\NetteDI\TCompiledContainer;
 
     private function generateCharacter(int $id): Character
     {
@@ -78,9 +72,6 @@ final class TextCombatLogRenderTest extends \Tester\TestCase
         $params = [
             "team1" => $team1, "team2" => $team2, "actions" => $logger->getIterator(), "title" => "",
         ];
-        Assert::same(file_get_contents(__DIR__ . "/CombatLogExpected.latte"), $render->render($params));
+        $this->assertSame(file_get_contents(__DIR__ . "/CombatLogExpected.latte"), $render->render($params));
     }
 }
-
-$test = new TextCombatLogRenderTest();
-$test->run();

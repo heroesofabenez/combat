@@ -3,15 +3,10 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-require __DIR__ . "/../../bootstrap.php";
+use MyTester\Attributes\TestSuite;
 
-use Tester\Assert;
-
-/**
- * @author Jakub Konečný
- * @testCase
- */
-final class CharacterAttackSkillTest extends \Tester\TestCase
+#[TestSuite("CharacterAttackSkill")]
+final class CharacterAttackSkillTest extends \MyTester\TestCase
 {
     public function testGetSkillType(): void
     {
@@ -21,7 +16,7 @@ final class CharacterAttackSkillTest extends \Tester\TestCase
         ];
         $skill = new SkillAttack($skillData);
         $characterSkill = new CharacterAttackSkill($skill, 1);
-        Assert::same("attack", $characterSkill->skillType);
+        $this->assertSame("attack", $characterSkill->skillType);
     }
 
     public function testGetLevel(): void
@@ -32,7 +27,7 @@ final class CharacterAttackSkillTest extends \Tester\TestCase
         ];
         $skill = new SkillAttack($skillData);
         $characterSkill = new CharacterAttackSkill($skill, 1);
-        Assert::same(1, $characterSkill->level);
+        $this->assertSame(1, $characterSkill->level);
     }
 
     public function testGetDamage(): void
@@ -43,9 +38,9 @@ final class CharacterAttackSkillTest extends \Tester\TestCase
         ];
         $skill = new SkillAttack($skillData);
         $characterSkill = new CharacterAttackSkill($skill, 1);
-        Assert::same(120, $characterSkill->damage);
+        $this->assertSame(120, $characterSkill->damage);
         $characterSkill = new CharacterAttackSkill($skill, 5);
-        Assert::same(128, $characterSkill->damage);
+        $this->assertSame(128, $characterSkill->damage);
     }
 
     public function testGetHitRate(): void
@@ -56,13 +51,10 @@ final class CharacterAttackSkillTest extends \Tester\TestCase
         ];
         $skill = new SkillAttack($skillData);
         $characterSkill = new CharacterAttackSkill($skill, 1);
-        Assert::same(100, $characterSkill->hitRate);
+        $this->assertSame(100, $characterSkill->hitRate);
         $skillData["hitRate"] = "80%";
         $skill = new SkillAttack($skillData);
         $characterSkill = new CharacterAttackSkill($skill, 1);
-        Assert::same(80, $characterSkill->hitRate);
+        $this->assertSame(80, $characterSkill->hitRate);
     }
 }
-
-$test = new CharacterAttackSkillTest();
-$test->run();

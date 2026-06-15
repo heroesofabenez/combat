@@ -13,4 +13,9 @@
             <arg path="./src"/>
         </exec>
     </target>
+    <target name="tests" description="Unit tests">
+        <exec executable="php" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="tests/run-tests.php"/>
+        </exec>
+    </target>
 </project>

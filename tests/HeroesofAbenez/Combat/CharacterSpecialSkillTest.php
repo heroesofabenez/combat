@@ -3,15 +3,10 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-require __DIR__ . "/../../bootstrap.php";
+use MyTester\Attributes\TestSuite;
 
-use Tester\Assert;
-
-/**
- * @author Jakub Konečný
- * @testCase
- */
-final class CharacterSpecialSkillTest extends \Tester\TestCase
+#[TestSuite("CharacterSpecialSkill")]
+final class CharacterSpecialSkillTest extends \MyTester\TestCase
 {
     public function testGetSkillType(): void
     {
@@ -21,7 +16,7 @@ final class CharacterSpecialSkillTest extends \Tester\TestCase
         ];
         $skill = new SkillSpecial($skillData);
         $characterSkill = new CharacterSpecialSkill($skill, 1);
-        Assert::same("special", $characterSkill->skillType);
+        $this->assertSame("special", $characterSkill->skillType);
     }
 
     public function testGetLevel(): void
@@ -32,7 +27,7 @@ final class CharacterSpecialSkillTest extends \Tester\TestCase
         ];
         $skill = new SkillSpecial($skillData);
         $characterSkill = new CharacterSpecialSkill($skill, 1);
-        Assert::same(1, $characterSkill->level);
+        $this->assertSame(1, $characterSkill->level);
     }
 
     public function testGetValues(): void
@@ -43,15 +38,12 @@ final class CharacterSpecialSkillTest extends \Tester\TestCase
         ];
         $skill = new SkillSpecial($skillData);
         $characterSkill = new CharacterSpecialSkill($skill, 1);
-        Assert::same(10, $characterSkill->value);
+        $this->assertSame(10, $characterSkill->value);
         $characterSkill = new CharacterSpecialSkill($skill, 5);
-        Assert::same(18, $characterSkill->value);
+        $this->assertSame(18, $characterSkill->value);
         $skillData["type"] = SkillSpecial::TYPE_STUN;
         $skill = new SkillSpecial($skillData);
         $characterSkill = new CharacterSpecialSkill($skill, 1);
-        Assert::same(0, $characterSkill->value);
+        $this->assertSame(0, $characterSkill->value);
     }
 }
-
-$test = new CharacterSpecialSkillTest();
-$test->run();

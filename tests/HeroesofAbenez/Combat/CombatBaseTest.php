@@ -3,23 +3,29 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-use Tester\Assert;
+use MyTester\Attributes\AfterTest;
+use MyTester\Attributes\BeforeTest;
+use MyTester\Attributes\BeforeTestSuite;
+use MyTester\Attributes\TestSuite;
 
-require __DIR__ . "/../../bootstrap.php";
-
-/**
- * @author Jakub Konečný
- * @testCase
- */
-final class CombatBaseTest extends \Tester\TestCase
+#[TestSuite("CombatBase")]
+final class CombatBaseTest extends \MyTester\TestCase
 {
-    use \Testbench\TCompiledContainer;
+    use \MyTester\Bridges\NetteDI\TCompiledContainer;
 
     private CombatLogger $logger;
 
-    public function setUp(): void
+    #[BeforeTest]
+    public function getLogger(): void
     {
-        $this->logger = $this->getService(CombatLogger::class); // @phpstan-ignore assign.propertyType
+        $this->logger = $this->getService(CombatLogger::class);
+    }
+
+    #[AfterTest]
+    #[BeforeTestSuite]
+    public function rebuildContainer(): void
+    {
+        $this->refreshContainer();
     }
 
     private function generateCharacter(int $id): Character
@@ -54,11 +60,11 @@ final class CombatBaseTest extends \Tester\TestCase
     public function testInvalidStates(): void
     {
         $combat = new CombatBase(clone $this->logger);
-        Assert::exception(static function () use ($combat) {
+        $this->assertThrowsException(static function () use ($combat) {
             $combat->execute();
         }, InvalidStateException::class);
         $combat->setTeams(new Team(""), new Team(""));
-        Assert::exception(static function () use ($combat) {
+        $this->assertThrowsException(static function () use ($combat) {
             $combat->setTeams(new Team(""), new Team(""));
         }, ImmutableException::class);
     }
@@ -69,40 +75,40 @@ final class CombatBaseTest extends \Tester\TestCase
         $character2 = $this->generateCharacter(2);
         $provider = new EffectsProvider();
         $character1->effectProviders[] = $provider;
-        Assert::same(50, $character1->maxHitpointsBase);
-        Assert::same(50, $character1->maxHitpoints);
-        Assert::same(50, $character1->hitpoints);
+        $this->assertSame(50, $character1->maxHitpointsBase);
+        $this->assertSame(50, $character1->maxHitpoints);
+        $this->assertSame(50, $character1->hitpoints);
         $combat = new CombatBase(clone $this->logger);
         $combat->setDuelParticipants($character1, $character2);
         $combat->onRoundStart($combat);
-        Assert::same(50, $character1->maxHitpointsBase);
-        Assert::same(60, $character1->maxHitpoints);
-        Assert::same(60, $character1->hitpoints);
+        $this->assertSame(50, $character1->maxHitpointsBase);
+        $this->assertSame(60, $character1->maxHitpoints);
+        $this->assertSame(60, $character1->hitpoints);
         $provider->value = 1;
         $combat->onRoundStart($combat);
-        Assert::same(50, $character1->maxHitpointsBase);
-        Assert::same(51, $character1->maxHitpoints);
-        Assert::same(51, $character1->hitpoints);
+        $this->assertSame(50, $character1->maxHitpointsBase);
+        $this->assertSame(51, $character1->maxHitpoints);
+        $this->assertSame(51, $character1->hitpoints);
         $combat->onCombatEnd($combat);
-        Assert::same(50, $character1->maxHitpointsBase);
-        Assert::same(50, $character1->maxHitpoints);
-        Assert::same(50, $character1->hitpoints);
+        $this->assertSame(50, $character1->maxHitpointsBase);
+        $this->assertSame(50, $character1->maxHitpoints);
+        $this->assertSame(50, $character1->hitpoints);
     }
 
     public function testSuccessCalculator(): void
     {
         $combat = new CombatBase(clone $this->logger);
-        Assert::type(RandomSuccessCalculator::class, $combat->successCalculator);
+        $this->assertType(RandomSuccessCalculator::class, $combat->successCalculator);
         $combat->successCalculator = new StaticSuccessCalculator();
-        Assert::type(StaticSuccessCalculator::class, $combat->successCalculator);
+        $this->assertType(StaticSuccessCalculator::class, $combat->successCalculator);
     }
 
     public function testActionSelector(): void
     {
         $combat = new CombatBase(clone $this->logger);
-        Assert::type(DefaultCombatActionSelector::class, $combat->actionSelector);
+        $this->assertType(DefaultCombatActionSelector::class, $combat->actionSelector);
         $combat->actionSelector = new ActionSelector();
-        Assert::type(ActionSelector::class, $combat->actionSelector);
+        $this->assertType(ActionSelector::class, $combat->actionSelector);
     }
 
     public function testAssignPositions(): void
@@ -123,18 +129,18 @@ final class CombatBaseTest extends \Tester\TestCase
         $team2[] = $this->generateCharacter(8);
         $combat->setTeams($team1, $team2);
         $combat->assignPositions($combat);
-        Assert::count(2, $team1->getItems(["positionRow" => 1]));
-        Assert::count(2, $team1->getItems(["positionRow" => 2]));
-        Assert::count(0, $team1->getItems(["positionRow" => 3]));
-        Assert::count(2, $team1->getItems(["positionColumn" => 1]));
-        Assert::count(2, $team1->getItems(["positionColumn" => 2]));
-        Assert::count(0, $team1->getItems(["positionColumn" => 3]));
-        Assert::count(2, $team2->getItems(["positionRow" => 1]));
-        Assert::count(2, $team2->getItems(["positionRow" => 2]));
-        Assert::count(0, $team2->getItems(["positionRow" => 3]));
-        Assert::count(2, $team2->getItems(["positionColumn" => 1]));
-        Assert::count(2, $team2->getItems(["positionColumn" => 2]));
-        Assert::count(0, $team2->getItems(["positionColumn" => 3]));
+        $this->assertCount(2, $team1->getItems(["positionRow" => 1]));
+        $this->assertCount(2, $team1->getItems(["positionRow" => 2]));
+        $this->assertCount(0, $team1->getItems(["positionRow" => 3]));
+        $this->assertCount(2, $team1->getItems(["positionColumn" => 1]));
+        $this->assertCount(2, $team1->getItems(["positionColumn" => 2]));
+        $this->assertCount(0, $team1->getItems(["positionColumn" => 3]));
+        $this->assertCount(2, $team2->getItems(["positionRow" => 1]));
+        $this->assertCount(2, $team2->getItems(["positionRow" => 2]));
+        $this->assertCount(0, $team2->getItems(["positionRow" => 3]));
+        $this->assertCount(2, $team2->getItems(["positionColumn" => 1]));
+        $this->assertCount(2, $team2->getItems(["positionColumn" => 2]));
+        $this->assertCount(0, $team2->getItems(["positionColumn" => 3]));
     }
 
     public function testDecreaseEffectsDuration(): void
@@ -143,19 +149,19 @@ final class CombatBaseTest extends \Tester\TestCase
         $character1 = $this->generateCharacter(1);
         $character2 = $this->generateCharacter(2);
         $combat->setDuelParticipants($character1, $character2);
-        Assert::count(0, $character1->effects);
+        $this->assertCount(0, $character1->effects);
         $effect = new CharacterEffect([
             "id" => "skillEffect", "type" => SkillSpecial::TYPE_STUN, "valueAbsolute" => false,
             "value" => 0, "duration" => 1, "stat" => "",
         ]);
         $character1->effects[] = $effect;
-        Assert::count(1, $character1->effects);
-        Assert::true($character1->hasStatus(Character::STATUS_STUNNED));
+        $this->assertCount(1, $character1->effects);
+        $this->assertTrue($character1->hasStatus(Character::STATUS_STUNNED));
         $combat->decreaseEffectsDuration($combat);
-        Assert::same(0, $effect->duration);
+        $this->assertSame(0, $effect->duration);
         $character1->recalculateStats();
-        Assert::count(0, $character1->effects);
-        Assert::false($character1->hasStatus(Character::STATUS_STUNNED));
+        $this->assertCount(0, $character1->effects);
+        $this->assertFalse($character1->hasStatus(Character::STATUS_STUNNED));
     }
 
     public function testApplyPoison(): void
@@ -170,9 +176,9 @@ final class CombatBaseTest extends \Tester\TestCase
         ]);
         $character1->effects[] = $effect;
         $character1->effects[] = $effect;
-        Assert::same(50, $character1->hitpoints);
+        $this->assertSame(50, $character1->hitpoints);
         $combat->applyPoison($combat);
-        Assert::same(40, $character1->hitpoints);
+        $this->assertSame(40, $character1->hitpoints);
     }
 
     public function testPostCombat(): void
@@ -183,12 +189,9 @@ final class CombatBaseTest extends \Tester\TestCase
         $character2 = $this->generateCharacter(2);
         $combat->setDuelParticipants($character1, $character2);
         $combat->execute();
-        Assert::same(31, $combat->round);
-        Assert::same(5000, $combat->log->round);
-        Assert::count(1, $combat->team1->getItems(["initiative" => 0]));
-        Assert::count(1, $combat->team2->getItems(["initiative" => 0]));
+        $this->assertSame(31, $combat->round);
+        $this->assertSame(5000, $combat->log->round);
+        $this->assertCount(1, $combat->team1->getItems(["initiative" => 0]));
+        $this->assertCount(1, $combat->team2->getItems(["initiative" => 0]));
     }
 }
-
-$test = new CombatBaseTest();
-$test->run();

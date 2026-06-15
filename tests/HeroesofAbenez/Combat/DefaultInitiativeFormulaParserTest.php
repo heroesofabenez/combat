@@ -3,15 +3,10 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-require __DIR__ . "/../../bootstrap.php";
+use MyTester\Attributes\TestSuite;
 
-use Tester\Assert;
-
-/**
- * @author Jakub Konečný
- * @testCase
- */
-final class DefaultInitiativeFormulaParserTest extends \Tester\TestCase
+#[TestSuite("DefaultInitiativeFormulaParser")]
+final class DefaultInitiativeFormulaParserTest extends \MyTester\TestCase
 {
     private function generateCharacter(int $id): Character
     {
@@ -28,11 +23,8 @@ final class DefaultInitiativeFormulaParserTest extends \Tester\TestCase
         $parser = new DefaultInitiativeFormulaParser();
         for ($i = 1; $i <= 10; $i++) {
             $initiative = $parser->calculateInitiative($character);
-            Assert::true($initiative >= 4);
-            Assert::true($initiative <= 8);
+            $this->assertTrue($initiative >= 4);
+            $this->assertTrue($initiative <= 8);
         }
     }
 }
-
-$test = new DefaultInitiativeFormulaParserTest();
-$test->run();

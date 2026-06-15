@@ -3,15 +3,10 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-use Tester\Assert;
+use MyTester\Attributes\TestSuite;
 
-require __DIR__ . "/../../bootstrap.php";
-
-/**
- * @author Jakub Konečný
- * @testCase
- */
-final class WeaponTest extends \Tester\TestCase
+#[TestSuite("Weapon")]
+final class WeaponTest extends \MyTester\TestCase
 {
     public function testIsRanged(): void
     {
@@ -21,15 +16,12 @@ final class WeaponTest extends \Tester\TestCase
         foreach (Weapon::MELEE_TYPES as $meleeWeapon) {
             $weaponStats["type"] = $meleeWeapon;
             $weapon = new Weapon($weaponStats);
-            Assert::false($weapon->ranged);
+            $this->assertFalse($weapon->ranged);
         }
         foreach (Weapon::RANGED_TYPES as $rangedWeapon) {
             $weaponStats["type"] = $rangedWeapon;
             $weapon = new Weapon($weaponStats);
-            Assert::true($weapon->ranged);
+            $this->assertTrue($weapon->ranged);
         }
     }
 }
-
-$test = new WeaponTest();
-$test->run();

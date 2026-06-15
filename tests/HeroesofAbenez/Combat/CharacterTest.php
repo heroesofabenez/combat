@@ -3,15 +3,10 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-require __DIR__ . "/../../bootstrap.php";
+use MyTester\Attributes\TestSuite;
 
-use Tester\Assert;
-
-/**
- * @author Jakub Konečný
- * @testCase
- */
-final class CharacterTest extends \Tester\TestCase
+#[TestSuite("Character")]
+final class CharacterTest extends \MyTester\TestCase
 {
     private function generateCharacter(int $id): Character
     {
@@ -33,16 +28,16 @@ final class CharacterTest extends \Tester\TestCase
         ];
         $pet = new Pet($petStats);
         $character = new Character($stats, [], [$pet]);
-        Assert::null($character->activePet);
+        $this->assertNull($character->activePet);
         $pet->deployed = true;
-        Assert::same(1, $character->activePet);
+        $this->assertSame(1, $character->activePet);
     }
 
     public function testAddAndRemoveEffect(): void
     {
         $character = $this->generateCharacter(1);
-        Assert::count(0, $character->effects);
-        Assert::same(5, $character->damage);
+        $this->assertCount(0, $character->effects);
+        $this->assertSame(5, $character->damage);
         $character->effects[] = new CharacterEffect([
             "id" => "equipment1bonusEffect",
             "type" => "buff",
@@ -51,20 +46,20 @@ final class CharacterTest extends \Tester\TestCase
             "valueAbsolute" => true,
             "duration" => CharacterEffectDuration::Combat,
         ]);
-        Assert::count(1, $character->effects);
-        Assert::same(15, $character->damage);
+        $this->assertCount(1, $character->effects);
+        $this->assertSame(15, $character->damage);
         $character->effects->removeByFilter(["id" => "equipment1bonusEffect"]);
-        Assert::count(0, $character->effects);
-        Assert::same(5, $character->damage);
+        $this->assertCount(0, $character->effects);
+        $this->assertSame(5, $character->damage);
     }
 
     public function testInitiativeFormulaParser(): void
     {
         $character = $this->generateCharacter(1);
-        Assert::type(DefaultInitiativeFormulaParser::class, $character->initiativeFormulaParser);
-        Assert::notEqual(0, $character->initiative);
+        $this->assertType(DefaultInitiativeFormulaParser::class, $character->initiativeFormulaParser);
+        $this->assertNotSame(0, $character->initiative);
         $character->initiativeFormulaParser = new ConstantInitiativeFormulaParser(0);
-        Assert::equal(0, $character->initiative);
+        $this->assertSame(0, $character->initiative);
     }
 
     public function testDebuffsCap(): void
@@ -75,7 +70,7 @@ final class CharacterTest extends \Tester\TestCase
             "value" => 1000, "duration" => 1, "stat" => "constitution",
         ]);
         $character->effects[] = $effect;
-        Assert::same(2, $character->constitution);
+        $this->assertSame(2, $character->constitution);
     }
 
     public function testDamageStat(): void
@@ -95,28 +90,28 @@ final class CharacterTest extends \Tester\TestCase
             ])
         ];
         $character = new Character($stats, $equipment);
-        Assert::same(Character::STAT_STRENGTH, $character->damageStat());
+        $this->assertSame(Character::STAT_STRENGTH, $character->damageStat());
         $equipment[0]->worn = false;
-        Assert::same(Character::STAT_INTELLIGENCE, $character->damageStat());
+        $this->assertSame(Character::STAT_INTELLIGENCE, $character->damageStat());
         $equipment[1]->worn = false;
-        Assert::same(Character::STAT_STRENGTH, $character->damageStat());
+        $this->assertSame(Character::STAT_STRENGTH, $character->damageStat());
     }
 
     public function testStatus(): void
     {
         $character = $this->generateCharacter(1);
-        Assert::false($character->hasStatus("abc"));
-        Assert::null($character->getStatus("abc"));
-        Assert::false($character->hasStatus(Character::STATUS_STUNNED));
+        $this->assertFalse($character->hasStatus("abc"));
+        $this->assertNull($character->getStatus("abc"));
+        $this->assertFalse($character->hasStatus(Character::STATUS_STUNNED));
         $character->effects[] = new CharacterEffect([
             "id" => "stunEffect",
             "type" => SkillSpecial::TYPE_STUN,
             "duration" => CharacterEffectDuration::Combat,
             "valueAbsolute" => false,
         ]);
-        Assert::true($character->hasStatus(Character::STATUS_STUNNED));
+        $this->assertTrue($character->hasStatus(Character::STATUS_STUNNED));
         $character->effects->removeByFilter(["id" => "stunEffect"]);
-        Assert::false($character->hasStatus(Character::STATUS_STUNNED));
+        $this->assertFalse($character->hasStatus(Character::STATUS_STUNNED));
         $character->effects[] = new CharacterEffect([
             "id" => "poisonEffect",
             "type" => SkillSpecial::TYPE_POISON,
@@ -124,47 +119,44 @@ final class CharacterTest extends \Tester\TestCase
             "value" => 5,
             "valueAbsolute" => false,
         ]);
-        Assert::true($character->hasStatus(Character::STATUS_POISONED));
+        $this->assertTrue($character->hasStatus(Character::STATUS_POISONED));
         $character->effects->removeByFilter(["id" => "poisonEffect"]);
-        Assert::false($character->hasStatus(Character::STATUS_POISONED));
+        $this->assertFalse($character->hasStatus(Character::STATUS_POISONED));
     }
 
     public function testCanAct(): void
     {
         $character = $this->generateCharacter(1);
-        Assert::true($character->canAct());
+        $this->assertTrue($character->canAct());
         $character->effects[] = new CharacterEffect([
             "id" => "stunEffect",
             "type" => SkillSpecial::TYPE_STUN,
             "duration" => CharacterEffectDuration::Combat,
             "valueAbsolute" => false,
         ]);
-        Assert::false($character->canAct());
+        $this->assertFalse($character->canAct());
         $character->effects->removeByFilter(["id" => "stunEffect"]);
-        Assert::true($character->canAct());
+        $this->assertTrue($character->canAct());
         $character->harm($character->hitpoints / 2);
-        Assert::true($character->canAct());
+        $this->assertTrue($character->canAct());
         $character->harm($character->hitpoints);
-        Assert::false($character->canAct());
+        $this->assertFalse($character->canAct());
         $character->heal(1);
-        Assert::true($character->canAct());
+        $this->assertTrue($character->canAct());
     }
 
     public function testCanDefend(): void
     {
         $character = $this->generateCharacter(1);
-        Assert::true($character->canDefend());
+        $this->assertTrue($character->canDefend());
         $character->effects[] = new CharacterEffect([
             "id" => "stunEffect",
             "type" => SkillSpecial::TYPE_STUN,
             "duration" => CharacterEffectDuration::Combat,
             "valueAbsolute" => false,
         ]);
-        Assert::false($character->canDefend());
+        $this->assertFalse($character->canDefend());
         $character->effects->removeByFilter(["id" => "stunEffect"]);
-        Assert::true($character->canDefend());
+        $this->assertTrue($character->canDefend());
     }
 }
-
-$test = new CharacterTest();
-$test->run();

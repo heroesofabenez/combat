@@ -3,19 +3,14 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-require __DIR__ . "/../../bootstrap.php";
+use MyTester\Attributes\TestSuite;
 
-use Tester\Assert;
-
-/**
- * @author Jakub Konečný
- * @testCase
- */
-final class CombatLoggerTest extends \Tester\TestCase
+#[TestSuite("CombatLogger")]
+final class CombatLoggerTest extends \MyTester\TestCase
 {
-    use \Testbench\TCompiledContainer;
+    use \MyTester\Bridges\NetteDI\TCompiledContainer;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         $this->refreshContainer();
     }
@@ -25,7 +20,7 @@ final class CombatLoggerTest extends \Tester\TestCase
         /** @var CombatLogger $logger */
         $logger = $this->getService(CombatLogger::class);
         $logger->setTeams(new Team("Team1"), new Team("Team 2"));
-        Assert::exception(static function () use ($logger) {
+        $this->assertThrowsException(static function () use ($logger) {
             $logger->setTeams(new Team("Team1"), new Team("Team 2"));
         }, ImmutableException::class);
     }
@@ -37,18 +32,18 @@ final class CombatLoggerTest extends \Tester\TestCase
         $logger = $this->getService(CombatLogger::class);
         $logger->setTeams(new Team("Team1"), new Team("Team 2"));
         $logger->title = $title;
-        Assert::same($title, $logger->title);
+        $this->assertSame($title, $logger->title);
         $log = (string) $logger;
-        Assert::contains("<title>$title Combat</title>", $log);
+        $this->assertContains("<title>$title Combat</title>", $log);
     }
 
     public function testCount(): void
     {
         /** @var CombatLogger $logger */
         $logger = $this->getService(CombatLogger::class);
-        Assert::count(0, $logger);
+        $this->assertCount(0, $logger);
         $logger->logText("abc");
-        Assert::count(1, $logger);
+        $this->assertCount(1, $logger);
     }
 
     private function generateCharacter(int $id): Character
@@ -75,7 +70,7 @@ final class CombatLoggerTest extends \Tester\TestCase
         $logger->round = 2;
         $logger->logText("abc.abc");
         $logger->logText("abc.abc");
-        Assert::type("string", (string) $logger);
+        $this->assertType("string", (string) $logger);
     }
 
     public function testGetIterator(): void
@@ -87,12 +82,9 @@ final class CombatLoggerTest extends \Tester\TestCase
             $logger->logText("abc");
         }
         foreach ($logger as $round => $actions) {
-            Assert::same(1, $round);
-            Assert::type("array", $actions);
-            Assert::count(5, $actions);
+            $this->assertSame(1, $round);
+            $this->assertType("array", $actions);
+            $this->assertCount(5, $actions);
         }
     }
 }
-
-$test = new CombatLoggerTest();
-$test->run();

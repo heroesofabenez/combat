@@ -1,7 +1,6 @@
 application:
     scanDirs: false
 services:
-    testbench.presenterMock: Testbench\Mocks\PresenterMock
     combatLogger: HeroesofAbenez\Combat\CombatLogger
     combatLogRender: HeroesofAbenez\Combat\TextCombatLogRender
 extensions:
@@ -11,3 +10,6 @@ translation:
     loader:
         folders!:
             - %appDir%/../src/lang
+mytester:
+    colors: true
+    coverageFormat: cobertura

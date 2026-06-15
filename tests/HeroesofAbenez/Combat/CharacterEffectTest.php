@@ -3,15 +3,10 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-require __DIR__ . "/../../bootstrap.php";
+use MyTester\Attributes\TestSuite;
 
-use Tester\Assert;
-
-/**
- * @author Jakub Konečný
- * @testCase
- */
-final class CharacterEffectTest extends \Tester\TestCase
+#[TestSuite("CharacterEffect")]
+final class CharacterEffectTest extends \MyTester\TestCase
 {
     private function generateCharacter(int $id): Character
     {
@@ -26,8 +21,8 @@ final class CharacterEffectTest extends \Tester\TestCase
     {
         $character = $this->generateCharacter(1);
         $character->initiativeFormulaParser = new ConstantInitiativeFormulaParser(1);
-        Assert::same(1, $character->initiative);
-        Assert::same(1, $character->initiativeBase);
+        $this->assertSame(1, $character->initiative);
+        $this->assertSame(1, $character->initiativeBase);
         $effect = new CharacterEffect([
             "id" => "equipment1bonusEffect",
             "type" => "buff",
@@ -37,20 +32,20 @@ final class CharacterEffectTest extends \Tester\TestCase
             "duration" => CharacterEffectDuration::Combat,
         ]);
         $character->effects[] = $effect;
-        Assert::same(11, $character->initiative);
-        Assert::same(1, $character->initiativeBase);
+        $this->assertSame(11, $character->initiative);
+        $this->assertSame(1, $character->initiativeBase);
         $character->effects->removeByFilter(["id" => $effect->id]);
-        Assert::same(1, $character->initiative);
-        Assert::same(1, $character->initiativeBase);
+        $this->assertSame(1, $character->initiative);
+        $this->assertSame(1, $character->initiativeBase);
     }
 
     public function testHitpointsEffect(): void
     {
         $character = $this->generateCharacter(1);
         $baseHitpoints = $character->constitution * Character::HITPOINTS_PER_CONSTITUTION;
-        Assert::same($baseHitpoints, $character->maxHitpointsBase);
-        Assert::same($baseHitpoints, $character->maxHitpoints);
-        Assert::same($baseHitpoints, $character->hitpoints);
+        $this->assertSame($baseHitpoints, $character->maxHitpointsBase);
+        $this->assertSame($baseHitpoints, $character->maxHitpoints);
+        $this->assertSame($baseHitpoints, $character->hitpoints);
         $effect = new CharacterEffect([
             "id" => "equipment1bonusEffect",
             "type" => "buff",
@@ -60,15 +55,12 @@ final class CharacterEffectTest extends \Tester\TestCase
             "duration" => CharacterEffectDuration::Combat,
         ]);
         $character->effects[] = $effect;
-        Assert::same($baseHitpoints, $character->maxHitpointsBase);
-        Assert::same(60, $character->maxHitpoints);
-        Assert::same(60, $character->hitpoints);
+        $this->assertSame($baseHitpoints, $character->maxHitpointsBase);
+        $this->assertSame(60, $character->maxHitpoints);
+        $this->assertSame(60, $character->hitpoints);
         $character->effects->removeByFilter(["id" => "equipment1bonusEffect"]);
-        Assert::same($baseHitpoints, $character->maxHitpointsBase);
-        Assert::same($baseHitpoints, $character->maxHitpoints);
-        Assert::same($baseHitpoints, $character->hitpoints);
+        $this->assertSame($baseHitpoints, $character->maxHitpointsBase);
+        $this->assertSame($baseHitpoints, $character->maxHitpoints);
+        $this->assertSame($baseHitpoints, $character->hitpoints);
     }
 }
-
-$test = new CharacterEffectTest();
-$test->run();

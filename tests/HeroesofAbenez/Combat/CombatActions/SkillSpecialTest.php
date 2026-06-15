@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat\CombatActions;
 
-use Tester\Assert;
 use HeroesofAbenez\Combat\Character;
 use HeroesofAbenez\Combat\CombatBase;
 use HeroesofAbenez\Combat\CombatLogger;
@@ -11,22 +10,20 @@ use HeroesofAbenez\Combat\StaticSuccessCalculator;
 use HeroesofAbenez\Combat\CombatLogEntry;
 use HeroesofAbenez\Combat\SkillSpecial as Skill;
 use HeroesofAbenez\Combat\CharacterSpecialSkill as CharacterSkill;
+use MyTester\Attributes\Group;
+use MyTester\Attributes\TestSuite;
 
-require __DIR__ . "/../../../bootstrap.php";
-
-/**
- * @author Jakub Konečný
- * @testCase
- */
-final class SkillSpecialTest extends \Tester\TestCase
+#[TestSuite("SkillSpecial")]
+#[Group("combatActions")]
+final class SkillSpecialTest extends \MyTester\TestCase
 {
-    use \Testbench\TCompiledContainer;
+    use \MyTester\Bridges\NetteDI\TCompiledContainer;
 
     private CombatLogger $logger;
 
     public function setUp(): void
     {
-        $this->logger = $this->getService(CombatLogger::class); // @phpstan-ignore assign.propertyType
+        $this->logger = $this->getService(CombatLogger::class);
     }
 
     private function generateCharacter(int $id): Character
@@ -50,11 +47,11 @@ final class SkillSpecialTest extends \Tester\TestCase
       $combat = new CombatBase(clone $this->logger, new StaticSuccessCalculator());
       $combat->setDuelParticipants($character1, $character2);
       $action = new SkillSpecial();
-      Assert::false($action->shouldUse($combat, $character1));
+      $this->assertFalse($action->shouldUse($combat, $character1));
       for($i = 1; $i <= $character1->skills[0]->skill->cooldown; $i++) {
         $character1->skills[0]->decreaseCooldown();
       }
-      Assert::true($action->shouldUse($combat, $character1));
+      $this->assertTrue($action->shouldUse($combat, $character1));
     }*/
 
     public function testDo(): void
@@ -70,25 +67,22 @@ final class SkillSpecialTest extends \Tester\TestCase
         }
         $action = new SkillSpecial();
         $action->do($combat, $character1);
-        Assert::count(1, $combat->log);
-        Assert::count(1, $combat->log->getIterator()[1]);
+        $this->assertCount(1, $combat->log);
+        $this->assertCount(1, $combat->log->getIterator()[1]);
         /** @var CombatLogEntry $record */
         $record = $combat->log->getIterator()[1][0];
-        Assert::type(CombatLogEntry::class, $record);
-        Assert::same(SkillSpecial::ACTION_NAME, $record->action);
-        Assert::same("Skill Special", $record->name);
-        Assert::true($record->result);
-        Assert::same(0, $record->amount);
-        Assert::same($character1->name, $record->character1->name);
-        Assert::same($character1->name, $record->character2->name);
-        Assert::count(1, $character1->effects);
+        $this->assertType(CombatLogEntry::class, $record);
+        $this->assertSame(SkillSpecial::ACTION_NAME, $record->action);
+        $this->assertSame("Skill Special", $record->name);
+        $this->assertTrue($record->result);
+        $this->assertSame(0, $record->amount);
+        $this->assertSame($character1->name, $record->character1->name);
+        $this->assertSame($character1->name, $record->character2->name);
+        $this->assertCount(1, $character1->effects);
         $effect = $character1->effects[0];
-        Assert::same(Skill::TYPE_BUFF, $effect->type);
-        Assert::same(Character::STAT_DAMAGE, $effect->stat);
-        Assert::same(12, $effect->value);
-        Assert::same(3, $effect->duration);
+        $this->assertSame(Skill::TYPE_BUFF, $effect->type);
+        $this->assertSame(Character::STAT_DAMAGE, $effect->stat);
+        $this->assertSame(12, $effect->value);
+        $this->assertSame(3, $effect->duration);
     }
 }
-
-$test = new SkillSpecialTest();
-$test->run();

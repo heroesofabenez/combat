@@ -48,7 +48,7 @@ final class CombatLogger implements \Countable, \IteratorAggregate, \Stringable
      */
     public function logText(string $text, array $params = []): void
     {
-        $this->actions[$this->round][] = $this->translator->translate($text, 0, $params);
+        $this->actions[$this->round][] = (string) $this->translator->translate($text, 0, $params);
     }
 
     public function __toString(): string

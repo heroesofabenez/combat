@@ -1,6 +1,13 @@
 /vendor/
 /public/
 /.idea/
-/tests/_temp/
+/tests/temp/
 composer.lock
 coverage.*
+
+# Errors in tests
+*.errors
+
+# Generated reports
+/coverage.*
+/junit.xml

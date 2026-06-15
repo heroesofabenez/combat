@@ -3,19 +3,16 @@ declare(strict_types=1);
 
 namespace HeroesofAbenez\Combat;
 
-require __DIR__ . "/../../bootstrap.php";
+use MyTester\Attributes\Group;
+use MyTester\Attributes\TestSuite;
 
-use Tester\Assert;
-
-/**
- * @author Jakub Konečný
- * @testCase
- */
-final class StaticSuccessCalculatorTest extends \Tester\TestCase
+#[TestSuite("StaticSuccessCalculator")]
+#[Group("successCalculators")]
+final class StaticSuccessCalculatorTest extends \MyTester\TestCase
 {
     private StaticSuccessCalculator $calculator;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         $this->calculator = new StaticSuccessCalculator();
     }
@@ -34,7 +31,7 @@ final class StaticSuccessCalculatorTest extends \Tester\TestCase
         $character1 = $this->generateCharacter(1);
         $character2 = $this->generateCharacter(2);
         for ($i = 1; $i <= 10; $i++) {
-            Assert::true($this->calculator->hasHit($character1, $character2));
+            $this->assertTrue($this->calculator->hasHit($character1, $character2));
         }
     }
 
@@ -42,10 +39,7 @@ final class StaticSuccessCalculatorTest extends \Tester\TestCase
     {
         $character1 = $this->generateCharacter(1);
         for ($i = 1; $i <= 10; $i++) {
-            Assert::true($this->calculator->hasHealed($character1));
+            $this->assertTrue($this->calculator->hasHealed($character1));
         }
     }
 }
-
-$test = new StaticSuccessCalculatorTest();
-$test->run();
