@@ -10,6 +10,8 @@ use HeroesofAbenez\Combat\StaticSuccessCalculator;
 use HeroesofAbenez\Combat\CombatLogEntry;
 use HeroesofAbenez\Combat\SkillSpecial as Skill;
 use HeroesofAbenez\Combat\CharacterSpecialSkill as CharacterSkill;
+use MyTester\Attributes\AfterTest;
+use MyTester\Attributes\BeforeTestSuite;
 use MyTester\Attributes\Group;
 use MyTester\Attributes\TestSuite;
 
@@ -24,6 +26,13 @@ final class SkillSpecialTest extends \MyTester\TestCase
     public function setUp(): void
     {
         $this->logger = $this->getService(CombatLogger::class);
+    }
+
+    #[AfterTest]
+    #[BeforeTestSuite]
+    public function rebuildContainer(): void
+    {
+        $this->refreshContainer();
     }
 
     private function generateCharacter(int $id): Character

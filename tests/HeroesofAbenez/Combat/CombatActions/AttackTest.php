@@ -8,6 +8,8 @@ use HeroesofAbenez\Combat\CombatBase;
 use HeroesofAbenez\Combat\CombatLogger;
 use HeroesofAbenez\Combat\StaticSuccessCalculator;
 use HeroesofAbenez\Combat\CombatLogEntry;
+use MyTester\Attributes\AfterTest;
+use MyTester\Attributes\BeforeTestSuite;
 use MyTester\Attributes\Group;
 use MyTester\Attributes\TestSuite;
 
@@ -22,6 +24,13 @@ final class AttackTest extends \MyTester\TestCase
     public function setUp(): void
     {
         $this->logger = $this->getService(CombatLogger::class);
+    }
+
+    #[AfterTest]
+    #[BeforeTestSuite]
+    public function rebuildContainer(): void
+    {
+        $this->refreshContainer();
     }
 
     private function generateCharacter(int $id): Character
