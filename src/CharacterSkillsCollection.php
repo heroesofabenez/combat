@@ -6,8 +6,13 @@ namespace HeroesofAbenez\Combat;
 /**
  * @author Jakub Konečný
  * @internal
+ * @extends \Nexendrie\Utils\Collection<BaseCharacterSkill>
  */
 class CharacterSkillsCollection extends \Nexendrie\Utils\Collection
 {
-    protected string $class = BaseCharacterSkill::class;
+    public function __construct()
+    {
+        parent::__construct();
+        $this->class = BaseCharacterSkill::class;
+    }
 }

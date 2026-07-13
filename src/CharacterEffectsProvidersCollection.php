@@ -6,8 +6,13 @@ namespace HeroesofAbenez\Combat;
 /**
  * @author Jakub Konečný
  * @internal
+ * @extends \Nexendrie\Utils\Collection<CharacterEffectsProvider>
  */
 class CharacterEffectsProvidersCollection extends \Nexendrie\Utils\Collection
 {
-    protected string $class = CharacterEffectsProvider::class;
+    public function __construct()
+    {
+        parent::__construct();
+        $this->class = CharacterEffectsProvider::class;
+    }
 }

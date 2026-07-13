@@ -117,16 +117,11 @@ class Character
     protected InitiativeFormulaParser $initiativeFormulaParser;
     protected float $defense = 0;
     protected float $defenseBase = 0;
-    /** @var Equipment[]|EquipmentCollection Character's equipment */
     public EquipmentCollection $equipment;
-    /** @var Pet[]|PetsCollection Character's pets */
     public PetsCollection $pets;
-    /** @var BaseCharacterSkill[]|CharacterSkillsCollection Character's skills */
     public CharacterSkillsCollection $skills;
     protected ?int $activePet = null;
-    /** @var CharacterEffect[]|CharacterEffectsCollection Active effects */
     public CharacterEffectsCollection $effects;
-    /** @var CharacterEffectsProvider[]|CharacterEffectsProvidersCollection */
     public CharacterEffectsProvidersCollection $effectProviders;
     protected int $positionRow = 0;
     protected int $positionColumn = 0;
@@ -136,9 +131,9 @@ class Character
     /**
      *
      * @param array $stats Stats of the character
-     * @param Equipment[] $equipment Equipment of the character
-     * @param Pet[] $pets Pets owned by the character
-     * @param BaseCharacterSkill[] $skills Skills acquired by the character
+     * @param list<Equipment> $equipment Equipment of the character
+     * @param list<Pet> $pets Pets owned by the character
+     * @param list<BaseCharacterSkill> $skills Skills acquired by the character
      */
     public function __construct(
         array $stats,
@@ -470,7 +465,7 @@ class Character
     }
 
     /**
-     * @return BaseCharacterSkill[]
+     * @return list<BaseCharacterSkill>
      */
     protected function getUsableSkills(): array
     {

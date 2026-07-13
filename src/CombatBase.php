@@ -18,7 +18,7 @@ use Nexendrie\Utils\Collection;
  * @property Team $team2
  * @property-read int $team1Damage
  * @property-read int $team2Damage
- * @property Collection|CombatAction[] $combatActions
+ * @property Collection<CombatAction> $combatActions
  */
 class CombatBase
 {
@@ -44,7 +44,7 @@ class CombatBase
     public Closure $victoryCondition;
     /** @var Closure To determine characters that are supposed to heal their team. Gets team1 and team2 as parameters, should return {@see Team} */
     public Closure $healers;
-    /** @var Collection|CombatAction[] */
+    /** @var Collection<CombatAction> */
     protected Collection $combatActions;
 
     public function __construct(
@@ -54,7 +54,7 @@ class CombatBase
     ) {
         $this->victoryCondition = VictoryConditions::moreDamage(...);
         $this->healers = static fn(): Team => new Team("healers");
-        $this->combatActions = new class extends Collection {
+        $this->combatActions = new class extends Collection { // @phpstan-ignore assign.propertyType
             protected string $class = CombatAction::class;
         };
         $this->registerDefaultHandlers();
@@ -147,7 +147,7 @@ class CombatBase
     }
 
     /**
-     * @return Collection|CombatAction[]
+     * @return Collection<CombatAction>
      */
     public function getCombatActions(): Collection
     {

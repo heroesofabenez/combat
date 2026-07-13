@@ -14,6 +14,7 @@ use Nexendrie\Utils\Numbers;
  * @property-read Character[] $usableMembers
  * @property int $maxRowSize
  * @property-read int|null $rowToAttack
+ * @extends Collection<Character>
  */
 final class Team extends Collection
 {
@@ -21,12 +22,12 @@ final class Team extends Collection
 
     private const float LOWEST_HP_THRESHOLD = 0.5;
 
-    protected string $class = Character::class;
     private int $maxRowSize = 5;
 
     public function __construct(public readonly string $name)
     {
         parent::__construct();
+        $this->class = Character::class;
     }
 
     protected function getMaxRowSize(): int
@@ -42,7 +43,7 @@ final class Team extends Collection
     /**
      * Get alive members from the team
      *
-     * @return Character[]
+     * @return list<Character>
      */
     protected function getAliveMembers(): array
     {
@@ -52,7 +53,7 @@ final class Team extends Collection
     /**
      * Get members which can perform an action
      *
-     * @return Character[]
+     * @return list<Character>
      */
     protected function getUsableMembers(): array
     {

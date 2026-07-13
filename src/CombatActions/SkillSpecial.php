@@ -67,6 +67,7 @@ final class SkillSpecial implements CombatAction
     {
         /** @var CharacterSpecialSkill $skill */
         $skill = $character->usableSkills[0];
+        /** @var list<Character> $targets */
         $targets = match ($skill->skill->target) {
             Skill::TARGET_ENEMY => [$combat->selectAttackTarget($character)],
             Skill::TARGET_SELF => [$character],

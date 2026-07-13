@@ -6,14 +6,14 @@ namespace HeroesofAbenez\Combat;
 /**
  * @author Jakub Konečný
  * @internal
+ * @extends \Nexendrie\Utils\Collection<CharacterEffect>
  */
 final class CharacterEffectsCollection extends \Nexendrie\Utils\Collection
 {
-    protected string $class = CharacterEffect::class;
-
     public function __construct(private readonly Character $character)
     {
         parent::__construct();
+        $this->class = CharacterEffect::class;
     }
 
     /**
