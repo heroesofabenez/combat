@@ -22,7 +22,7 @@
         "nette/utils": "^3.2.2 || ^4.0",
         "nexendrie/translation": "^2.5",
         "nexendrie/utils": "^1.11 || ^2.0",
-        "symfony/options-resolver": "^6.4 || ^7.4"
+        "symfony/options-resolver": "^6.4 || ^7.4 || ^8.0"
     },
     "require-dev": {
         "nexendrie/code-quality": "dev-mytester",
