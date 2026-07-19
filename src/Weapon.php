@@ -55,6 +55,9 @@ class Weapon extends Equipment
         $resolver->setAllowedValues("type", $this->getAllowedTypes());
     }
 
+    /**
+     * @return list<string>
+     */
     protected function getAllowedTypes(): array
     {
         return Constants::getValues(static::class, "TYPE_");

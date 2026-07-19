@@ -36,6 +36,9 @@ abstract class BaseSkill
         $resolver->setAllowedValues("levels", static fn(int $value): bool => ($value > 0));
     }
 
+    /**
+     * @return list<string>
+     */
     protected function getAllowedTargets(): array
     {
         return Constants::getValues(static::class, "TARGET_");

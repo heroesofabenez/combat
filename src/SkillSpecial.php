@@ -31,6 +31,9 @@ final class SkillSpecial extends BaseSkill
     public readonly int $valueGrowth;
     public readonly int $duration;
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function __construct(array $data)
     {
         $resolver = new OptionsResolver();

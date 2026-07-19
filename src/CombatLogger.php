@@ -37,6 +37,8 @@ final class CombatLogger implements \Countable, \IteratorAggregate, \Stringable
 
     /**
      * Adds new entry
+     *
+     * @param array<string, mixed> $action
      */
     public function log(array $action): void
     {
@@ -45,6 +47,8 @@ final class CombatLogger implements \Countable, \IteratorAggregate, \Stringable
 
     /**
      * Adds text entry
+     *
+     * @param array<string, mixed> $params
      */
     public function logText(string $text, array $params = []): void
     {

@@ -6,7 +6,7 @@ includes:
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon
 parameters:
     reportMaybesInPropertyPhpDocTypes: false
-    ignoreErrors:
+    ignoreErrors!:
         - '#Variable property access on \$this\(HeroesofAbenez\\Combat\\Character\)#'
         - '#Variable variables are not allowed#'
         -

@@ -24,6 +24,9 @@ class CharacterEffect
     /** @var callable[] */
     public array $onRemove = [];
 
+    /**
+     * @param array<string, mixed> $effect
+     */
     public function __construct(array $effect)
     {
         $resolver = new OptionsResolver();
@@ -80,6 +83,9 @@ class CharacterEffect
         });
     }
 
+    /**
+     * @return list<string>
+     */
     protected function getAllowedStats(): array
     {
         return Constants::getValues(Character::class, "STAT_");

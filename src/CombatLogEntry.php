@@ -22,6 +22,9 @@ final readonly class CombatLogEntry
     public bool $result;
     public int $amount;
 
+    /**
+     * @param array<string, mixed> $action
+     */
     public function __construct(array $action)
     {
         $resolver = new OptionsResolver();

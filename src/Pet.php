@@ -17,6 +17,9 @@ final class Pet implements CharacterEffectsProvider
     public readonly string $bonusStat;
     public readonly int $bonusValue;
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function __construct(array $data)
     {
         $resolver = new OptionsResolver();
@@ -40,6 +43,9 @@ final class Pet implements CharacterEffectsProvider
         $resolver->setAllowedValues("bonusValue", static fn(int $value): bool => ($value >= 0));
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getDeployParams(): array
     {
         return [

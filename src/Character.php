@@ -130,7 +130,7 @@ class Character
 
     /**
      *
-     * @param array $stats Stats of the character
+     * @param array<string, mixed> $stats Stats of the character
      * @param list<Equipment> $equipment Equipment of the character
      * @param list<Pet> $pets Pets owned by the character
      * @param list<BaseCharacterSkill> $skills Skills acquired by the character
@@ -176,6 +176,9 @@ class Character
         );
     }
 
+    /**
+     * @param array<string, mixed> $stats
+     */
     protected function setStats(array $stats): void
     {
         $requiredStats = array_merge(["id", "name", "level", "initiativeFormula",], static::BASE_STATS);

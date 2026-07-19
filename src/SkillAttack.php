@@ -21,6 +21,9 @@ final class SkillAttack extends BaseSkill
     public readonly int $strikes;
     public readonly ?string $hitRate;
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function __construct(array $data)
     {
         $resolver = new OptionsResolver();

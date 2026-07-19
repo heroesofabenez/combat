@@ -35,6 +35,9 @@ class Equipment implements CharacterEffectsProvider
     protected int $durability;
     public readonly int $maxDurability;
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function __construct(array $data)
     {
         $resolver = new OptionsResolver();
@@ -72,6 +75,9 @@ class Equipment implements CharacterEffectsProvider
         $resolver->setAllowedTypes("durability", "integer");
     }
 
+    /**
+     * @return list<string>
+     */
     protected function getAllowedSlots(): array
     {
         return Constants::getValues(static::class, "SLOT_");
@@ -101,6 +107,9 @@ class Equipment implements CharacterEffectsProvider
         $this->durability = Numbers::clamp($durability, 0, $this->maxDurability);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getDeployParams(): array
     {
         $stat = [

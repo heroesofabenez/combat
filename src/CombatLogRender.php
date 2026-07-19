@@ -5,5 +5,8 @@ namespace HeroesofAbenez\Combat;
 
 interface CombatLogRender
 {
+    /**
+     * @param array<string, mixed> $params
+     */
     public function render(array $params): string;
 }
